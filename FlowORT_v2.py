@@ -6,6 +6,7 @@ from gurobipy import *
 
 import numpy as np
 
+
 class FlowORT:
     def __init__(self, data, label, tree, time_limit):
         '''
@@ -49,8 +50,8 @@ class FlowORT:
         self.d = self.tree.depth
         # Decision Variables
         self.b = 0
+        self.p = 0
         self.beta_zero = 0
-        self.zeta = 0
         self.z = 0
         self.e = 0
 
@@ -90,15 +91,13 @@ class FlowORT:
         ############################### define variables
         # b[n,f] ==1 iff at node n we branch on feature f
         self.b = self.model.addVars(self.tree.Nodes, self.cat_features, vtype=GRB.BINARY, name='b')
+        # p[i,n] ==1 iff at leaf n we predict datapoint i
+        self.p = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.BINARY, name='p')
 
-        # zeta[i] potential at sink node t for point i
-        self.zeta = self.model.addVars(self.datapoints, vtype=GRB.CONTINUOUS, lb=0,
-                                       name='zeta')
         # z[i,n] potential at node n for point i
         self.z = self.model.addVars(self.datapoints, self.tree.Nodes + self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                     name='z')
 
-        # TODO discretize leaves variable
         # e[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
         self.e = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                     name='e')
@@ -108,31 +107,19 @@ class FlowORT:
 
         ############################### define constraints
 
-        # e[i,n] >= beta_zero[i] - y[i]  forall i, n in Leaves
+        # e[i,n] + big_m(1-p[i,n]) >= beta_zero[i] - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (self.e[i, n] >= self.beta_zero[n] - self.data.at[i, self.label]) for i in self.datapoints)
+                (self.e[i, n] + self.big_m * (1 - self.p[i, n]) >= self.beta_zero[n] - self.data.at[i, self.label]) for
+                i
+                in self.datapoints)
         self.model.addConstrs(self.z[i, 1] == 0 for i in self.datapoints)
-        # -e[i,n] <= beta_zero[i] - y[i]  forall i, n in Leaves
+        # -e[i,n] - big_m(1-p[i,n]) <= beta_zero[i] - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (-self.e[i, n] <= self.beta_zero[n] - self.data.at[i, self.label]) for i in self.datapoints)
-
-        # zeta[i] - z[i,n] <= e[i,n] - M*(D-z[i,n])  forall i, n in Leaves
-        for n in self.tree.Leaves:
-            self.model.addConstrs(
-                (self.zeta[i] - self.z[i, n] >= self.e[i, n] - self.big_m * (self.d - self.z[i, n])) for i in
-                self.datapoints)
-        #
-        for n in self.tree.Leaves:
-            self.model.addConstrs(
-                (self.zeta[i] - self.d <= self.e[i, n]) for i in
-                self.datapoints)
-        # e[i,n] >= M*(D-z[i,n])  forall i, n in Leaves
-        for n in self.tree.Leaves:
-            self.model.addConstrs(
-                (self.e[i, n] >= self.big_m * (self.d - self.z[i, n])) for i in
-                self.datapoints)
+                (-self.e[i, n] - self.big_m * (1 - self.p[i, n]) <= self.beta_zero[n] - self.data.at[i, self.label]) for
+                i
+                in self.datapoints)
 
         # z[i,l(n)] - z[i,n] <= sum(b[n,f], f if x[i,f]=0)    forall i, n in Nodes
         for i in self.datapoints:
@@ -149,14 +136,19 @@ class FlowORT:
             (quicksum(self.b[n, f] for f in self.cat_features) == 1) for n in
             self.tree.Nodes)
 
-        #self.model.addConstrs(self.zeta[i] >= self.d for i in self.datapoints)
+        # z[i,n] >= d*p[i,n]
+        for i in self.datapoints:
+            self.model.addConstrs(self.z[i, n] >= self.d * self.p[i, n] for n in self.tree.Leaves)
+
+        # sum(p[i,n]) = 1 for all i in datapoints
+        self.model.addConstrs(quicksum(self.p[i, n] for n in self.tree.Leaves) == 1 for i in self.datapoints)
 
         # sum(z[i,n] forall n in L+N[2^l:2^(l+1))>= level
         for level in range(self.d):
             if level == 0:
                 continue
             self.model.addConstrs(
-                quicksum(self.z[i, n] for n in self.tree.Nodes[(np.power(2, level)) - 1:(np.power(2, level+1))])
+                quicksum(self.z[i, n] for n in self.tree.Nodes[(np.power(2, level)) - 1:(np.power(2, level + 1))])
                 >= level
                 for i in self.datapoints)
 
