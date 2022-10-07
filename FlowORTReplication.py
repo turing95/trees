@@ -85,15 +85,7 @@ def main(argv):
     data_train_calibration and evaluate the accuracy on (test)
 
     '''
-    data_train, data_test = train_test_split(data, test_size=0.25, random_state=random_states_list[input_sample - 1])
-    data_train_calibration, data_calibration = train_test_split(data_train, test_size=0.33,
-                                                                random_state=random_states_list[input_sample - 1])
-
-    if calibration == 1:  # in this mode, we train on 50% of the data; otherwise we train on 75% of the data
-        data_train = data_train_calibration
-
-    train_len = len(data_train.index)
-    ##########################################################
+    data_train = data
     # Creating and Solving the problem
     ##########################################################
     # We create the MIP problem by passing the required arguments
@@ -141,38 +133,7 @@ def main(argv):
     print('e value')
     print(e)
 
-    # todo compare beta_zero
-    ##########################################################
-    # Evaluation
-    ##########################################################
-    '''
-    For classification we report accuracy
-    For regression we report MAE (Mean Absolute Error) , MSE (Mean Squared Error) and  R-squared
-
-    over training, test and the calibration set
-    '''
-    train_acc = test_acc = calibration_acc = 0
-    train_mae = test_mae = calibration_mae = 0
-    train_r_squared = test_r_squared = calibration_r_squared = 0
-
     print("obj value", primal.model.getAttr("ObjVal"))
-
-    ##########################################################
-    # writing info to the file
-    ##########################################################
-    primal.model.write(out_put_path + out_put_name + '.lp')
-    # writing info to the file
-    result_file = out_put_name + '.csv'
-    with open(out_put_path + result_file, mode='a') as results:
-        results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
-
-        results_writer.writerow(
-            [approach_name, input_file, train_len, depth, _lambda, time_limit,
-             primal.model.getAttr("Status"), primal.model.getAttr("ObjVal"), train_acc,
-             primal.model.getAttr("MIPGap") * 100, primal.model.getAttr("NodeCount"), solving_time,
-             primal.model._total_callback_time_integer, primal.model._total_callback_time_integer_success,
-             primal.model._callback_counter_integer, primal.model._callback_counter_integer_success,
-             test_acc, calibration_acc, input_sample])
 
 
 if __name__ == "__main__":

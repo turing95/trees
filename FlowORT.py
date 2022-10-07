@@ -99,6 +99,7 @@ class FlowORT:
         self.z = self.model.addVars(self.datapoints, self.tree.Nodes + self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                     name='z')
 
+        # TODO discretize leaves variable
         # e[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
         self.e = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                     name='e')
@@ -123,7 +124,7 @@ class FlowORT:
             self.model.addConstrs(
                 (self.zeta[i] - self.z[i, n] >= self.e[i, n] - self.big_m * (self.d - self.z[i, n])) for i in
                 self.datapoints)
-        # zeta[i] -d <= e[i,n]
+        # zeta[i] - d <= e[i,n]
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (self.zeta[i] - self.d <= self.e[i, n]) for i in
@@ -158,7 +159,7 @@ class FlowORT:
             nodes = self.tree.Nodes+self.tree.Leaves
             self.model.addConstrs(
                 quicksum(self.z[i, n] for n in nodes[(np.power(2, level)) - 1:(np.power(2, level + 1))])
-                >= level
+                == level + (sum(np.power(2, level - l_ - 1) * l_ for l_ in range(level)))
                 for i in self.datapoints)
 
         # define objective function
