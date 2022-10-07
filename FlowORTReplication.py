@@ -4,7 +4,6 @@ import pandas as pd
 import sys
 import time
 from Tree import Tree
-from FlowORT_v2 import FlowORT as FlowORT_v2
 from FlowORT import FlowORT
 import logger
 import getopt
@@ -99,15 +98,11 @@ def main(argv):
     ##########################################################
     # We create the MIP problem by passing the required arguments
     primal = FlowORT(data_train, label, tree, time_limit)
-    primal_v2 = FlowORT_v2(data_train, label, tree, time_limit)
 
     primal.create_primal_problem()
     primal.model.update()
     primal.model.optimize()
 
-    primal_v2.create_primal_problem()
-    primal_v2.model.update()
-    primal_v2.model.optimize()
     end_time = time.time()
     solving_time = end_time - start_time
 
@@ -116,10 +111,8 @@ def main(argv):
     ##########################################################
     b_value = primal.model.getAttr("X", primal.b)
     beta_zero = primal.model.getAttr("x", primal.beta_zero)
-    # zeta = primal.model.getAttr("x", primal.zeta)
-    # p = primal.model.getAttr("x", primal.p)
+    zeta = primal.model.getAttr("x", primal.zeta)
     z = primal.model.getAttr("x", primal.z)
-    z_v2 = primal_v2.model.getAttr("x", primal_v2.z)
     e = primal.model.getAttr("x", primal.e)
 
     print("\n\n")
@@ -133,39 +126,21 @@ def main(argv):
 
     print('Total Callback Time (Integer)', primal.model._total_callback_time_integer)
     print('Total Successful Callback Time (Integer)', primal.model._total_callback_time_integer_success)
-
+    print('b value')
     print(b_value)
     print('#####')
+    print('beta_zero value')
     print(beta_zero)
     print('#####')
-    # print(zeta)
-    # print(p)
+    print('zeta value')
+    print(zeta)
     print('#####')
+    print('z value')
     print(z)
     print('#####')
+    print('e value')
     print(e)
 
-    max_values = []
-    max_values_v2 = []
-    for i in primal.datapoints:
-        max_value = -1
-        node = None
-        for t in range(1, 8):
-            if max_value < z[i, t]:
-                node = t
-                max_value = z[i, t]
-        max_values.append(node)
-    for i in primal.datapoints:
-        max_value = -1
-        node = None
-        for t in range(1, 8):
-            if max_value < z_v2[i, t]:
-                node = t
-                max_value = z_v2[i, t]
-        max_values_v2.append(node)
-    print(max_values)
-    print(max_values_v2)
-    assert max_values == max_values_v2
     # todo compare beta_zero
     ##########################################################
     # Evaluation

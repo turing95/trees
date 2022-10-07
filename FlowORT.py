@@ -118,12 +118,12 @@ class FlowORT:
             self.model.addConstrs(
                 (-self.e[i, n] <= self.beta_zero[n] - self.data.at[i, self.label]) for i in self.datapoints)
 
-        # zeta[i] - z[i,n] <= e[i,n] - M*(D-z[i,n])  forall i, n in Leaves
+        # zeta[i] - z[i,n] >= e[i,n] - M*(D-z[i,n])  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (self.zeta[i] - self.z[i, n] >= self.e[i, n] - self.big_m * (self.d - self.z[i, n])) for i in
                 self.datapoints)
-        #
+        # zeta[i] -d <= e[i,n]
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (self.zeta[i] - self.d <= self.e[i, n]) for i in
@@ -155,8 +155,9 @@ class FlowORT:
         for level in range(self.d):
             if level == 0:
                 continue
+            nodes = self.tree.Nodes+self.tree.Leaves
             self.model.addConstrs(
-                quicksum(self.z[i, n] for n in self.tree.Nodes[(np.power(2, level)) - 1:(np.power(2, level + 1))])
+                quicksum(self.z[i, n] for n in nodes[(np.power(2, level)) - 1:(np.power(2, level + 1))])
                 >= level
                 for i in self.datapoints)
 
