@@ -4,7 +4,7 @@ import pandas as pd
 import sys
 import time
 from Tree import Tree
-from FlowORT import FlowORT
+from FlowORT_v2 import FlowORT
 import logger
 import getopt
 import csv
@@ -74,21 +74,7 @@ def main(argv):
     ##########################################################
     # data splitting
     ##########################################################
-    '''
-    Creating  train, test and calibration datasets
-    We take 50% of the whole data as training, 25% as test and 25% as calibration
-
-    When we want to calibrate _lambda, for a given value of _lambda we train the model on train and evaluate
-    the accuracy on calibration set and at the end we pick the _lambda with the highest accuracy.
-
-    When we got the calibrated _lambda, we train the mode on (train+calibration) which we refer to it as
-    data_train_calibration and evaluate the accuracy on (test)
-
-    '''
     data_train = data
-    # Creating and Solving the problem
-    ##########################################################
-    # We create the MIP problem by passing the required arguments
     primal = FlowORT(data_train, label, tree, time_limit)
 
     primal.create_primal_problem()
@@ -103,7 +89,7 @@ def main(argv):
     ##########################################################
     b_value = primal.model.getAttr("X", primal.b)
     beta_zero = primal.model.getAttr("x", primal.beta_zero)
-    zeta = primal.model.getAttr("x", primal.zeta)
+    #zeta = primal.model.getAttr("x", primal.zeta)
     z = primal.model.getAttr("x", primal.z)
     e = primal.model.getAttr("x", primal.e)
 
@@ -112,14 +98,17 @@ def main(argv):
 
     print('\n\nTotal Solving Time', solving_time)
     print("obj value", primal.model.getAttr("ObjVal"))
+
+    print('Total Callback counter (Integer)', primal.model._callback_counter_integer)
+    print('Total Successful Callback counter (Integer)', primal.model._callback_counter_integer_success)
+
+    print('Total Callback Time (Integer)', primal.model._total_callback_time_integer)
+    print('Total Successful Callback Time (Integer)', primal.model._total_callback_time_integer_success)
     print('b value')
     print(b_value)
     print('#####')
     print('beta_zero value')
     print(beta_zero)
-    print('#####')
-    print('zeta value')
-    print(zeta)
     print('#####')
     print('z value')
     print(z)
@@ -127,7 +116,9 @@ def main(argv):
     print('e value')
     print(e)
 
+
     print("obj value", primal.model.getAttr("ObjVal"))
+
 
 
 if __name__ == "__main__":

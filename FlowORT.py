@@ -6,6 +6,7 @@ from gurobipy import *
 
 import numpy as np
 
+
 class FlowORT:
     def __init__(self, data, label, tree, time_limit):
         '''
@@ -118,12 +119,12 @@ class FlowORT:
             self.model.addConstrs(
                 (-self.e[i, n] <= self.beta_zero[n] - self.data.at[i, self.label]) for i in self.datapoints)
 
-        # zeta[i] - z[i,n] <= e[i,n] - M*(D-z[i,n])  forall i, n in Leaves
+        # zeta[i] - z[i,n] >= e[i,n] - M*(D-z[i,n])  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (self.zeta[i] - self.z[i, n] >= self.e[i, n] - self.big_m * (self.d - self.z[i, n])) for i in
                 self.datapoints)
-        #
+        # zeta[i] - d <= e[i,n]
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (self.zeta[i] - self.d <= self.e[i, n]) for i in
@@ -149,15 +150,16 @@ class FlowORT:
             (quicksum(self.b[n, f] for f in self.cat_features) == 1) for n in
             self.tree.Nodes)
 
-        #self.model.addConstrs(self.zeta[i] >= self.d for i in self.datapoints)
+        # self.model.addConstrs(self.zeta[i] >= self.d for i in self.datapoints)
 
         # sum(z[i,n] forall n in L+N[2^l:2^(l+1))>= level
         for level in range(self.d):
             if level == 0:
                 continue
+            nodes = self.tree.Nodes+self.tree.Leaves
             self.model.addConstrs(
-                quicksum(self.z[i, n] for n in self.tree.Nodes[(np.power(2, level)) - 1:(np.power(2, level+1))])
-                >= level
+                quicksum(self.z[i, n] for n in nodes[(np.power(2, level)) - 1:(np.power(2, level + 1))])
+                == level + (sum(np.power(2, level - l_ - 1) * l_ for l_ in range(level)))
                 for i in self.datapoints)
 
         # define objective function
