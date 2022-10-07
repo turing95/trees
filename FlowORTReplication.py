@@ -166,6 +166,7 @@ def main(argv):
     print(max_values)
     print(max_values_v2)
     assert max_values == max_values_v2
+    # todo compare beta_zero
     ##########################################################
     # Evaluation
     ##########################################################
