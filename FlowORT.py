@@ -158,7 +158,7 @@ class FlowORT:
                 continue
             nodes = self.tree.Nodes+self.tree.Leaves
             self.model.addConstrs(
-                quicksum(self.z[i, n] for n in nodes[(np.power(2, level)) - 1:(np.power(2, level + 1))])
+                quicksum(self.z[i, n] for n in nodes[(np.power(2, level)-1):(np.power(2, level + 1))-1])
                 == level + (sum(np.power(2, level - l_ - 1) * l_ for l_ in range(level)))
                 for i in self.datapoints)
 
