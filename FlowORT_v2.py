@@ -143,15 +143,6 @@ class FlowORT:
         # sum(p[i,n]) = 1 for all i in datapoints
         self.model.addConstrs(quicksum(self.p[i, n] for n in self.tree.Leaves) == 1 for i in self.datapoints)
 
-        # sum(z[i,n] forall n in L+N[2^l:2^(l+1))>= level
-        for level in range(self.d):
-            if level == 0:
-                continue
-            self.model.addConstrs(
-                quicksum(self.z[i, n] for n in self.tree.Nodes[(np.power(2, level)) - 1:(np.power(2, level + 1))])
-                >= level
-                for i in self.datapoints)
-
         # define objective function
         obj = LinExpr(0)
         for i in self.datapoints:

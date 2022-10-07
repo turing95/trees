@@ -6,6 +6,7 @@ from gurobipy import *
 
 import numpy as np
 
+
 class FlowORT:
     def __init__(self, data, label, tree, time_limit):
         '''
@@ -98,7 +99,6 @@ class FlowORT:
         self.z = self.model.addVars(self.datapoints, self.tree.Nodes + self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                     name='z')
 
-        # TODO discretize leaves variable
         # e[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
         self.e = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                     name='e')
@@ -149,14 +149,14 @@ class FlowORT:
             (quicksum(self.b[n, f] for f in self.cat_features) == 1) for n in
             self.tree.Nodes)
 
-        #self.model.addConstrs(self.zeta[i] >= self.d for i in self.datapoints)
+        # self.model.addConstrs(self.zeta[i] >= self.d for i in self.datapoints)
 
         # sum(z[i,n] forall n in L+N[2^l:2^(l+1))>= level
         for level in range(self.d):
             if level == 0:
                 continue
             self.model.addConstrs(
-                quicksum(self.z[i, n] for n in self.tree.Nodes[(np.power(2, level)) - 1:(np.power(2, level+1))])
+                quicksum(self.z[i, n] for n in self.tree.Nodes[(np.power(2, level)) - 1:(np.power(2, level + 1))])
                 >= level
                 for i in self.datapoints)
 
