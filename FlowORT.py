@@ -98,11 +98,11 @@ class FlowORT:
                                        name='zeta')
         # z_nodes[i,n] potential at node n for point i
         self.z_nodes = self.model.addVars(self.datapoints, self.tree.Nodes, vtype=GRB.CONTINUOUS, lb=0,
-                                    name='z_nodes')
+                                          name='z_nodes')
 
         # z_leaves[i,n] potential at node n for point i
         self.z_leaves = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.INTEGER, lb=0,
-                                    name='z_leaves')
+                                           name='z_leaves')
 
         # TODO discretize leaves variable
         # e[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
@@ -127,7 +127,8 @@ class FlowORT:
         # zeta[i] - z[i,n] <= e[i,n] - M*(D-z[i,n])  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (self.zeta[i] - self.z_leaves[i, n] >= self.e[i, n] - self.big_m * (self.d - self.z_leaves[i, n])) for i in
+                (self.zeta[i] - self.z_leaves[i, n] >= self.e[i, n] - self.big_m * (self.d - self.z_leaves[i, n])) for i
+                in
                 self.datapoints)
         # zeta[i] - d <=e[i,n]
         for n in self.tree.Leaves:
@@ -142,14 +143,25 @@ class FlowORT:
 
         # z[i,l(n)] - z[i,n] <= sum(b[n,f], f if x[i,f]=0)    forall i, n in Nodes
         for i in self.datapoints:
-            self.model.addConstrs((self.z_nodes[i, int(self.tree.get_left_children(n))] - self.z_nodes[i, n] <= quicksum(
-                self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 0)) for n in self.tree.Nodes)
-
+            self.model.addConstrs((self.z_nodes[i, int(self.tree.get_left_children(n))]
+                                   - self.z_nodes[i, n] <= quicksum(
+                        self.b[n, f] for f in self.cat_features
+                        if self.data.at[i, f] == 0))
+                                  for n in self.tree.Nodes[:np.power(2, self.d - 1)-1])
+            self.model.addConstrs(
+                (self.z_leaves[i, int(self.tree.get_left_children(n))] - self.z_nodes[i, n] <= quicksum(
+                    self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 0)) for n in
+                self.tree.Nodes[np.power(2, self.d - 1)-1:])
         # z[i,r(n)] - z[i,n] <= sum(b[n,f], f if x[i,f]=0)    forall i, n in Nodes
         for i in self.datapoints:
-            self.model.addConstrs((self.z_nodes[i, int(self.tree.get_right_children(n))] - self.z_nodes[i, n] <= quicksum(
-                self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 1)) for n in self.tree.Nodes)
-
+            self.model.addConstrs(
+                (self.z_nodes[i, int(self.tree.get_right_children(n))] - self.z_nodes[i, n] <= quicksum(
+                    self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 1)) for n in
+                self.tree.Nodes[:np.power(2, self.d - 1)-1])
+            self.model.addConstrs(
+                (self.z_leaves[i, int(self.tree.get_right_children(n))] - self.z_nodes[i, n] <= quicksum(
+                    self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 1)) for n in
+                self.tree.Nodes[np.power(2, self.d - 1)-1:])
         # sum(b[n,f], f) = 1   forall n in Nodes
         self.model.addConstrs(
             (quicksum(self.b[n, f] for f in self.cat_features) == 1) for n in
@@ -161,9 +173,10 @@ class FlowORT:
         for level in range(self.d):
             if level == 0:
                 continue
+            nodes = self.tree.Nodes + self.tree.Leaves
             self.model.addConstrs(
-                quicksum(self.z_nodes[i, n] for n in self.tree.Nodes[(np.power(2, level)) - 1:(np.power(2, level + 1))])
-                >= level
+                quicksum(self.z_nodes[i, n] for n in nodes[(np.power(2, level) - 1):(np.power(2, level + 1)) - 1])
+                == level + (sum(np.power(2, level - l_ - 1) * l_ for l_ in range(level)))
                 for i in self.datapoints)
 
         # define objective function
