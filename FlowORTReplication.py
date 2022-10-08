@@ -128,7 +128,7 @@ def main(argv):
     print(e)
 
     print("obj value", primal.model.getAttr("ObjVal"))
-
+    # sklearn.metrics.r2_score(y_true, y_pred) y_true = y[i], y_pred = beta_zero at maximal_potential_node
 
 if __name__ == "__main__":
     main(sys.argv[1:])
