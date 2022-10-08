@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.metrics import r2_score
 
 
 def get_node_status(grb_model, b, beta, n):
@@ -172,3 +173,18 @@ def get_r_squared(grb_model, local_data, b, beta):
 
     R_squared = 1 - SS_Residuals / SS_Total
     return R_squared
+
+
+def get_model_accuracy(data, datapoints, z, beta_zero, depth, label):
+    y_trues = []
+    y_preds = []
+    for i in datapoints:
+        max_value = -1
+        node = None
+        for t in range(1, np.power(2, depth + 1)):
+            if max_value < z[i, t]:
+                node = t
+                max_value = z[i, t]
+        y_trues.append(data.at[i, label])
+        y_preds.append(beta_zero[node])
+    return r2_score(y_trues, y_preds)

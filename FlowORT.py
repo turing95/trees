@@ -61,7 +61,7 @@ class FlowORT:
         To compare all approaches in a fair setting we limit the solver to use only one thread to merely evaluate 
         the strength of the formulation.
         '''
-        #self.model.params.Threads = 1
+        self.model.params.Threads = 1
         self.model.params.TimeLimit = time_limit
 
         '''
