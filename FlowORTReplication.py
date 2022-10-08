@@ -128,7 +128,9 @@ def main(argv):
     print(e)
 
     print("obj value", primal.model.getAttr("ObjVal"))
-
+    # def get_model_accuracy(data, datapoints, z, beta_zero, depth, label)
+    acc = get_model_accuracy(data, primal.datapoints, z, beta_zero, depth, label)
+    print('accuracy',acc)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
