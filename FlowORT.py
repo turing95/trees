@@ -147,37 +147,39 @@ class FlowORT:
                                    - self.z_nodes[i, n] <= quicksum(
                         self.b[n, f] for f in self.cat_features
                         if self.data.at[i, f] == 0))
-                                  for n in self.tree.Nodes[:np.power(2, self.d - 1)-1])
+                                  for n in self.tree.Nodes[:np.power(2, self.d - 1) - 1])
             self.model.addConstrs(
                 (self.z_leaves[i, int(self.tree.get_left_children(n))] - self.z_nodes[i, n] <= quicksum(
                     self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 0)) for n in
-                self.tree.Nodes[np.power(2, self.d - 1)-1:])
+                self.tree.Nodes[np.power(2, self.d - 1) - 1:])
         # z[i,r(n)] - z[i,n] <= sum(b[n,f], f if x[i,f]=0)    forall i, n in Nodes
         for i in self.datapoints:
             self.model.addConstrs(
                 (self.z_nodes[i, int(self.tree.get_right_children(n))] - self.z_nodes[i, n] <= quicksum(
                     self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 1)) for n in
-                self.tree.Nodes[:np.power(2, self.d - 1)-1])
+                self.tree.Nodes[:np.power(2, self.d - 1) - 1])
             self.model.addConstrs(
                 (self.z_leaves[i, int(self.tree.get_right_children(n))] - self.z_nodes[i, n] <= quicksum(
                     self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 1)) for n in
-                self.tree.Nodes[np.power(2, self.d - 1)-1:])
+                self.tree.Nodes[np.power(2, self.d - 1) - 1:])
         # sum(b[n,f], f) = 1   forall n in Nodes
         self.model.addConstrs(
             (quicksum(self.b[n, f] for f in self.cat_features) == 1) for n in
             self.tree.Nodes)
 
-        # self.model.addConstrs(self.zeta[i] >= self.d for i in self.datapoints)
-
         # sum(z[i,n] forall n in L+N[2^l:2^(l+1))>= level
-        for level in range(self.d):
+        for level in range(self.d+1):
             if level == 0:
                 continue
-            nodes = self.tree.Nodes + self.tree.Leaves
+            nodes = self.tree.Nodes+self.tree.Leaves
             self.model.addConstrs(
-                quicksum(self.z_nodes[i, n] for n in nodes[(np.power(2, level) - 1):(np.power(2, level + 1)) - 1])
+                quicksum((self.z_nodes|self.z_leaves)[i, n] for n in
+                         nodes[(np.power(2, level) - 1):(np.power(2, level + 1)) - 1])
                 == level + (sum(np.power(2, level - l_ - 1) * l_ for l_ in range(level)))
                 for i in self.datapoints)
+
+
+
 
         # define objective function
         obj = LinExpr(0)
