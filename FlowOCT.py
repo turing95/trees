@@ -107,7 +107,9 @@ class FlowOCT:
                                     name='z')
 
         ############################### define constraints
-
+        #additional constraint to have balanced trees
+        self.model.addConstrs(
+            (self.p[n] == 0) for n in self.tree.Nodes)
         # z[i,n] = z[i,l(n)] + z[i,r(n)] + zeta[i,n]    forall i, n in Nodes
         for n in self.tree.Nodes:
             n_left = int(self.tree.get_left_children(n))
