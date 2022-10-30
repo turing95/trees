@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn.metrics import r2_score
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, median_absolute_error
 
 
 def get_node_status(grb_model, b, beta, n):
@@ -178,6 +178,11 @@ def get_r_squared(grb_model, local_data, b, beta):
 def get_model_accuracy(data, datapoints, z, beta_zero, depth, label):
     y_trues = []
     y_preds = []
+    tss_total = 0
+    ess_total = 0
+    median = np.median(data[label])
+    mean = np.mean(data[label])
+
     for i in datapoints:
         max_value = -1
         node = None
@@ -187,4 +192,7 @@ def get_model_accuracy(data, datapoints, z, beta_zero, depth, label):
                 max_value = z[i, t]
         y_trues.append(data.at[i, label])
         y_preds.append(beta_zero[node])
-    return r2_score(y_trues, y_preds)
+        tss_total += abs(data.at[i, label] - median)
+    mae = mean_absolute_error(y_trues, y_preds)
+    r2_lad = (mae * len(y_trues)) / tss_total
+    return r2_score(y_trues, y_preds), mean_squared_error(y_trues, y_preds), mae, r2_lad, 1 - r2_lad, mean, median
