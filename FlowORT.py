@@ -109,43 +109,43 @@ class FlowORT:
 
         ############################### define constraints
 
-        # e[i,n] >= beta_zero[i] - y[i]  forall i, n in Leaves
+        # 1a) e[i,n] >= beta_zero[n] - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (self.e[i, n] >= self.beta_zero[n] - self.data.at[i, self.label]) for i in self.datapoints)
         self.model.addConstrs(self.z[i, 1] == 0 for i in self.datapoints)
-        # -e[i,n] <= beta_zero[i] - y[i]  forall i, n in Leaves
+        #  1b) -e[i,n] <= beta_zero[n] - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (-self.e[i, n] <= self.beta_zero[n] - self.data.at[i, self.label]) for i in self.datapoints)
 
-        # zeta[i] - z[i,n] >= e[i,n] - M*(D-z[i,n])  forall i, n in Leaves
+        # 2) zeta[i] - z[i,n] >= e[i,n] - M*(D-z[i,n])  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (self.zeta[i] - self.z[i, n] >= self.e[i, n] - self.big_m * (self.d - self.z[i, n])) for i in
                 self.datapoints)
-        # zeta[i] - d <= e[i,n]
+        # 3) zeta[i] - d <= e[i,n]
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (self.zeta[i] - self.d <= self.e[i, n]) for i in
                 self.datapoints)
-        # e[i,n] >= M*(D-z[i,n])  forall i, n in Leaves
+        # 4) e[i,n] >= M*(D-z[i,n])  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (self.e[i, n] >= self.big_m * (self.d - self.z[i, n])) for i in
                 self.datapoints)
 
-        # z[i,l(n)] - z[i,n] <= sum(b[n,f], f if x[i,f]=0)    forall i, n in Nodes
+        # 5) z[i,l(n)] - z[i,n] == sum(b[n,f], f if x[i,f]=0)    forall i, n in Nodes
         for i in self.datapoints:
-            self.model.addConstrs((self.z[i, int(self.tree.get_left_children(n))] - self.z[i, n] <= quicksum(
+            self.model.addConstrs((self.z[i, int(self.tree.get_left_children(n))] - self.z[i, n] == quicksum(
                 self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 0)) for n in self.tree.Nodes)
 
-        # z[i,r(n)] - z[i,n] <= sum(b[n,f], f if x[i,f]=0)    forall i, n in Nodes
+        # 6) z[i,r(n)] - z[i,n] == sum(b[n,f], f if x[i,f]=0)    forall i, n in Nodes
         for i in self.datapoints:
-            self.model.addConstrs((self.z[i, int(self.tree.get_right_children(n))] - self.z[i, n] <= quicksum(
+            self.model.addConstrs((self.z[i, int(self.tree.get_right_children(n))] - self.z[i, n] == quicksum(
                 self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 1)) for n in self.tree.Nodes)
 
-        # sum(b[n,f], f) = 1   forall n in Nodes
+        # 7) sum(b[n,f], f) = 1   forall n in Nodes
         self.model.addConstrs(
             (quicksum(self.b[n, f] for f in self.cat_features) == 1) for n in
             self.tree.Nodes)
@@ -153,14 +153,14 @@ class FlowORT:
         # self.model.addConstrs(self.zeta[i] >= self.d for i in self.datapoints)
 
         # sum(z[i,n] forall n in L+N[2^l:2^(l+1))>= level
-        for level in range(self.d):
+        '''for level in range(self.d):
             if level == 0:
                 continue
             nodes = self.tree.Nodes+self.tree.Leaves
             self.model.addConstrs(
                 quicksum(self.z[i, n] for n in nodes[(np.power(2, level)-1):(np.power(2, level + 1))-1])
                 == level + (sum(np.power(2, level - l_ - 1) * l_ for l_ in range(level)))
-                for i in self.datapoints)
+                for i in self.datapoints)'''
 
         # define objective function
         obj = LinExpr(0)

@@ -52,7 +52,7 @@ def main(argv):
     ##########################################################
     # output setup
     ##########################################################
-    approach_name = 'FlowOCT'
+    approach_name = 'FlowORT'
     out_put_name = input_file + '_' + approach_name + '_d_' + str(depth) + '_t_' + str(
         time_limit)
     out_put_path = os.getcwd() + '/Results/'

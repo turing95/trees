@@ -18,9 +18,6 @@ def main(argv):
     input_file = None
     depth = None
     time_limit = None
-    _lambda = None
-    input_sample = None
-    calibration = None
     '''
     Depending on the value of input_sample we choose one of the following random seeds and then split the whole data
     into train, test and calibration
@@ -29,9 +26,7 @@ def main(argv):
 
     try:
         opts, args = getopt.getopt(argv, "f:d:t:l:i:c:m:",
-                                   ["input_file=", "depth=", "timelimit=", "lambda=",
-                                    "input_sample=",
-                                    "calibration=", "mode="])
+                                   ["input_file=", "depth=", "timelimit=", "lambda="])
     except getopt.GetoptError:
         sys.exit(2)
     for opt, arg in opts:
@@ -41,12 +36,6 @@ def main(argv):
             depth = int(arg)
         elif opt in ("-t", "--timelimit"):
             time_limit = int(arg)
-        elif opt in ("-l", "--lambda"):
-            _lambda = float(arg)
-        elif opt in ("-i", "--input_sample"):
-            input_sample = int(arg)
-        elif opt in ("-c", "--calibration"):
-            calibration = int(arg)
 
     start_time = time.time()
     data_path = os.getcwd() + '/DataSets/'
@@ -63,10 +52,9 @@ def main(argv):
     ##########################################################
     # output setup
     ##########################################################
-    approach_name = 'FlowOCT'
-    out_put_name = input_file + '_' + str(input_sample) + '_' + approach_name + '_d_' + str(depth) + '_t_' + str(
-        time_limit) + '_lambda_' + str(
-        _lambda) + '_c_' + str(calibration)
+    approach_name = 'FlowORT_binary'
+    out_put_name = input_file + '_' + approach_name + '_d_' + str(depth) + '_t_' + str(
+        time_limit)
     out_put_path = os.getcwd() + '/Results/'
     # Using logger we log the output of the console in a text file
     sys.stdout = logger(out_put_path + out_put_name + '.txt')
@@ -75,6 +63,8 @@ def main(argv):
     # data splitting
     ##########################################################
     data_train = data
+    train_len = len(data_train.index)
+
     primal = FlowORT(data_train, label, tree, time_limit)
 
     primal.create_primal_problem()
@@ -118,7 +108,21 @@ def main(argv):
 
 
     print("obj value", primal.model.getAttr("ObjVal"))
+    # def get_model_accuracy(data, datapoints, z, beta_zero, depth, label)
+    acc = get_model_accuracy(data, primal.datapoints, z, beta_zero, depth, label)
+    print('accuracy', acc)
+    print('\n\nTotal Solving Time', solving_time)
 
+    # writing info to the file
+    result_file = out_put_name + '.csv'
+    with open(out_put_path + result_file, mode='a') as results:
+        results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
+
+        results_writer.writerow(
+            [approach_name, input_file, train_len, depth, time_limit,
+             primal.model.getAttr("Status"), primal.model.getAttr("ObjVal"),
+             primal.model.getAttr("MIPGap") * 100, primal.model.getAttr("NodeCount"), solving_time,
+             acc])
 
 
 if __name__ == "__main__":
