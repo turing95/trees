@@ -5,12 +5,14 @@ import sys
 import time
 from Tree import Tree
 from FlowORT import FlowORT
+from FlowOCT import FlowOCT
 from FlowORT_v2 import FlowORT as FlowORT_v2
 import logger
 import getopt
 import csv
-from sklearn.model_selection import train_test_split
-from utils import *
+import numpy as np
+from utils import get_model_accuracy
+from utils_oct import get_mae, get_mse, get_r_squared, get_r_lad
 from logger import logger
 
 
@@ -66,6 +68,10 @@ def main(argv):
     out_put_name_2 = input_file + '_' + approach_name_2 + '_d_' + str(depth) + '_t_' + str(
         time_limit)
 
+    approach_name_3 = 'FlowOCT'
+    out_put_name_3 = input_file + '_' + approach_name_3 + '_d_' + str(depth) + '_t_' + str(
+        time_limit)
+
     ##########################################################
     # data splitting
     ##########################################################
@@ -110,70 +116,64 @@ def main(argv):
 
     solving_time_v2 = end_time - start_time
 
+    start_time = time.time()
+    primal_v3 = FlowOCT(data, label, tree, time_limit)
+
+    primal_v3.create_primal_problem()
+    primal_v3.model.update()
+    primal_v3.model.optimize()
+
+    end_time = time.time()
+
+    solving_time_v3 = end_time - start_time
+
     ##########################################################
     # Preparing the output
     ##########################################################
     b_value_v1 = primal_v1.model.getAttr("X", primal_v1.b)
     b_value_v2 = primal_v2.model.getAttr("X", primal_v2.b)
+    b_value_v3 = primal_v3.model.getAttr("X", primal_v3.b)
+
     beta_zero_v1 = primal_v1.model.getAttr("x", primal_v1.beta_zero)
     beta_zero_v2 = primal_v2.model.getAttr("x", primal_v2.beta_zero)
+    beta_v3 = primal_v3.model.getAttr("x", primal_v3.beta)
     # zeta = primal.model.getAttr("x", primal.zeta)
-    # p = primal.model.getAttr("x", primal.p)
+    p_v3 = primal_v3.model.getAttr("x", primal_v3.p)
     z_v1 = primal_v1.model.getAttr("x", primal_v1.z)
     z_v2 = primal_v2.model.getAttr("x", primal_v2.z)
-    e_v1 = primal_v1.model.getAttr("x", primal_v1.e)
-    e_v2 = primal_v2.model.getAttr("x", primal_v2.e)
 
     print("\n\n")
     print('\n\nTotal Solving Time v1', solving_time_v1)
     print('Total Solving Time v2', solving_time_v2)
+    print('Total Solving Time v3', solving_time_v3)
     print("\n\nobj value v1", primal_v1.model.getAttr("ObjVal"))
     print("obj value v2", primal_v2.model.getAttr("ObjVal"))
+    print("obj value v3", primal_v3.model.getAttr("ObjVal"))
     print('\n\nbnf_v1', b_value_v1)
     print('bnf_v2', b_value_v2)
+    print('bnf_v3', b_value_v3)
     print('\n\npi_n v1')
     print(z_v1)
     print('#####')
     print('pi_n v2')
     print(z_v2)
 
-    max_values = []
-    max_values_v2 = []
     print(f'\n\nbeta_zero V1 {beta_zero_v1}')
     print(f'beta_zero V2 {beta_zero_v2}')
-    beta_zeros_differing = False
-    for key, value in beta_zero_v1.items():
-        if value != beta_zero_v2[key]:
-            print(f'beta_zero differring: V1 {key} : {value} V2  {key} : {beta_zero_v2[key]}')
-            beta_zeros_differing = True
 
-    for i in primal_v1.datapoints:
-        max_value = -1
-        node = None
-        for t in range(1, np.power(2, depth + 1)):
-            if max_value < z_v1[i, t]:
-                node = t
-                max_value = z_v1[i, t]
-        max_values.append(node)
-    for i in primal_v2.datapoints:
-        max_value = -1
-        node = None
-        for t in range(1, np.power(2, depth + 1)):
-            if max_value < z_v2[i, t]:
-                node = t
-                max_value = z_v2[i, t]
-        max_values_v2.append(node)
-    print('\n\nmax_values v1', max_values)
-    print('max_values v1', max_values_v2)
-    max_value_node_differring = False
-    if max_values != max_values_v2:
-        max_value_node_differring = True
+    r2_v1, mse_v1, mae_v1, r2_lad_v1, r2_lad_alt_v1, mean_v1, median_v1 = get_model_accuracy(data, primal_v1.datapoints,
+                                                                                             z_v1, beta_zero_v1,
+                                                                                             depth, label)
+    r2_v2, mse_v2, mae_v2, r2_lad_v2, r2_lad_alt_v2, mean_v2, median_v2 = get_model_accuracy(data, primal_v2.datapoints,
+                                                                                             z_v2, beta_zero_v2,
+                                                                                             depth, label)
+    mae_v3 = get_mae(primal_v3, data, b_value_v3, beta_v3, p_v3)
 
-    r2_v1, mse_v1, mae_v1, r2_lad_v1, r2_lad_alt_v1,mean_v1,median_v1 = get_model_accuracy(data, primal_v1.datapoints, z_v1, beta_zero_v1,
-                                                                     depth, label)
-    r2_v2, mse_v2, mae_v2, r2_lad_v2, r2_lad_alt_v2,mean_v2,median_v2 = get_model_accuracy(data, primal_v2.datapoints, z_v2, beta_zero_v2,
-                                                                     depth, label)
+    mse_v3 = get_mse(primal_v3, data, b_value_v3, beta_v3, p_v3)
 
+    r2_v3 = get_r_squared(primal_v3, data, b_value_v3, beta_v3, p_v3)
+
+    r2_lad_alt_v3 = 1 - get_r_lad(label, data, mae_v3)
     # writing info to the file
     result_file_v1 = out_put_name_1 + '.csv'
     with open(out_put_path + result_file_v1, mode='a') as results:
@@ -183,7 +183,7 @@ def main(argv):
             [approach_name_1, input_file, train_len, depth, time_limit,
              primal_v1.model.getAttr("Status"), primal_v1.model.getAttr("ObjVal"),
              primal_v1.model.getAttr("MIPGap") * 100, primal_v1.model.getAttr("NodeCount"), solving_time_v1,
-             r2_v1, mse_v1, mae_v1, r2_lad_v1, r2_lad_alt_v1, max_value_node_differring, beta_zeros_differing,mean_v1,median_v1])
+             r2_v1, mse_v1, mae_v1, r2_lad_alt_v1])
 
     # writing info to the file
     result_file_v2 = out_put_name_2 + '.csv'
@@ -194,7 +194,18 @@ def main(argv):
             [approach_name_2, input_file, train_len, depth, time_limit,
              primal_v2.model.getAttr("Status"), primal_v2.model.getAttr("ObjVal"),
              primal_v2.model.getAttr("MIPGap") * 100, primal_v2.model.getAttr("NodeCount"), solving_time_v2,
-             r2_v2, mse_v2, mae_v2, r2_lad_v2, r2_lad_alt_v2, max_value_node_differring, beta_zeros_differing,mean_v2,median_v2])
+             r2_v2, mse_v2, mae_v2, r2_lad_alt_v2])
+
+    # writing info to the file
+    result_file_v3 = out_put_name_3 + '.csv'
+    with open(out_put_path + result_file_v3, mode='a') as results:
+        results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
+
+        results_writer.writerow(
+            [approach_name_3, input_file, train_len, depth, time_limit,
+             primal_v3.model.getAttr("Status"), primal_v3.model.getAttr("ObjVal"),
+             primal_v3.model.getAttr("MIPGap") * 100, primal_v3.model.getAttr("NodeCount"), solving_time_v3,
+             r2_v3, mse_v3, mae_v3, r2_lad_alt_v3])
 
 
 if __name__ == "__main__":

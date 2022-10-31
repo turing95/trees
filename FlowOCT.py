@@ -6,7 +6,7 @@ from gurobipy import *
 
 
 class FlowOCT:
-    def __init__(self, data, label, tree, _lambda, time_limit, mode):
+    def __init__(self, data, label, tree, time_limit, mode='regression', _lambda=0):
         '''
 
         :param data: The training data
@@ -107,7 +107,7 @@ class FlowOCT:
                                     name='z')
 
         ############################### define constraints
-        #additional constraint to have balanced trees
+        # additional constraint to have balanced trees
         self.model.addConstrs(
             (self.p[n] == 0) for n in self.tree.Nodes)
         # z[i,n] = z[i,l(n)] + z[i,r(n)] + zeta[i,n]    forall i, n in Nodes
@@ -169,7 +169,6 @@ class FlowOCT:
             self.model.addConstrs(
                 (self.beta[n, 1] <= self.p[n]) for n in
                 self.tree.Nodes + self.tree.Leaves)
-
 
         for n in self.tree.Leaves:
             self.model.addConstrs(self.zeta[i, n] == self.z[i, n] for i in self.datapoints)
