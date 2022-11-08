@@ -23,20 +23,20 @@ def get_node_status(grb_model, b, beta, n):
     value: if node n is a leaf, value represent the prediction at this node
     '''
     tree = grb_model.tree
-    pruned = False
     branching = False
     leaf = False
     value = None
     selected_feature = None
 
     if n in tree.Nodes:
-        if (pruned == False) and (leaf == False):  # branching
-            for f in grb_model.cat_features:
-                if b[n, f] > 0.5:
-                    selected_feature = f
-                    branching = True
-
-    return pruned, branching, selected_feature, leaf, value
+        for f in grb_model.cat_features:
+            if b[n, f] > 0.5:
+                selected_feature = f
+                branching = True
+    else:
+        leaf = True
+        value = beta[n]
+    return branching, selected_feature, leaf, value
 
 
 def print_tree(grb_model, b, beta):
@@ -50,11 +50,9 @@ def print_tree(grb_model, b, beta):
     '''
     tree = grb_model.tree
     for n in tree.Nodes + tree.Leaves:
-        pruned, branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta, n)
+        branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta, n)
         print('#########node ', n)
-        if pruned:
-            print("pruned")
-        elif branching:
+        if branching:
             print(selected_feature)
         elif leaf:
             print('leaf {}'.format(value))
@@ -75,7 +73,7 @@ def get_predicted_value(grb_model, local_data, b, beta, i):
     current = 1
 
     while True:
-        pruned, branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta, current)
+        branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta, current)
         if leaf:
             return value
         elif branching:
@@ -120,7 +118,7 @@ def get_mae(grb_model, local_data, b, beta, p):
     label = grb_model.label
     err = 0
     for i in local_data.index:
-        yhat_i = get_predicted_value(grb_model, local_data, b, beta, p, i)
+        yhat_i = get_predicted_value(grb_model, local_data, b, beta, i)
         y_i = local_data.at[i, label]
         err += abs(yhat_i - y_i)
 
@@ -175,13 +173,11 @@ def get_r_squared(grb_model, local_data, b, beta):
     return R_squared
 
 
-def get_model_accuracy(data, datapoints, z, beta_zero, depth, label):
+def get_model_train_accuracy(data, datapoints, z, beta_zero, depth, label):
     y_trues = []
     y_preds = []
     tss_total = 0
-    ess_total = 0
     median = np.median(data[label])
-    mean = np.mean(data[label])
     regression_residual = 0
     for i in datapoints:
         max_value = -1
@@ -198,4 +194,26 @@ def get_model_accuracy(data, datapoints, z, beta_zero, depth, label):
         tss_total += abs(y_true - median)
     mae = mean_absolute_error(y_trues, y_preds)
     r2_lad = (mae * len(y_trues)) / tss_total
-    return r2_score(y_trues, y_preds), mean_squared_error(y_trues, y_preds), mae, r2_lad, 1 - r2_lad, regression_residual
+    return r2_score(y_trues, y_preds), mean_squared_error(y_trues,
+                                                          y_preds), mae, r2_lad, 1 - r2_lad, regression_residual
+
+
+def get_model_test_accuracy(grb_model, local_data, b, beta):
+    label = grb_model.label
+    y_trues = []
+    y_preds = []
+    tss_total = 0
+    median = np.median(local_data[label])
+    regression_residual = 0
+    for i in local_data.index:
+        y_true = local_data.at[i, label]
+        y_pred = get_predicted_value(grb_model, local_data, b, beta, i)
+        y_trues.append(y_true)
+        y_preds.append(y_pred)
+        regression_residual += abs(y_pred - y_true)
+        tss_total += abs(y_true - median)
+
+    mae = mean_absolute_error(y_trues, y_preds)
+    r2_lad = (mae * len(y_trues)) / tss_total
+    return r2_score(y_trues, y_preds), mean_squared_error(y_trues,
+                                                          y_preds), mae, r2_lad, 1 - r2_lad, regression_residual
