@@ -182,7 +182,7 @@ def get_model_accuracy(data, datapoints, z, beta_zero, depth, label):
     ess_total = 0
     median = np.median(data[label])
     mean = np.mean(data[label])
-
+    regression_residual = 0
     for i in datapoints:
         max_value = -1
         node = None
@@ -190,9 +190,12 @@ def get_model_accuracy(data, datapoints, z, beta_zero, depth, label):
             if max_value < z[i, t]:
                 node = t
                 max_value = z[i, t]
-        y_trues.append(data.at[i, label])
-        y_preds.append(beta_zero[node])
-        tss_total += abs(data.at[i, label] - median)
+        y_true = data.at[i, label]
+        y_pred = beta_zero[node]
+        y_trues.append(y_true)
+        y_preds.append(y_pred)
+        regression_residual += abs(y_pred - y_true)
+        tss_total += abs(y_true - median)
     mae = mean_absolute_error(y_trues, y_preds)
     r2_lad = (mae * len(y_trues)) / tss_total
-    return r2_score(y_trues, y_preds), mean_squared_error(y_trues, y_preds), mae, r2_lad, 1 - r2_lad, mean, median
+    return r2_score(y_trues, y_preds), mean_squared_error(y_trues, y_preds), mae, r2_lad, 1 - r2_lad, regression_residual

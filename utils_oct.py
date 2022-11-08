@@ -121,6 +121,16 @@ def get_acc(grb_model, local_data, b, beta, p):
     return acc
 
 
+def get_res_err(grb_model, local_data, b, beta, p):
+    label = grb_model.label
+    res_err = 0
+    for i in local_data.index:
+        yhat_i = get_predicted_value(grb_model, local_data, b, beta, p, i)
+        y_i = local_data.at[i, label]
+        res_err += abs(yhat_i - y_i)
+    return res_err
+
+
 def get_mae(grb_model, local_data, b, beta, p):
     '''
     This function returns the MAE for a given dataset
@@ -131,14 +141,9 @@ def get_mae(grb_model, local_data, b, beta, p):
     :param p: The value of decision variable p
     :return: The MAE
     '''
-    label = grb_model.label
-    err = 0
-    for i in local_data.index:
-        yhat_i = get_predicted_value(grb_model, local_data, b, beta, p, i)
-        y_i = local_data.at[i, label]
-        err += abs(yhat_i - y_i)
+    res_err = get_res_err(grb_model, local_data, b, beta, p)
 
-    err = err / len(local_data.index)
+    err = res_err / len(local_data.index)
     return err
 
 

@@ -12,7 +12,7 @@ import getopt
 import csv
 import numpy as np
 from utils import get_model_accuracy
-from utils_oct import get_mae, get_mse, get_r_squared, get_r_lad
+from utils_oct import get_mae, get_mse, get_r_squared, get_r_lad, get_res_err
 from logger import logger
 
 
@@ -142,6 +142,8 @@ def main(argv):
     z_v1 = primal_v1.model.getAttr("x", primal_v1.z)
     z_v2 = primal_v2.model.getAttr("x", primal_v2.z)
 
+    lower_bound_v2 = primal_v2.model.getAttr("ObjBound")
+
     print("\n\n")
     print('\n\nTotal Solving Time v1', solving_time_v1)
     print('Total Solving Time v2', solving_time_v2)
@@ -161,12 +163,13 @@ def main(argv):
     print(f'\n\nbeta_zero V1 {beta_zero_v1}')
     print(f'beta_zero V2 {beta_zero_v2}')
 
-    r2_v1, mse_v1, mae_v1, r2_lad_v1, r2_lad_alt_v1, mean_v1, median_v1 = get_model_accuracy(data, primal_v1.datapoints,
-                                                                                             z_v1, beta_zero_v1,
-                                                                                             depth, label)
-    r2_v2, mse_v2, mae_v2, r2_lad_v2, r2_lad_alt_v2, mean_v2, median_v2 = get_model_accuracy(data, primal_v2.datapoints,
-                                                                                             z_v2, beta_zero_v2,
-                                                                                             depth, label)
+    r2_v1, mse_v1, mae_v1, r2_lad_v1, r2_lad_alt_v1, reg_res_v1 = get_model_accuracy(data, primal_v1.datapoints,
+                                                                                     z_v1, beta_zero_v1,
+                                                                                     depth, label)
+    r2_v2, mse_v2, mae_v2, r2_lad_v2, r2_lad_alt_v2, reg_res_v2 = get_model_accuracy(data, primal_v2.datapoints,
+                                                                                     z_v2, beta_zero_v2,
+                                                                                     depth, label)
+    reg_res_v3 = get_res_err(primal_v3, data, b_value_v3, beta_v3, p_v3)
     mae_v3 = get_mae(primal_v3, data, b_value_v3, beta_v3, p_v3)
 
     mse_v3 = get_mse(primal_v3, data, b_value_v3, beta_v3, p_v3)
@@ -181,8 +184,9 @@ def main(argv):
 
         results_writer.writerow(
             [approach_name_1, input_file, train_len, depth, time_limit,
-             primal_v1.model.getAttr("Status"), primal_v1.model.getAttr("ObjVal"),
-             primal_v1.model.getAttr("MIPGap") * 100, primal_v1.model.getAttr("NodeCount"), solving_time_v1,
+             primal_v1.model.getAttr("Status"), primal_v1.model.getAttr("ObjVal"), reg_res_v1,
+             primal_v1.model.getAttr("MIPGap") * 100, ((reg_res_v1 - lower_bound_v2) / lower_bound_v2) * 100,
+             primal_v1.model.getAttr("NodeCount"), solving_time_v1,
              r2_v1, mse_v1, mae_v1, r2_lad_alt_v1])
 
     # writing info to the file
@@ -192,8 +196,8 @@ def main(argv):
 
         results_writer.writerow(
             [approach_name_2, input_file, train_len, depth, time_limit,
-             primal_v2.model.getAttr("Status"), primal_v2.model.getAttr("ObjVal"),
-             primal_v2.model.getAttr("MIPGap") * 100, primal_v2.model.getAttr("NodeCount"), solving_time_v2,
+             primal_v2.model.getAttr("Status"), primal_v2.model.getAttr("ObjVal"), reg_res_v2,
+             primal_v2.model.getAttr("MIPGap") * 100,((reg_res_v2 - lower_bound_v2) / lower_bound_v2) * 100, primal_v2.model.getAttr("NodeCount"), solving_time_v2,
              r2_v2, mse_v2, mae_v2, r2_lad_alt_v2])
 
     # writing info to the file
@@ -203,8 +207,8 @@ def main(argv):
 
         results_writer.writerow(
             [approach_name_3, input_file, train_len, depth, time_limit,
-             primal_v3.model.getAttr("Status"), primal_v3.model.getAttr("ObjVal"),
-             primal_v3.model.getAttr("MIPGap") * 100, primal_v3.model.getAttr("NodeCount"), solving_time_v3,
+             primal_v3.model.getAttr("Status"), primal_v3.model.getAttr("ObjVal"), reg_res_v3,
+             primal_v3.model.getAttr("MIPGap") * 100,((reg_res_v3 - lower_bound_v2) / lower_bound_v2) * 100, primal_v3.model.getAttr("NodeCount"), solving_time_v3,
              r2_v3, mse_v3, mae_v3, r2_lad_alt_v3])
 
 
