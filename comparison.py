@@ -12,7 +12,7 @@ import getopt
 import csv
 import numpy as np
 from utils import get_model_train_accuracy, get_model_test_accuracy
-from utils_oct import get_mae, get_mse, get_r_squared, get_r_lad, get_res_err
+from utils_oct import get_model_accuracy as get_model_accuracy_v3
 from logger import logger
 from sklearn.model_selection import KFold
 
@@ -57,21 +57,21 @@ def main(argv):
     ##########################################################
     approach_name_1 = 'FlowORT'
     out_put_name = input_file + '_' + '_d_' + str(depth) + '_t_' + str(
-        time_limit) + '_cross_validation'
+        time_limit) + '_linear_cross_validation'
     # Using logger we log the output of the console in a text file
     out_put_path = os.getcwd() + '/Results/'
     sys.stdout = logger(out_put_path + out_put_name + '.txt')
 
     out_put_name_1 = input_file + '_' + approach_name_1 + '_d_' + str(depth) + '_t_' + str(
-        time_limit) + '_cross_validation'
+        time_limit) + '_linear_cross_validation'
 
     approach_name_2 = 'FlowORT_binary'
     out_put_name_2 = input_file + '_' + approach_name_2 + '_d_' + str(depth) + '_t_' + str(
-        time_limit) + '_cross_validation'
+        time_limit) + '_linear_cross_validation'
 
     approach_name_3 = 'FlowOCT'
     out_put_name_3 = input_file + '_' + approach_name_3 + '_d_' + str(depth) + '_t_' + str(
-        time_limit) + '_cross_validation'
+        time_limit) + '_linear_cross_validation'
 
     ##########################################################
     # data splitting
@@ -113,9 +113,9 @@ def main(argv):
     r2_lads_test_v1 = []
     r2_lads_test_v2 = []
     r2_lads_test_v3 = []
-    orig_obj_v1=[]
-    orig_obj_v2=[]
-    orig_obj_v3=[]
+    orig_obj_v1 = []
+    orig_obj_v2 = []
+    orig_obj_v3 = []
     n_k_folds = kf.get_n_splits(x)
     for train_index, test_index in kf.split(x):
         print("TRAIN:", train_index, "TEST:", test_index)
@@ -167,8 +167,12 @@ def main(argv):
         b_value_v3 = primal_v3.model.getAttr("X", primal_v3.b)
 
         beta_zero_v1 = primal_v1.model.getAttr("x", primal_v1.beta_zero)
+        beta_v1 = primal_v1.model.getAttr("x", primal_v1.beta)
         beta_zero_v2 = primal_v2.model.getAttr("x", primal_v2.beta_zero)
-        beta_v3 = primal_v3.model.getAttr("x", primal_v3.beta)
+        beta_v2 = primal_v2.model.getAttr("x", primal_v2.beta)
+        beta_zero_v3 = primal_v3.model.getAttr("x", primal_v3.beta)
+        #beta_v3 = primal_v3.model.getAttr("x", primal_v3.beta_linear)
+        beta_v3 = None
         # zeta = primal.model.getAttr("x", primal.zeta)
         p_v3 = primal_v3.model.getAttr("x", primal_v3.p)
         z_v1 = primal_v1.model.getAttr("x", primal_v1.z)
@@ -194,37 +198,38 @@ def main(argv):
 
         print(f'\n\nbeta_zero V1 {beta_zero_v1}')
         print(f'beta_zero V2 {beta_zero_v2}')
-        print(f'beta_zero V3 {beta_v3}')
+        print(f'beta_zero V3 {beta_zero_v3}')
+        print(f'beta V1 {beta_v1}')
+        print(f'beta V3 {beta_v3}')
         print(f'lower_bound_v2 {lower_bound_v2}')
 
         r2_v1, mse_v1, mae_v1, r2_lad_v1, r2_lad_alt_v1, reg_res_v1 = get_model_train_accuracy(data_train,
                                                                                                primal_v1.datapoints,
-                                                                                               z_v1, beta_zero_v1,
-                                                                                               depth, label)
+                                                                                               z_v1,
+                                                                                               beta_zero_v1,
+                                                                                               depth, primal_v1,
+                                                                                               beta_v1)
         r2_v1_test, mse_v1_test, mae_v1_test, r2_lad_v1_test, r2_lad_alt_v1_test, reg_res_v1_test = get_model_test_accuracy(
             primal_v1,
             data_test,
             b_value_v1,
-            beta_zero_v1)
+            beta_zero_v1,
+            beta_v1)
         r2_v2, mse_v2, mae_v2, r2_lad_v2, r2_lad_alt_v2, reg_res_v2 = get_model_train_accuracy(data_train,
                                                                                                primal_v2.datapoints,
                                                                                                z_v2, beta_zero_v2,
-                                                                                               depth, label)
+                                                                                               depth, primal_v2,beta_v2)
         r2_v2_test, mse_v2_test, mae_v2_test, r2_lad_v2_test, r2_lad_alt_v2_test, reg_res_v2_test = get_model_test_accuracy(
             primal_v2,
             data_test,
             b_value_v2,
-            beta_zero_v2)
-        reg_res_v3 = get_res_err(primal_v3, data_train, b_value_v3, beta_v3, p_v3)
-        mae_v3 = get_mae(primal_v3, data_train, b_value_v3, beta_v3, p_v3)
-        mae_v3_test = get_mae(primal_v3, data_test, b_value_v3, beta_v3, p_v3)
+            beta_zero_v2,beta_v2)
 
-        mse_v3 = get_mse(primal_v3, data_train, b_value_v3, beta_v3, p_v3)
+        reg_res_v3, mae_v3, mse_v3, r2_v3, r2_lad_alt_v3 = get_model_accuracy_v3(primal_v3, data_train, b_value_v3,
+                                                                                 beta_zero_v3, p_v3,beta_v3)
 
-        r2_v3 = get_r_squared(primal_v3, data_train, b_value_v3, beta_v3, p_v3)
-
-        r2_lad_alt_v3 = 1 - get_r_lad(label, data_train, mae_v3)
-        r2_lad_alt_v3_test = 1 - get_r_lad(label, data_test, mae_v3_test)
+        _, mae_v3_test, _, _, r2_lad_alt_v3_test = get_model_accuracy_v3(primal_v3, data_test, b_value_v3, beta_zero_v3,
+                                                                         p_v3,beta_v3)
         maes_train_v1.append(mae_v1)
         maes_train_v2.append(mae_v2)
         maes_train_v3.append(mae_v3)
@@ -261,11 +266,14 @@ def main(argv):
     print('orig obj v2', orig_obj_v2)
     print('orig obj v3', orig_obj_v3)
     row_1 = [approach_name_1, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v1) * 100,
-             np.average(solving_times_v1), np.average(maes_train_v1), np.average(r2_lads_train_v1),np.average(maes_test_v1), np.average(r2_lads_test_v1)]
+             np.average(solving_times_v1), np.average(maes_train_v1), np.average(r2_lads_train_v1),
+             np.average(maes_test_v1), np.average(r2_lads_test_v1)]
     row_2 = [approach_name_2, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v2) * 100,
-             np.average(solving_times_v2), np.average(maes_train_v2), np.average(r2_lads_train_v2),np.average(maes_test_v2), np.average(r2_lads_test_v2)]
+             np.average(solving_times_v2), np.average(maes_train_v2), np.average(r2_lads_train_v2),
+             np.average(maes_test_v2), np.average(r2_lads_test_v2)]
     row_3 = [approach_name_3, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v3) * 100,
-             np.average(solving_times_v3), np.average(maes_train_v3), np.average(r2_lads_train_v3),np.average(maes_test_v3), np.average(r2_lads_test_v3)]
+             np.average(solving_times_v3), np.average(maes_train_v3), np.average(r2_lads_train_v3),
+             np.average(maes_test_v3), np.average(r2_lads_test_v3)]
     with open(out_put_path + result_file_v1, mode='a') as results:
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 

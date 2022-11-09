@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def get_node_status(grb_model, b, beta, p, n):
+def get_node_status(grb_model, b, beta_zero, p, n, beta=None):
     '''
     This function give the status of a given node in a tree. By status we mean whether the node
         1- is pruned? i.e., we have made a prediction at one of its ancestors
@@ -35,10 +35,12 @@ def get_node_status(grb_model, b, beta, p, n):
     if p[n] > 0.5:  # leaf
         leaf = True
         if mode == "regression":
-            value = beta[n, 1]
+            value = beta_zero[n, 1]
+            if beta is not None:
+                value += sum(beta[n, f] for f in grb_model.cat_features)
         elif mode == "classification":
             for k in grb_model.labels:
-                if beta[n, k] > 0.5:
+                if beta_zero[n, k] > 0.5:
                     value = k
     elif p_sum == 1:  # Pruned
         pruned = True
@@ -74,7 +76,7 @@ def print_tree(grb_model, b, beta, p):
             print('leaf {}'.format(value))
 
 
-def get_predicted_value(grb_model, local_data, b, beta, p, i):
+def get_predicted_value(grb_model, local_data, b, beta_zero, p, i, beta):
     '''
     This function returns the predicted value for a given datapoint
     :param grb_model: The gurobi model we solved
@@ -89,7 +91,7 @@ def get_predicted_value(grb_model, local_data, b, beta, p, i):
     current = 1
 
     while True:
-        pruned, branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta, p, current)
+        pruned, branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta_zero, p, current, beta)
         if leaf:
             return value
         elif branching:
@@ -99,39 +101,17 @@ def get_predicted_value(grb_model, local_data, b, beta, p, i):
                 current = tree.get_left_children(current)
 
 
-def get_acc(grb_model, local_data, b, beta, p):
-    '''
-    This function returns the accuracy of the prediction for a given dataset
-    :param grb_model: The gurobi model we solved
-    :param local_data: The dataset we want to compute accuracy for
-    :param b: The value of decision variable b
-    :param beta: The value of decision variable beta
-    :param p: The value of decision variable p
-    :return: The accuracy (fraction of datapoints which are correctly classified)
-    '''
-    label = grb_model.label
-    acc = 0
-    for i in local_data.index:
-        yhat_i = get_predicted_value(grb_model, local_data, b, beta, p, i)
-        y_i = local_data.at[i, label]
-        if yhat_i == y_i:
-            acc += 1
-
-    acc = acc / len(local_data.index)
-    return acc
-
-
-def get_res_err(grb_model, local_data, b, beta, p):
+def get_res_err(grb_model, local_data, b, beta_zero, p, beta=None):
     label = grb_model.label
     res_err = 0
     for i in local_data.index:
-        yhat_i = get_predicted_value(grb_model, local_data, b, beta, p, i)
+        yhat_i = get_predicted_value(grb_model, local_data, b, beta_zero, p, i, beta)
         y_i = local_data.at[i, label]
         res_err += abs(yhat_i - y_i)
     return res_err
 
 
-def get_mae(grb_model, local_data, b, beta, p):
+def get_mae(grb_model, local_data, b, beta_zero, p, beta=None):
     '''
     This function returns the MAE for a given dataset
     :param grb_model: The gurobi model we solved
@@ -141,13 +121,13 @@ def get_mae(grb_model, local_data, b, beta, p):
     :param p: The value of decision variable p
     :return: The MAE
     '''
-    res_err = get_res_err(grb_model, local_data, b, beta, p)
+    res_err = get_res_err(grb_model, local_data, b, beta_zero, p, beta)
 
     err = res_err / len(local_data.index)
     return err
 
 
-def get_mse(grb_model, local_data, b, beta, p):
+def get_mse(grb_model, local_data, b, beta_zero, p, beta=None):
     '''
     This function returns the MSE for a given dataset
     :param grb_model: The gurobi model we solved
@@ -160,7 +140,7 @@ def get_mse(grb_model, local_data, b, beta, p):
     label = grb_model.label
     err = 0
     for i in local_data.index:
-        yhat_i = get_predicted_value(grb_model, local_data, b, beta, p, i)
+        yhat_i = get_predicted_value(grb_model, local_data, b, beta_zero, p, i, beta)
         y_i = local_data.at[i, label]
         err += np.power(yhat_i - y_i, 2)
 
@@ -168,7 +148,7 @@ def get_mse(grb_model, local_data, b, beta, p):
     return err
 
 
-def get_r_squared(grb_model, local_data, b, beta, p):
+def get_r_squared(grb_model, local_data, b, beta_zero, p, beta=None):
     '''
     This function returns the R^2 for a given dataset
     :param grb_model: The gurobi model we solved
@@ -185,7 +165,7 @@ def get_r_squared(grb_model, local_data, b, beta, p):
     SS_Residuals = 0
     SS_Total = 0
     for i in local_data.index:
-        yhat_i = get_predicted_value(grb_model, local_data, b, beta, p, i)
+        yhat_i = get_predicted_value(grb_model, local_data, b, beta_zero, p, i, beta)
         y_i = local_data.at[i, label]
         SS_Residuals += np.power(yhat_i - y_i, 2)
         SS_Total += np.power(y_bar - y_i, 2)
@@ -211,3 +191,15 @@ def get_r_lad(label, local_data, mae):
 
     r2_lad = (mae * len(y_trues)) / tss_total
     return r2_lad
+
+
+def get_model_accuracy(model, data, b, beta_zero, p, beta):
+    err = get_res_err(model, data, b, beta_zero, p, beta)
+    mae = get_mae(model, data, b, beta_zero, p, beta)
+
+    mse = get_mse(model, data, b, beta_zero, p, beta)
+
+    r2 = get_r_squared(model, data, b, beta_zero, p, beta)
+
+    r2_lad_alt = 1 - get_r_lad(model.label, data, mae)
+    return err, mae, mse, r2, r2_lad_alt

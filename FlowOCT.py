@@ -22,10 +22,8 @@ class FlowOCT:
         self.datapoints = data.index
         self.label = label
 
-        if self.mode == "classification":
-            self.labels = data[label].unique()
-        elif self.mode == "regression":
-            self.labels = [1]
+
+        self.labels = [1]
 
         '''
         cat_features is the set of all categorical features. 
@@ -43,15 +41,16 @@ class FlowOCT:
         for i in self.datapoints:
             self.m[i] = 1
 
-        if self.mode == "regression":
-            for i in self.datapoints:
-                y_i = self.data.at[i, self.label]
-                self.m[i] = max(y_i, 1 - y_i)
+
+        for i in self.datapoints:
+            y_i = self.data.at[i, self.label]
+            self.m[i] = max(y_i, 1 - y_i)
 
         # Decision Variables
         self.b = 0
         self.p = 0
         self.beta = 0
+        self.beta_linear = 0
         self.zeta = 0
         self.z = 0
 
@@ -99,6 +98,7 @@ class FlowOCT:
         '''
         self.beta = self.model.addVars(self.tree.Nodes + self.tree.Leaves, self.labels, vtype=GRB.CONTINUOUS, lb=0,
                                        name='beta')
+        #self.beta_linear = self.model.addVars(self.tree.Leaves, self.cat_features, vtype=GRB.CONTINUOUS, name='beta_linear')
         # zeta[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
         self.zeta = self.model.addVars(self.datapoints, self.tree.Nodes + self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                        name='zeta')
@@ -144,31 +144,20 @@ class FlowOCT:
         #     (quicksum(
         #         quicksum(self.b[n, f] for f in self.cat_features) for n in self.tree.Nodes)) <= self.branching_limit)
 
-        # loss reduction:
-        if self.mode == "classification":  # zeta[i,n] <= beta[n,y[i]]     forall n in N+L, i
-            # sum(beta[n,k], k in labels) = p[n]
-            for n in self.tree.Nodes + self.tree.Leaves:
-                self.model.addConstrs(
-                    self.zeta[i, n] <= self.beta[n, self.data.at[i, self.label]] for i in self.datapoints)
+
+        # beta[n,k] = 1
+        for n in self.tree.Nodes +self.tree.Leaves:
+            self.model.addConstrs(
+                self.zeta[i, n] <= self.m[i] * self.p[n] - self.data.at[i, self.label] * self.p[n] + self.beta[n, 1]
+                for i in self.datapoints)
 
             self.model.addConstrs(
-                (quicksum(self.beta[n, k] for k in self.labels) == self.p[n]) for n in
-                self.tree.Nodes + self.tree.Leaves)
+                self.zeta[i, n] <= self.m[i] * self.p[n] + self.data.at[i, self.label] * self.p[n] - self.beta[n, 1]
+                for i in self.datapoints)
 
-        elif self.mode == "regression":
-            # beta[n,k] = 1
-            for n in self.tree.Nodes + self.tree.Leaves:
-                self.model.addConstrs(
-                    self.zeta[i, n] <= self.m[i] * self.p[n] - self.data.at[i, self.label] * self.p[n] + self.beta[n, 1]
-                    for i in self.datapoints)
-
-                self.model.addConstrs(
-                    self.zeta[i, n] <= self.m[i] * self.p[n] + self.data.at[i, self.label] * self.p[n] - self.beta[n, 1]
-                    for i in self.datapoints)
-
-            self.model.addConstrs(
-                (self.beta[n, 1] <= self.p[n]) for n in
-                self.tree.Nodes + self.tree.Leaves)
+        self.model.addConstrs(
+            (self.beta[n, 1] <= self.p[n]) for n in
+            self.tree.Nodes + self.tree.Leaves)
 
         for n in self.tree.Leaves:
             self.model.addConstrs(self.zeta[i, n] == self.z[i, n] for i in self.datapoints)

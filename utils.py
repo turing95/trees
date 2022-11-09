@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, median_absolute_error
 
 
-def get_node_status(grb_model, b, beta, n):
+def get_node_status(grb_model, b, beta_zero, n, beta=None):
     '''
     This function give the status of a given node in a tree. By status we mean whether the node
         1- is pruned? i.e., we have made a prediction at one of its ancestors
@@ -35,7 +35,9 @@ def get_node_status(grb_model, b, beta, n):
                 branching = True
     else:
         leaf = True
-        value = beta[n]
+        value = beta_zero[n]
+        if beta is not None:
+            value += sum(beta[n, f] for f in grb_model.cat_features)
     return branching, selected_feature, leaf, value
 
 
@@ -58,7 +60,7 @@ def print_tree(grb_model, b, beta):
             print('leaf {}'.format(value))
 
 
-def get_predicted_value(grb_model, local_data, b, beta, i):
+def get_predicted_value(grb_model, local_data, b, beta_zero, i, beta=None):
     '''
     This function returns the predicted value for a given datapoint
     :param grb_model: The gurobi model we solved
@@ -73,7 +75,7 @@ def get_predicted_value(grb_model, local_data, b, beta, i):
     current = 1
 
     while True:
-        branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta, current)
+        branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta_zero, current, beta)
         if leaf:
             return value
         elif branching:
@@ -173,9 +175,10 @@ def get_r_squared(grb_model, local_data, b, beta):
     return R_squared
 
 
-def get_model_train_accuracy(data, datapoints, z, beta_zero, depth, label):
+def get_model_train_accuracy(data, datapoints, z, beta_zero, depth, model, beta=None):
     y_trues = []
     y_preds = []
+    label = model.label
     tss_total = 0
     median = np.median(data[label])
     regression_residual = 0
@@ -188,6 +191,8 @@ def get_model_train_accuracy(data, datapoints, z, beta_zero, depth, label):
                 max_value = z[i, t]
         y_true = data.at[i, label]
         y_pred = beta_zero[node]
+        if beta is not None:
+            y_pred += sum(beta[node, f] for f in model.cat_features)
         y_trues.append(y_true)
         y_preds.append(y_pred)
         regression_residual += abs(y_pred - y_true)
@@ -198,7 +203,7 @@ def get_model_train_accuracy(data, datapoints, z, beta_zero, depth, label):
                                                           y_preds), mae, r2_lad, 1 - r2_lad, regression_residual
 
 
-def get_model_test_accuracy(grb_model, local_data, b, beta):
+def get_model_test_accuracy(grb_model, local_data, b, beta_zero, beta=None):
     label = grb_model.label
     y_trues = []
     y_preds = []
@@ -207,7 +212,7 @@ def get_model_test_accuracy(grb_model, local_data, b, beta):
     regression_residual = 0
     for i in local_data.index:
         y_true = local_data.at[i, label]
-        y_pred = get_predicted_value(grb_model, local_data, b, beta, i)
+        y_pred = get_predicted_value(grb_model, local_data, b, beta_zero, i, beta)
         y_trues.append(y_true)
         y_preds.append(y_pred)
         regression_residual += abs(y_pred - y_true)
