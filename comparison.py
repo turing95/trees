@@ -113,9 +113,9 @@ def main(argv):
     r2_lads_test_v1 = []
     r2_lads_test_v2 = []
     r2_lads_test_v3 = []
-    orig_obj_v1=[]
-    orig_obj_v2=[]
-    orig_obj_v3=[]
+    orig_obj_v1 = []
+    orig_obj_v2 = []
+    orig_obj_v3 = []
     n_k_folds = kf.get_n_splits(x)
     for train_index, test_index in kf.split(x):
         print("TRAIN:", train_index, "TEST:", test_index)
@@ -232,11 +232,11 @@ def main(argv):
         maes_test_v2.append(mae_v2_test)
         maes_test_v3.append(mae_v3_test)
         orig_obj_v1.append(reg_res_v1)
-        orig_obj_v2.append(reg_res_v2)
+        orig_obj_v2.append(primal_v2.model.getAttr("ObjVal"))
         orig_obj_v3.append(reg_res_v3)
-        mip_gaps_v1.append((reg_res_v1 - lower_bound_v2) / lower_bound_v2)
-        mip_gaps_v2.append((reg_res_v2 - lower_bound_v2) / lower_bound_v2)
-        mip_gaps_v3.append((reg_res_v3 - lower_bound_v2) / lower_bound_v2)
+        mip_gaps_v1.append((reg_res_v1 - lower_bound_v2) / lower_bound_v2 if lower_bound_v2 > 0 else 100)
+        mip_gaps_v2.append(primal_v2.model.getAttr("MIPGap"))
+        mip_gaps_v3.append((reg_res_v3 - lower_bound_v2) / lower_bound_v2 if lower_bound_v2 > 0 else 100)
         solving_times_v1.append(solving_time_v1)
         solving_times_v2.append(solving_time_v2)
         solving_times_v3.append(solving_time_v3)
@@ -261,11 +261,14 @@ def main(argv):
     print('orig obj v2', orig_obj_v2)
     print('orig obj v3', orig_obj_v3)
     row_1 = [approach_name_1, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v1) * 100,
-             np.average(solving_times_v1), np.average(maes_train_v1), np.average(r2_lads_train_v1),np.average(maes_test_v1), np.average(r2_lads_test_v1)]
+             np.average(solving_times_v1), np.average(maes_train_v1), np.average(r2_lads_train_v1),
+             np.average(maes_test_v1), np.average(r2_lads_test_v1)]
     row_2 = [approach_name_2, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v2) * 100,
-             np.average(solving_times_v2), np.average(maes_train_v2), np.average(r2_lads_train_v2),np.average(maes_test_v2), np.average(r2_lads_test_v2)]
+             np.average(solving_times_v2), np.average(maes_train_v2), np.average(r2_lads_train_v2),
+             np.average(maes_test_v2), np.average(r2_lads_test_v2)]
     row_3 = [approach_name_3, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v3) * 100,
-             np.average(solving_times_v3), np.average(maes_train_v3), np.average(r2_lads_train_v3),np.average(maes_test_v3), np.average(r2_lads_test_v3)]
+             np.average(solving_times_v3), np.average(maes_train_v3), np.average(r2_lads_train_v3),
+             np.average(maes_test_v3), np.average(r2_lads_test_v3)]
     with open(out_put_path + result_file_v1, mode='a') as results:
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
