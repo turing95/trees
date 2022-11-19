@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, median_absolute_error
 
 
-def get_node_status(grb_model, b, beta_zero, n, beta=None):
+def get_node_status(grb_model, b, beta_zero, n, i,local_data, beta=None):
     '''
     This function give the status of a given node in a tree. By status we mean whether the node
         1- is pruned? i.e., we have made a prediction at one of its ancestors
@@ -37,27 +37,8 @@ def get_node_status(grb_model, b, beta_zero, n, beta=None):
         leaf = True
         value = beta_zero[n]
         if beta is not None:
-            value += sum(beta[n, f] for f in grb_model.cat_features)
+            value += sum(beta[n, f] * local_data.at[i, f] for f in grb_model.cat_features)
     return branching, selected_feature, leaf, value
-
-
-def print_tree(grb_model, b, beta):
-    '''
-    This function print the derived tree with the branching features and the predictions asserted for each node
-    :param grb_model: the gurobi model solved to optimality (or reached to the time limit)
-    :param b: The values of branching decision variable b
-    :param beta: The values of prediction decision variable beta
-    :param p: The values of decision variable p
-    :return: print out the tree in the console
-    '''
-    tree = grb_model.tree
-    for n in tree.Nodes + tree.Leaves:
-        branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta, n)
-        print('#########node ', n)
-        if branching:
-            print(selected_feature)
-        elif leaf:
-            print('leaf {}'.format(value))
 
 
 def get_predicted_value(grb_model, local_data, b, beta_zero, i, beta=None):
@@ -75,7 +56,7 @@ def get_predicted_value(grb_model, local_data, b, beta_zero, i, beta=None):
     current = 1
 
     while True:
-        branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta_zero, current, beta)
+        branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta_zero, current, i,local_data, beta)
         if leaf:
             return value
         elif branching:
@@ -192,7 +173,7 @@ def get_model_train_accuracy(data, datapoints, z, beta_zero, depth, model, beta=
         y_true = data.at[i, label]
         y_pred = beta_zero[node]
         if beta is not None:
-            y_pred += sum(beta[node, f] for f in model.cat_features)
+            y_pred += sum(beta[node, f] * data.at[i, f] for f in model.cat_features)
         y_trues.append(y_true)
         y_preds.append(y_pred)
         regression_residual += abs(y_pred - y_true)

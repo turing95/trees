@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def get_node_status(grb_model, b, beta_zero, p, n, beta=None):
+def get_node_status(grb_model, b, beta_zero, p, n,i,local_data, beta=None):
     '''
     This function give the status of a given node in a tree. By status we mean whether the node
         1- is pruned? i.e., we have made a prediction at one of its ancestors
@@ -37,7 +37,7 @@ def get_node_status(grb_model, b, beta_zero, p, n, beta=None):
         if mode == "regression":
             value = beta_zero[n, 1]
             if beta is not None:
-                value += sum(beta[n, f] for f in grb_model.cat_features)
+                value += sum(beta[n, f]*local_data.at[i, f] for f in grb_model.cat_features)
         elif mode == "classification":
             for k in grb_model.labels:
                 if beta_zero[n, k] > 0.5:
@@ -91,7 +91,7 @@ def get_predicted_value(grb_model, local_data, b, beta_zero, p, i, beta):
     current = 1
 
     while True:
-        pruned, branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta_zero, p, current, beta)
+        pruned, branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta_zero, p, current,i,local_data, beta)
         if leaf:
             return value
         elif branching:

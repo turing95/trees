@@ -22,7 +22,6 @@ class FlowOCT:
         self.datapoints = data.index
         self.label = label
 
-
         self.labels = [1]
 
         '''
@@ -40,7 +39,6 @@ class FlowOCT:
         self.m = {}
         for i in self.datapoints:
             self.m[i] = 1
-
 
         for i in self.datapoints:
             y_i = self.data.at[i, self.label]
@@ -98,7 +96,7 @@ class FlowOCT:
         '''
         self.beta = self.model.addVars(self.tree.Nodes + self.tree.Leaves, self.labels, vtype=GRB.CONTINUOUS, lb=0,
                                        name='beta')
-        #self.beta_linear = self.model.addVars(self.tree.Leaves, self.cat_features, vtype=GRB.CONTINUOUS, name='beta_linear')
+        self.beta_linear = self.model.addVars(self.tree.Leaves, self.cat_features, vtype=GRB.CONTINUOUS, name='beta_linear')
         # zeta[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
         self.zeta = self.model.addVars(self.datapoints, self.tree.Nodes + self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                        name='zeta')
@@ -144,15 +142,16 @@ class FlowOCT:
         #     (quicksum(
         #         quicksum(self.b[n, f] for f in self.cat_features) for n in self.tree.Nodes)) <= self.branching_limit)
 
-
         # beta[n,k] = 1
-        for n in self.tree.Nodes +self.tree.Leaves:
+        for n in self.tree.Leaves:
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] * self.p[n] - self.data.at[i, self.label] * self.p[n] + self.beta[n, 1]
+                self.zeta[i, n] <= self.m[i] * self.p[n] - self.data.at[i, self.label] * self.p[n] + self.beta[n, 1] +quicksum(
+                    self.beta_linear[n, f] * self.data.at[i, f] for f in self.cat_features)
                 for i in self.datapoints)
 
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] * self.p[n] + self.data.at[i, self.label] * self.p[n] - self.beta[n, 1]
+                self.zeta[i, n] <= self.m[i] * self.p[n] + self.data.at[i, self.label] * self.p[n] - self.beta[n, 1] -quicksum(
+                    self.beta_linear[n, f] * self.data.at[i, f] for f in self.cat_features)
                 for i in self.datapoints)
 
         self.model.addConstrs(
