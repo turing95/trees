@@ -112,12 +112,12 @@ class FlowORT:
         # 1a) e[i,n] >= beta_zero[n] - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (self.e[i, n]-self.d+self.big_m*(self.d-self.z[i, n]) >= self.beta_zero[n] - self.data.at[i, self.label]) for i in self.datapoints)
+                (self.e[i, n]-self.z[i, n]+self.big_m*(self.d-self.z[i, n]) >= self.beta_zero[n] - self.data.at[i, self.label]) for i in self.datapoints)
         self.model.addConstrs(self.z[i, 1] == 0 for i in self.datapoints)
         #  1b) -e[i,n] <= beta_zero[n] - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (-self.e[i, n]+self.d-self.big_m*(self.d-self.z[i, n]) <= self.beta_zero[n] - self.data.at[i, self.label]) for i in self.datapoints)
+                (-self.e[i, n]+self.z[i, n]-self.big_m*(self.d-self.z[i, n]) <= self.beta_zero[n] - self.data.at[i, self.label]) for i in self.datapoints)
 
         '''# 2) zeta[i] - z[i,n] >= e[i,n] - M*(D-z[i,n])  forall i, n in Leaves
         for n in self.tree.Leaves:
