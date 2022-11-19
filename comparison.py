@@ -7,6 +7,7 @@ from Tree import Tree
 from FlowORT import FlowORT
 from FlowOCT import FlowOCT
 from FlowORT_v2 import FlowORT as FlowORT_v2
+from FlowORT_v3 import FlowORT as FlowORT_v3
 import logger
 import getopt
 import csv
@@ -73,6 +74,10 @@ def main(argv):
     out_put_name_3 = input_file + '_' + approach_name_3 + '_d_' + str(depth) + '_t_' + str(
         time_limit) + '_cross_validation'
 
+    approach_name_4 = 'FlowORT_less_constraints'
+    out_put_name_4 = input_file + '_' + approach_name_4 + '_d_' + str(depth) + '_t_' + str(
+        time_limit) + '_cross_validation'
+
     ##########################################################
     # data splitting
     ##########################################################
@@ -93,34 +98,40 @@ def main(argv):
     train_len = len(data.index)
     x = data.iloc[:, :-1]
     y = data.iloc[:, -1]
+    random_state = 1
     k_folds = 5 if train_len < 300 else 10
-    kf = KFold(n_splits=k_folds, shuffle=True)
+    kf = KFold(n_splits=k_folds, shuffle=True, random_state=random_state)
     maes_train_v1 = []
     maes_train_v2 = []
     maes_train_v3 = []
+    maes_train_v4 = []
     maes_test_v1 = []
     maes_test_v2 = []
     maes_test_v3 = []
+    maes_test_v4 = []
     mip_gaps_v1 = []
     mip_gaps_v2 = []
     mip_gaps_v3 = []
+    mip_gaps_v4 = []
     solving_times_v1 = []
     solving_times_v2 = []
     solving_times_v3 = []
+    solving_times_v4 = []
     r2_lads_train_v1 = []
     r2_lads_train_v2 = []
     r2_lads_train_v3 = []
+    r2_lads_train_v4 = []
     r2_lads_test_v1 = []
     r2_lads_test_v2 = []
     r2_lads_test_v3 = []
+    r2_lads_test_v4 = []
     orig_obj_v1 = []
     orig_obj_v2 = []
     orig_obj_v3 = []
+    orig_obj_v4 = []
     n_k_folds = kf.get_n_splits(x)
     for train_index, test_index in kf.split(x):
         print("TRAIN:", train_index, "TEST:", test_index)
-        x_train, x_test = x.iloc[train_index], x.iloc[test_index]
-        y_train, y_test = y.iloc[train_index], y.iloc[test_index]
         data_train, data_test = data.iloc[train_index], data.iloc[test_index]
 
         ##########################################################
@@ -159,20 +170,34 @@ def main(argv):
 
         solving_time_v3 = end_time - start_time
 
+        start_time = time.time()
+        primal_v4 = FlowORT_v3(data_train, label, tree, time_limit)
+
+        primal_v4.create_primal_problem()
+        primal_v4.model.update()
+        primal_v4.model.optimize()
+
+        end_time = time.time()
+
+        solving_time_v4 = end_time - start_time
+
         ##########################################################
         # Preparing the output
         ##########################################################
         b_value_v1 = primal_v1.model.getAttr("X", primal_v1.b)
         b_value_v2 = primal_v2.model.getAttr("X", primal_v2.b)
         b_value_v3 = primal_v3.model.getAttr("X", primal_v3.b)
+        b_value_v4 = primal_v4.model.getAttr("X", primal_v4.b)
 
         beta_zero_v1 = primal_v1.model.getAttr("x", primal_v1.beta_zero)
         beta_zero_v2 = primal_v2.model.getAttr("x", primal_v2.beta_zero)
+        beta_zero_v4 = primal_v4.model.getAttr("x", primal_v4.beta_zero)
         beta_v3 = primal_v3.model.getAttr("x", primal_v3.beta)
         # zeta = primal.model.getAttr("x", primal.zeta)
         p_v3 = primal_v3.model.getAttr("x", primal_v3.p)
         z_v1 = primal_v1.model.getAttr("x", primal_v1.z)
         z_v2 = primal_v2.model.getAttr("x", primal_v2.z)
+        z_v3 = primal_v4.model.getAttr("x", primal_v4.z)
 
         lower_bound_v2 = primal_v2.model.getAttr("ObjBound")
 
@@ -180,12 +205,15 @@ def main(argv):
         print('\n\nTotal Solving Time v1', solving_time_v1)
         print('Total Solving Time v2', solving_time_v2)
         print('Total Solving Time v3', solving_time_v3)
+        print('Total Solving Time v4', solving_time_v4)
         print("\n\nobj value v1", primal_v1.model.getAttr("ObjVal"))
         print("obj value v2", primal_v2.model.getAttr("ObjVal"))
         print("obj value v3", primal_v3.model.getAttr("ObjVal"))
+        print("obj value v4", primal_v4.model.getAttr("ObjVal"))
         print('\n\nbnf_v1', b_value_v1)
         print('bnf_v2', b_value_v2)
         print('bnf_v3', b_value_v3)
+        print('bnf_v4', b_value_v4)
         print('\n\npi_n v1')
         print(z_v1)
         print('#####')
@@ -195,6 +223,7 @@ def main(argv):
         print(f'\n\nbeta_zero V1 {beta_zero_v1}')
         print(f'beta_zero V2 {beta_zero_v2}')
         print(f'beta_zero V3 {beta_v3}')
+        print(f'beta_zero V4 {beta_zero_v4}')
         print(f'lower_bound_v2 {lower_bound_v2}')
 
         r2_v1, mse_v1, mae_v1, r2_lad_v1, r2_lad_alt_v1, reg_res_v1 = get_model_train_accuracy(data_train,
@@ -215,6 +244,16 @@ def main(argv):
             data_test,
             b_value_v2,
             beta_zero_v2)
+
+        r2_v4, mse_v4, mae_v4, r2_lad_v4, r2_lad_alt_v4, reg_res_v4 = get_model_train_accuracy(data_train,
+                                                                                               primal_v4.datapoints,
+                                                                                               z_v3, beta_zero_v4,
+                                                                                               depth, label)
+        r2_v4_test, mse_v4_test, mae_v4_test, r2_lad_v4_test, r2_lad_alt_v4_test, reg_res_v4_test = get_model_test_accuracy(
+            primal_v4,
+            data_test,
+            b_value_v4,
+            beta_zero_v4)
         reg_res_v3 = get_res_err(primal_v3, data_train, b_value_v3, beta_v3, p_v3)
         mae_v3 = get_mae(primal_v3, data_train, b_value_v3, beta_v3, p_v3)
         mae_v3_test = get_mae(primal_v3, data_test, b_value_v3, beta_v3, p_v3)
@@ -228,47 +267,65 @@ def main(argv):
         maes_train_v1.append(mae_v1)
         maes_train_v2.append(mae_v2)
         maes_train_v3.append(mae_v3)
+        maes_train_v4.append(mae_v4)
         maes_test_v1.append(mae_v1_test)
         maes_test_v2.append(mae_v2_test)
         maes_test_v3.append(mae_v3_test)
+        maes_test_v4.append(mae_v4_test)
         orig_obj_v1.append(reg_res_v1)
         orig_obj_v2.append(primal_v2.model.getAttr("ObjVal"))
         orig_obj_v3.append(reg_res_v3)
+        orig_obj_v4.append(reg_res_v4)
         mip_gaps_v1.append((reg_res_v1 - lower_bound_v2) / lower_bound_v2 if lower_bound_v2 > 0 else 100)
         mip_gaps_v2.append(primal_v2.model.getAttr("MIPGap"))
         mip_gaps_v3.append((reg_res_v3 - lower_bound_v2) / lower_bound_v2 if lower_bound_v2 > 0 else 100)
+        mip_gaps_v4.append((reg_res_v4 - lower_bound_v2) / lower_bound_v2 if lower_bound_v2 > 0 else 100)
         solving_times_v1.append(solving_time_v1)
         solving_times_v2.append(solving_time_v2)
         solving_times_v3.append(solving_time_v3)
+        solving_times_v4.append(solving_time_v4)
         r2_lads_train_v1.append(1 - r2_lad_v1)
         r2_lads_train_v2.append(1 - r2_lad_v2)
         r2_lads_train_v3.append(r2_lad_alt_v3)
+        r2_lads_train_v4.append(1 - r2_lad_v4)
         r2_lads_test_v1.append(r2_lad_alt_v1_test)
         r2_lads_test_v2.append(r2_lad_alt_v2_test)
         r2_lads_test_v3.append(r2_lad_alt_v3_test)
+        r2_lads_test_v4.append(1 - r2_lad_v4_test)
     # writing info to the file
     result_file_v1 = out_put_name_1 + '.csv'
     print('mip gaps v1', mip_gaps_v1)
     print('mip gaps v2', mip_gaps_v2)
     print('mip gaps v3', mip_gaps_v3)
+    print('mip gaps v4', mip_gaps_v4)
     print('solving times v1', solving_times_v1)
     print('solving times v2', solving_times_v2)
     print('solving times v3', solving_times_v3)
+    print('solving times v4', solving_times_v4)
     print('maes v1', maes_train_v1)
     print('maes v2', maes_train_v2)
     print('maes v3', maes_train_v3)
+    print('maes v4', maes_train_v4)
+    print('maes v1 test', maes_test_v1)
+    print('maes v2 test', maes_test_v2)
+    print('maes v3 test', maes_test_v3)
+    print('maes v4 test', maes_test_v4)
     print('orig obj v1', orig_obj_v1)
     print('orig obj v2', orig_obj_v2)
     print('orig obj v3', orig_obj_v3)
-    row_1 = [approach_name_1, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v1) * 100,
+    print('orig obj v4', orig_obj_v4)
+    row_1 = [approach_name_1, input_file, depth, n_k_folds, np.average(mip_gaps_v1) * 100,
              np.average(solving_times_v1), np.average(maes_train_v1), np.average(r2_lads_train_v1),
              np.average(maes_test_v1), np.average(r2_lads_test_v1)]
-    row_2 = [approach_name_2, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v2) * 100,
+    row_2 = [approach_name_2, input_file, depth, n_k_folds, np.average(mip_gaps_v2) * 100,
              np.average(solving_times_v2), np.average(maes_train_v2), np.average(r2_lads_train_v2),
              np.average(maes_test_v2), np.average(r2_lads_test_v2)]
-    row_3 = [approach_name_3, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v3) * 100,
+    row_3 = [approach_name_3, input_file, depth, n_k_folds, np.average(mip_gaps_v3) * 100,
              np.average(solving_times_v3), np.average(maes_train_v3), np.average(r2_lads_train_v3),
              np.average(maes_test_v3), np.average(r2_lads_test_v3)]
+    row_4 = [approach_name_4, input_file, depth, n_k_folds, np.average(mip_gaps_v4) * 100,
+             np.average(solving_times_v4), np.average(maes_train_v4), np.average(r2_lads_train_v4),
+             np.average(maes_test_v4), np.average(r2_lads_test_v4)]
     with open(out_put_path + result_file_v1, mode='a') as results:
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
@@ -288,13 +345,20 @@ def main(argv):
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
         results_writer.writerow(row_3)
-    result_file_v4 = out_put_name + '.csv'
+
+    result_file_v4 = out_put_name_4 + '.csv'
     with open(out_put_path + result_file_v4, mode='a') as results:
+        results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
+
+        results_writer.writerow(row_4)
+    result_file_v5 = out_put_name + '.csv'
+    with open(out_put_path + result_file_v5, mode='a') as results:
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
         results_writer.writerow(row_1)
         results_writer.writerow(row_2)
         results_writer.writerow(row_3)
+        results_writer.writerow(row_4)
 
 
 if __name__ == "__main__":
