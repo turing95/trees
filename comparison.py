@@ -94,7 +94,8 @@ def main(argv):
     x = data.iloc[:, :-1]
     y = data.iloc[:, -1]
     k_folds = 5 if train_len < 300 else 10
-    kf = KFold(n_splits=k_folds, shuffle=True)
+    random_state = 1
+    kf = KFold(n_splits=k_folds, shuffle=True,random_state=random_state)
     maes_train_v1 = []
     maes_train_v2 = []
     maes_train_v3 = []
