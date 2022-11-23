@@ -46,7 +46,6 @@ class FlowOCT:
 
         # Decision Variables
         self.b = 0
-        self.p = 0
         self.beta = 0
         self.beta_linear = 0
         self.zeta = 0
@@ -88,8 +87,6 @@ class FlowOCT:
         ############################### define variables
         # b[n,f] ==1 iff at node n we branch on feature f
         self.b = self.model.addVars(self.tree.Nodes, self.cat_features, vtype=GRB.BINARY, name='b')
-        # p[n] == 1 iff at node n we do not branch and we make a prediction
-        self.p = self.model.addVars(self.tree.Nodes + self.tree.Leaves, vtype=GRB.BINARY, name='p')
         '''
         For classification beta[n,k]=1 iff at node n we predict class k
         For the case regression beta[n,1] is the prediction value for node n
@@ -105,9 +102,6 @@ class FlowOCT:
                                     name='z')
 
         ############################### define constraints
-        # additional constraint to have balanced trees
-        self.model.addConstrs(
-            (self.p[n] == 0) for n in self.tree.Nodes)
         # z[i,n] = z[i,l(n)] + z[i,r(n)] + zeta[i,n]    forall i, n in Nodes
         for n in self.tree.Nodes:
             n_left = int(self.tree.get_left_children(n))
@@ -127,15 +121,8 @@ class FlowOCT:
 
         # sum(b[n,f], f) + p[n] + sum(p[m], m in A(n)) = 1   forall n in Nodes
         self.model.addConstrs(
-            (quicksum(self.b[n, f] for f in self.cat_features) + self.p[n] + quicksum(
-                self.p[m] for m in self.tree.get_ancestors(n)) == 1) for n in
+            (quicksum(self.b[n, f] for f in self.cat_features) == 1) for n in
             self.tree.Nodes)
-
-        # p[n] + sum(p[m], m in A(n)) = 1   forall n in Leaves
-        self.model.addConstrs(
-            (self.p[n] + quicksum(
-                self.p[m] for m in self.tree.get_ancestors(n)) == 1) for n in
-            self.tree.Leaves)
 
         # sum(sum(b[n,f], f), n) <= branching_limit
         # self.model.addConstr(
@@ -145,18 +132,17 @@ class FlowOCT:
         # beta[n,k] = 1
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] * self.p[n] - self.data.at[i, self.label] * self.p[n] + self.beta[n, 1] +quicksum(
+                self.zeta[i, n] <= self.m[i] - self.data.at[i, self.label] + self.beta[n, 1] +quicksum(
                     self.beta_linear[n, f] * self.data.at[i, f] for f in self.cat_features)
                 for i in self.datapoints)
 
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] * self.p[n] + self.data.at[i, self.label] * self.p[n] - self.beta[n, 1] -quicksum(
+                self.zeta[i, n] <= self.m[i] + self.data.at[i, self.label] - self.beta[n, 1] -quicksum(
                     self.beta_linear[n, f] * self.data.at[i, f] for f in self.cat_features)
                 for i in self.datapoints)
 
         self.model.addConstrs(
-            (self.beta[n, 1] <= self.p[n]) for n in
-            self.tree.Nodes + self.tree.Leaves)
+            (self.beta[n, 1] <= 1) for n in self.tree.Leaves)
 
         for n in self.tree.Leaves:
             self.model.addConstrs(self.zeta[i, n] == self.z[i, n] for i in self.datapoints)

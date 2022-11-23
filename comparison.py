@@ -94,7 +94,8 @@ def main(argv):
     x = data.iloc[:, :-1]
     y = data.iloc[:, -1]
     k_folds = 5 if train_len < 300 else 10
-    kf = KFold(n_splits=k_folds, shuffle=True)
+    random_state = 1
+    kf = KFold(n_splits=k_folds, shuffle=True, random_state=random_state)
     maes_train_v1 = []
     maes_train_v2 = []
     maes_train_v3 = []
@@ -172,9 +173,8 @@ def main(argv):
         beta_v2 = primal_v2.model.getAttr("x", primal_v2.beta)
         beta_zero_v3 = primal_v3.model.getAttr("x", primal_v3.beta)
         beta_v3 = primal_v3.model.getAttr("x", primal_v3.beta_linear)
-        #beta_v3 = None
+        # beta_v3 = None
         # zeta = primal.model.getAttr("x", primal.zeta)
-        p_v3 = primal_v3.model.getAttr("x", primal_v3.p)
         z_v1 = primal_v1.model.getAttr("x", primal_v1.z)
         z_v2 = primal_v2.model.getAttr("x", primal_v2.z)
 
@@ -218,18 +218,18 @@ def main(argv):
         r2_v2, mse_v2, mae_v2, r2_lad_v2, r2_lad_alt_v2, reg_res_v2 = get_model_train_accuracy(data_train,
                                                                                                primal_v2.datapoints,
                                                                                                z_v2, beta_zero_v2,
-                                                                                               depth, primal_v2,beta_v2)
+                                                                                               depth, primal_v2,
+                                                                                               beta_v2)
         r2_v2_test, mse_v2_test, mae_v2_test, r2_lad_v2_test, r2_lad_alt_v2_test, reg_res_v2_test = get_model_test_accuracy(
             primal_v2,
             data_test,
             b_value_v2,
-            beta_zero_v2,beta_v2)
+            beta_zero_v2, beta_v2)
 
         reg_res_v3, mae_v3, mse_v3, r2_v3, r2_lad_alt_v3 = get_model_accuracy_v3(primal_v3, data_train, b_value_v3,
-                                                                                 beta_zero_v3, p_v3,beta_v3)
+                                                                                 beta_zero_v3, beta_v3)
 
-        _, mae_v3_test, _, _, r2_lad_alt_v3_test = get_model_accuracy_v3(primal_v3, data_test, b_value_v3, beta_zero_v3,
-                                                                         p_v3,beta_v3)
+        _, mae_v3_test, _, _, r2_lad_alt_v3_test = get_model_accuracy_v3(primal_v3, data_test, b_value_v3, beta_zero_v3,beta_v3)
         maes_train_v1.append(mae_v1)
         maes_train_v2.append(mae_v2)
         maes_train_v3.append(mae_v3)
