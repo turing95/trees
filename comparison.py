@@ -168,11 +168,11 @@ def main(argv):
         b_value_v3 = primal_v3.model.getAttr("X", primal_v3.b)
 
         beta_zero_v1 = primal_v1.model.getAttr("x", primal_v1.beta_zero)
-        beta_v1 = primal_v1.model.getAttr("x", primal_v1.beta)
+        beta_v1 = None
         beta_zero_v2 = primal_v2.model.getAttr("x", primal_v2.beta_zero)
-        beta_v2 = primal_v2.model.getAttr("x", primal_v2.beta)
+        beta_v2 = None
         beta_zero_v3 = primal_v3.model.getAttr("x", primal_v3.beta)
-        beta_v3 = primal_v3.model.getAttr("x", primal_v3.beta_linear)
+        beta_v3 = None
         # beta_v3 = None
         # zeta = primal.model.getAttr("x", primal.zeta)
         z_v1 = primal_v1.model.getAttr("x", primal_v1.z)

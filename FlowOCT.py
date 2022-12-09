@@ -47,7 +47,6 @@ class FlowOCT:
         # Decision Variables
         self.b = 0
         self.beta = 0
-        self.beta_linear = 0
         self.zeta = 0
         self.z = 0
 
@@ -91,11 +90,11 @@ class FlowOCT:
         For classification beta[n,k]=1 iff at node n we predict class k
         For the case regression beta[n,1] is the prediction value for node n
         '''
-        self.beta = self.model.addVars(self.tree.Nodes + self.tree.Leaves, self.labels, vtype=GRB.CONTINUOUS, lb=0,
+        self.beta = self.model.addVars(self.tree.Leaves, self.labels, vtype=GRB.CONTINUOUS, lb=0,
                                        name='beta')
-        self.beta_linear = self.model.addVars(self.tree.Leaves, self.cat_features, vtype=GRB.CONTINUOUS, name='beta_linear')
         # zeta[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
-        self.zeta = self.model.addVars(self.datapoints, self.tree.Nodes + self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
+        #TODO remove nodes
+        self.zeta = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                        name='zeta')
         # z[i,n] is the incoming flow to node n for datapoint i
         self.z = self.model.addVars(self.datapoints, self.tree.Nodes + self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
@@ -107,7 +106,7 @@ class FlowOCT:
             n_left = int(self.tree.get_left_children(n))
             n_right = int(self.tree.get_right_children(n))
             self.model.addConstrs(
-                (self.z[i, n] == self.z[i, n_left] + self.z[i, n_right] + self.zeta[i, n]) for i in self.datapoints)
+                (self.z[i, n] == self.z[i, n_left] + self.z[i, n_right]) for i in self.datapoints)
 
         # z[i,l(n)] <= m[i] * sum(b[n,f], f if x[i,f]=0)    forall i, n in Nodes
         for i in self.datapoints:
@@ -132,13 +131,11 @@ class FlowOCT:
         # beta[n,k] = 1
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] - self.data.at[i, self.label] + self.beta[n, 1] +quicksum(
-                    self.beta_linear[n, f] * self.data.at[i, f] for f in self.cat_features)
+                self.zeta[i, n] <= self.m[i] - self.data.at[i, self.label] + self.beta[n, 1]
                 for i in self.datapoints)
 
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] + self.data.at[i, self.label] - self.beta[n, 1] -quicksum(
-                    self.beta_linear[n, f] * self.data.at[i, f] for f in self.cat_features)
+                self.zeta[i, n] <= self.m[i] + self.data.at[i, self.label] - self.beta[n, 1]
                 for i in self.datapoints)
 
         self.model.addConstrs(

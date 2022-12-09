@@ -52,7 +52,6 @@ class FlowORT:
         self.b = 0
         self.p = 0
         self.beta_zero = 0
-        self.beta = 0
 
 
         self.z = 0
@@ -107,22 +106,19 @@ class FlowORT:
         # beta_zero[n] is the constant of the regression
         self.beta_zero = self.model.addVars(self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                             name='beta_zero')
-        self.beta = self.model.addVars(self.tree.Leaves, self.cat_features, vtype=GRB.CONTINUOUS, name='beta')
         ############################### define constraints
 
         # e[i,n] + big_m(1-p[i,n]) >= beta_zero[i] - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (self.e[i, n] + self.big_m * (1 - self.p[i, n]) >= self.beta_zero[n]+quicksum(
-                    self.beta[n, f] * self.data.at[i, f] for f in self.cat_features) - self.data.at[i, self.label]) for
+                (self.e[i, n] + self.big_m * (1 - self.p[i, n]) >= self.beta_zero[n] - self.data.at[i, self.label]) for
                 i
                 in self.datapoints)
         self.model.addConstrs(self.z[i, 1] == 0 for i in self.datapoints)
         # -e[i,n] - big_m(1-p[i,n]) <= beta_zero[i] - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (-self.e[i, n] - self.big_m * (1 - self.p[i, n]) <= self.beta_zero[n]+quicksum(
-                    self.beta[n, f] * self.data.at[i, f] for f in self.cat_features) - self.data.at[i, self.label]) for
+                (-self.e[i, n] - self.big_m * (1 - self.p[i, n]) <= self.beta_zero[n] - self.data.at[i, self.label]) for
                 i
                 in self.datapoints)
 
