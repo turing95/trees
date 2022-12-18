@@ -37,12 +37,15 @@ class FlowOCT:
 
         # parameters
         self.m = {}
+        self.sign = {}
+
         for i in self.datapoints:
             self.m[i] = 1
 
         for i in self.datapoints:
             y_i = self.data.at[i, self.label]
-            self.m[i] = max(y_i, 1 - y_i)
+            self.m[i] = y_i
+            self.sign[i] = 1 if y_i >= 0.5 else -1
 
         # Decision Variables
         self.b = 0
@@ -93,7 +96,6 @@ class FlowOCT:
         self.beta = self.model.addVars(self.tree.Leaves, self.labels, vtype=GRB.CONTINUOUS, lb=0,
                                        name='beta')
         # zeta[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
-        #TODO remove nodes
         self.zeta = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                        name='zeta')
         # z[i,n] is the incoming flow to node n for datapoint i
@@ -131,15 +133,15 @@ class FlowOCT:
         # beta[n,k] = 1
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] - self.data.at[i, self.label] + self.beta[n, 1]
+                self.zeta[i, n] - self.data.at[i, self.label] <= self.sign[i] * (
+                            self.beta[n, 1] - self.data.at[i, self.label])
                 for i in self.datapoints)
-
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] + self.data.at[i, self.label] - self.beta[n, 1]
+                self.zeta[i, n] - self.data.at[i, self.label] <= self.sign[i] * (self.data.at[i, self.label] - self.beta[n, 1])
                 for i in self.datapoints)
 
-        self.model.addConstrs(
-            (self.beta[n, 1] <= 1) for n in self.tree.Leaves)
+        '''self.model.addConstrs(
+            (self.beta[n, 1] <= 1) for n in self.tree.Leaves)'''
 
         for n in self.tree.Leaves:
             self.model.addConstrs(self.zeta[i, n] == self.z[i, n] for i in self.datapoints)
