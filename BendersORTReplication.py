@@ -72,16 +72,13 @@ def subproblem(master, b, p, beta, i):
     subproblem_value = 0
 
     while True:
-        pruned, branching, selected_feature, terminal, current_value = get_node_status(master, b, beta, p, current)
+        pruned, branching, selected_feature, terminal, current_value = get_node_status(master, b, beta, current)
         if terminal:
             target.append(current)
             if current in master.tree.Nodes:
                 left.append(current)
                 right.append(current)
-            if master.mode == "regression":
                 subproblem_value = master.m[i] - abs(current_value - label_i)
-            elif master.mode == "classification" and beta[current, label_i] > 0.5:
-                subproblem_value = 1
             break
         elif branching:
             if master.data.at[i, selected_feature] == 1:  # going right on the branch
@@ -130,14 +127,9 @@ def mycallback(model, where):
             g_threshold = 0
             if g[i] > g_threshold:
                 subproblem_value, left, right, target = subproblem(model._master, b, p, beta, i)
-                if mode == "classification" and subproblem_value == 0:
-                    added_cut = 1
-                    lhs = get_cut_integer(model._master, b, p, beta, left, right, target, i)
-                    model.cbLazy(lhs <= 0)
-                elif mode == "regression" and ((subproblem_value + local_eps) < g[i]):
-                    added_cut = 1
-                    lhs = get_cut_integer(model._master, b, p, beta, left, right, target, i)
-                    model.cbLazy(lhs <= 0)
+                added_cut = 1
+                lhs = get_cut_integer(model._master, b, p, beta, left, right, target, i)
+                model.cbLazy(lhs <= 0)
 
         func_end_time = time.time()
         func_time = func_end_time - func_start_time
