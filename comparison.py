@@ -330,7 +330,7 @@ def main(argv):
 
         # zeta = primal.model.getAttr("x", primal.zeta)
         p_v3 = primal_v3.model.getAttr("x", primal_v3.p)
-        p_v4 = primal_v3.model.getAttr("x", primal_v4.p)
+        p_v4 = primal_v4.model.getAttr("x", primal_v4.p)
         z_v1 = primal_v1.model.getAttr("x", primal_v1.z)
         z_v2 = primal_v2.model.getAttr("x", primal_v2.z)
 

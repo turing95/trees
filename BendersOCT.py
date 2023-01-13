@@ -117,7 +117,8 @@ class BendersOCT:
         self.model._vars_b = self.b
         self.model._vars_p = self.p
         self.model._vars_beta = self.beta
-
+        self.model.addConstrs(
+            (self.p[n] == 0) for n in self.tree.Nodes)
         # define constraints
         # additional constraint to have balanced trees
         # sum(b[n,f], f) + p[n] + sum(p[m], m in A(n)) = 1   forall n in Nodes
