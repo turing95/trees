@@ -8,6 +8,7 @@ from FlowORT import FlowORT
 from FlowOCT import FlowOCT
 from FlowORT_v2 import FlowORT as FlowORT_v2
 from BendersOCT import BendersOCT
+from BendersORT import BendersORT
 import logger
 import getopt
 import csv
@@ -58,7 +59,7 @@ def get_cut_integer(master, b, beta, left, right, target, i):
     return lhs
 
 
-def subproblem(master, b, beta, i):
+def subproblem_oct(master, b, beta, i):
     label_i = master.data.at[i, master.label]
     current = 1
     right = []
@@ -92,10 +93,28 @@ def subproblem(master, b, beta, i):
     return subproblem_value, left, right, target
 
 
+def subproblem_ort(master, b, beta, i):
+    current = 1
+
+    while True:
+        pruned, branching, selected_feature, terminal, current_value = get_node_status(master, b, beta, current, i,
+                                                                                       master.data)
+        if terminal:
+            target = current
+            break
+        elif branching:
+            if master.data.at[i, selected_feature] == 1:  # going right on the branch
+                current = master.tree.get_right_children(current)
+            else:  # going left on the branch
+                current = master.tree.get_left_children(current)
+
+    return target
+
+
 ##########################################################
 # Defining the callback function
 ###########################################################
-def mycallback(model, where):
+def mycallback_oct(model, where):
     '''
     This function is called by gurobi at every node through the branch-&-bound tree while we solve the model.
     Using the argument "where" we can see where the callback has been called. We are specifically interested at nodes
@@ -129,7 +148,7 @@ def mycallback(model, where):
             elif mode == "regression":
                 g_threshold = 0
             if g[i] > g_threshold:
-                subproblem_value, left, right, target = subproblem(model._master, b, beta, i)
+                subproblem_value, left, right, target = subproblem_oct(model._master, b, beta, i)
                 if mode == "classification" and subproblem_value == 0:
                     added_cut = 1
                     lhs = get_cut_integer(model._master, b, beta, left, right, target, i)
@@ -146,6 +165,38 @@ def mycallback(model, where):
         if added_cut == 1:
             model._callback_counter_integer_success += 1
             model._total_callback_time_integer_success += func_time
+
+
+def mycallback_ort(model, where):
+    '''
+    This function is called by gurobi at every node through the branch-&-bound tree while we solve the model.
+    Using the argument "where" we can see where the callback has been called. We are specifically interested at nodes
+    where we get an integer solution for the master problem.
+    When we get an integer solution for b and p, for every datapoint we solve the subproblem which is a minimum cut and
+    check if g[i] <= value of subproblem[i]. If this is violated we add the corresponding benders constraint as lazy
+    constraint to the master problem and proceed. Whenever we have no violated constraint! It means that we have found
+    the optimal solution.
+    :param model: the gurobi model we are solving.
+    :param where: the node where the callback function is called from
+    :return:
+    '''
+    data_train = model._master.data
+    if where == GRB.Callback.MIPSOL:
+        func_start_time = time.time()
+        model._callback_counter_integer += 1
+        # we need the value of b,w and g
+        b = model.cbGetSolution(model._vars_b)
+        beta = model.cbGetSolution(model._vars_beta_zero)
+
+        for i in data_train.index:
+            target = subproblem_ort(model._master, b, beta, i)
+            model.cbLazy((model.e[i, n] >= model.big_m) for
+                         n in model.tree.Leaves if n != target)
+
+        func_end_time = time.time()
+        func_time = func_end_time - func_start_time
+        # print(model._callback_counter)
+        model._total_callback_time_integer += func_time
 
 
 def main(argv):
@@ -205,7 +256,11 @@ def main(argv):
         time_limit) + '_constant_cross_validation'
 
     approach_name_4 = 'BenderOCT'
-    out_put_name_4 = input_file + '_' + approach_name_3 + '_d_' + str(depth) + '_t_' + str(
+    out_put_name_4 = input_file + '_' + approach_name_4 + '_d_' + str(depth) + '_t_' + str(
+        time_limit) + '_constant_cross_validation'
+
+    approach_name_5 = 'BenderOCT'
+    out_put_name_5 = input_file + '_' + approach_name_5 + '_d_' + str(depth) + '_t_' + str(
         time_limit) + '_constant_cross_validation'
 
     ##########################################################
@@ -235,30 +290,37 @@ def main(argv):
     maes_train_v2 = []
     maes_train_v3 = []
     maes_train_v4 = []
+    maes_train_v5 = []
     maes_test_v1 = []
     maes_test_v2 = []
     maes_test_v3 = []
     maes_test_v4 = []
+    maes_test_v5 = []
     mip_gaps_v1 = []
     mip_gaps_v2 = []
     mip_gaps_v3 = []
     mip_gaps_v4 = []
+    mip_gaps_v5 = []
     solving_times_v1 = []
     solving_times_v2 = []
     solving_times_v3 = []
     solving_times_v4 = []
+    solving_times_v5 = []
     r2_lads_train_v1 = []
     r2_lads_train_v2 = []
     r2_lads_train_v3 = []
     r2_lads_train_v4 = []
+    r2_lads_train_v5 = []
     r2_lads_test_v1 = []
     r2_lads_test_v2 = []
     r2_lads_test_v3 = []
     r2_lads_test_v4 = []
+    r2_lads_test_v5 = []
     orig_obj_v1 = []
     orig_obj_v2 = []
     orig_obj_v3 = []
     orig_obj_v4 = []
+    orig_obj_v5 = []
     n_k_folds = kf.get_n_splits(x)
     for train_index, test_index in kf.split(x):
         print("TRAIN:", train_index, "TEST:", test_index)
@@ -307,10 +369,20 @@ def main(argv):
 
         primal_v4.create_master_problem()
         primal_v4.model.update()
-        primal_v4.model.optimize(mycallback)
+        primal_v4.model.optimize(mycallback_oct)
         end_time = time.time()
 
         solving_time_v4 = end_time - start_time
+
+        start_time = time.time()
+        primal_v5 = BendersORT(data_train, label, tree, time_limit)
+
+        primal_v5.create_master_problem()
+        primal_v5.model.update()
+        primal_v5.model.optimize(mycallback_ort)
+        end_time = time.time()
+
+        solving_time_v5 = end_time - start_time
         ##########################################################
         # Preparing the output
         ##########################################################
@@ -318,6 +390,7 @@ def main(argv):
         b_value_v2 = primal_v2.model.getAttr("X", primal_v2.b)
         b_value_v3 = primal_v3.model.getAttr("X", primal_v3.b)
         b_value_v4 = primal_v3.model.getAttr("X", primal_v4.b)
+        b_value_v5 = primal_v3.model.getAttr("X", primal_v5.b)
 
         beta_zero_v1 = primal_v1.model.getAttr("x", primal_v1.beta_zero)
         beta_v1 = None
@@ -327,6 +400,8 @@ def main(argv):
         beta_v3 = None
         beta_zero_v4 = primal_v4.model.getAttr("x", primal_v4.beta)
         beta_v4 = None
+        beta_zero_v5 = primal_v5.model.getAttr("x", primal_v5.beta_zero)
+        beta_v5 = None
         # beta_v3 = None
         # zeta = primal.model.getAttr("x", primal.zeta)
         z_v1 = primal_v1.model.getAttr("x", primal_v1.z)
@@ -339,10 +414,12 @@ def main(argv):
         print('Total Solving Time v2', solving_time_v2)
         print('Total Solving Time v3', solving_time_v3)
         print('Total Solving Time v4', solving_time_v4)
+        print('Total Solving Time v5', solving_time_v5)
         print("\n\nobj value v1", primal_v1.model.getAttr("ObjVal"))
         print("obj value v2", primal_v2.model.getAttr("ObjVal"))
         print("obj value v3", primal_v3.model.getAttr("ObjVal"))
         print("obj value v4", primal_v4.model.getAttr("ObjVal"))
+        print("obj value v5", primal_v5.model.getAttr("ObjVal"))
         print('\n\nbnf_v1', b_value_v1)
         print('bnf_v2', b_value_v2)
         print('bnf_v3', b_value_v3)
@@ -393,56 +470,73 @@ def main(argv):
 
         _, mae_v4_test, _, _, r2_lad_alt_v4_test = get_model_accuracy_v3(primal_v4, data_test, b_value_v4, beta_zero_v4,
                                                                          beta_v4)
+
+        reg_res_v5, mae_v5, mse_v5, r2_v5, r2_lad_alt_v5 = get_model_accuracy_v3(primal_v5, data_train, b_value_v5,
+                                                                                 beta_zero_v5, beta_v5)
+        _, mae_v5_test, _, _, r2_lad_alt_v5_test = get_model_accuracy_v3(primal_v5, data_test, b_value_v5, beta_zero_v5,
+                                                                         beta_v5)
         maes_train_v1.append(mae_v1)
         maes_train_v2.append(mae_v2)
         maes_train_v3.append(mae_v3)
         maes_train_v4.append(mae_v4)
+        maes_train_v5.append(mae_v5)
         maes_test_v1.append(mae_v1_test)
         maes_test_v2.append(mae_v2_test)
         maes_test_v3.append(mae_v3_test)
         maes_test_v4.append(mae_v4_test)
+        maes_test_v5.append(mae_v5_test)
         orig_obj_v1.append(reg_res_v1)
         orig_obj_v2.append(reg_res_v2)
         orig_obj_v3.append(reg_res_v3)
         orig_obj_v4.append(reg_res_v4)
+        orig_obj_v5.append(reg_res_v5)
         mip_gaps_v1.append((reg_res_v1 - lower_bound_v2) / lower_bound_v2)
         mip_gaps_v2.append((reg_res_v2 - lower_bound_v2) / lower_bound_v2)
         mip_gaps_v3.append((reg_res_v3 - lower_bound_v2) / lower_bound_v2)
         mip_gaps_v4.append((reg_res_v4 - lower_bound_v2) / lower_bound_v2)
+        mip_gaps_v5.append((reg_res_v5 - lower_bound_v2) / lower_bound_v2)
         solving_times_v1.append(solving_time_v1)
         solving_times_v2.append(solving_time_v2)
         solving_times_v3.append(solving_time_v3)
         solving_times_v4.append(solving_time_v4)
+        solving_times_v5.append(solving_time_v5)
         r2_lads_train_v1.append(1 - r2_lad_v1)
         r2_lads_train_v2.append(1 - r2_lad_v2)
         r2_lads_train_v3.append(r2_lad_alt_v3)
         r2_lads_train_v4.append(r2_lad_alt_v4)
+        r2_lads_train_v5.append(r2_lad_alt_v5)
         r2_lads_test_v1.append(r2_lad_alt_v1_test)
         r2_lads_test_v2.append(r2_lad_alt_v2_test)
         r2_lads_test_v3.append(r2_lad_alt_v3_test)
         r2_lads_test_v4.append(r2_lad_alt_v4_test)
+        r2_lads_test_v5.append(r2_lad_alt_v5_test)
     # writing info to the file
     result_file_v1 = out_put_name_1 + '.csv'
     print('mip gaps v1', mip_gaps_v1)
     print('mip gaps v2', mip_gaps_v2)
     print('mip gaps v3', mip_gaps_v3)
     print('mip gaps v4', mip_gaps_v4)
+    print('mip gaps v5', mip_gaps_v5)
     print('solving times v1', solving_times_v1)
     print('solving times v2', solving_times_v2)
     print('solving times v3', solving_times_v3)
     print('solving times v4', solving_times_v4)
+    print('solving times v5', solving_times_v5)
     print('maes v1', maes_train_v1)
     print('maes v2', maes_train_v2)
     print('maes v3', maes_train_v3)
     print('maes v4', maes_train_v4)
+    print('maes v5', maes_train_v5)
     print('orig obj v1', orig_obj_v1)
     print('orig obj v2', orig_obj_v2)
     print('orig obj v3', orig_obj_v3)
     print('orig obj v4', orig_obj_v4)
+    print('orig obj v5', orig_obj_v5)
     print('maes v1 test', maes_train_v1)
     print('maes v2 test', maes_train_v2)
     print('maes v3 test', maes_train_v3)
     print('maes v4 test', maes_train_v4)
+    print('maes v5 test', maes_train_v5)
     row_1 = [approach_name_1, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v1) * 100,
              np.average(solving_times_v1), np.average(maes_train_v1), np.average(r2_lads_train_v1),
              np.average(maes_test_v1), np.average(r2_lads_test_v1)]
@@ -455,6 +549,9 @@ def main(argv):
     row_4 = [approach_name_4, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v4) * 100,
              np.average(solving_times_v4), np.average(maes_train_v4), np.average(r2_lads_train_v4),
              np.average(maes_test_v4), np.average(r2_lads_test_v4)]
+    row_5 = [approach_name_5, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v5) * 100,
+             np.average(solving_times_v5), np.average(maes_train_v5), np.average(r2_lads_train_v5),
+             np.average(maes_test_v5), np.average(r2_lads_test_v5)]
     with open(out_put_path + result_file_v1, mode='a') as results:
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
@@ -474,7 +571,7 @@ def main(argv):
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
         results_writer.writerow(row_3)
-    result_file_v4 = out_put_name + '.csv'
+    result_file_v4 = out_put_name_4 + '.csv'
     with open(out_put_path + result_file_v4, mode='a') as results:
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
@@ -488,6 +585,7 @@ def main(argv):
         results_writer.writerow(row_2)
         results_writer.writerow(row_3)
         results_writer.writerow(row_4)
+        results_writer.writerow(row_5)
 
 
 if __name__ == "__main__":

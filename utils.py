@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, median_absolute_error
 
 
-def get_node_status(grb_model, b, beta_zero, n, i,local_data, beta=None):
+def get_node_status(grb_model, b, beta_zero, n, i, local_data, beta=None):
     '''
     This function give the status of a given node in a tree. By status we mean whether the node
         1- is pruned? i.e., we have made a prediction at one of its ancestors
@@ -56,7 +56,8 @@ def get_predicted_value(grb_model, local_data, b, beta_zero, i, beta=None):
     current = 1
 
     while True:
-        branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta_zero, current, i,local_data, beta)
+        branching, selected_feature, leaf, value = get_node_status(grb_model, b, beta_zero, current, i, local_data,
+                                                                   beta)
         if leaf:
             return value
         elif branching:

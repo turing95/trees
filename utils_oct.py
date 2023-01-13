@@ -22,7 +22,6 @@ def get_node_status(grb_model, b, beta_zero, n, i, local_data, beta=None):
     value: if node n is a leaf, value represent the prediction at this node
     '''
     tree = grb_model.tree
-    mode = grb_model.mode
     pruned = False
     branching = False
     leaf = False
@@ -31,14 +30,10 @@ def get_node_status(grb_model, b, beta_zero, n, i, local_data, beta=None):
 
     if n in grb_model.tree.Leaves:  # leaf
         leaf = True
-        if mode == "regression":
-            value = beta_zero[n, 1]
-            if beta is not None:
-                value += sum(beta[n, f] * local_data.at[i, f] for f in grb_model.cat_features)
-        elif mode == "classification":
-            for k in grb_model.labels:
-                if beta_zero[n, k] > 0.5:
-                    value = k
+        value = beta_zero[n, 1]
+        if beta is not None:
+            value += sum(beta[n, f] * local_data.at[i, f] for f in grb_model.cat_features)
+
 
     if n in tree.Nodes:
         if (pruned == False) and (leaf == False):  # branching
