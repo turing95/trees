@@ -137,7 +137,6 @@ def mycallback_oct(model, where):
         # we need the value of b,w and g
         g = model.cbGetSolution(model._vars_g)
         b = model.cbGetSolution(model._vars_b)
-        p = model.cbGetSolution(model._vars_p)
         beta = model.cbGetSolution(model._vars_beta)
 
         added_cut = 0
@@ -187,12 +186,19 @@ def mycallback_ort(model, where):
         # we need the value of b,w and g
         b = model.cbGetSolution(model._vars_b)
         beta = model.cbGetSolution(model._vars_beta_zero)
+        e = model._vars_e
 
         for i in data_train.index:
-            target = subproblem_ort(model._master, b, beta, i)
-            model.cbLazy((model.e[i, n] >= model.big_m) for
-                         n in model.tree.Leaves if n != target)
 
+            target = subproblem_ort(model._master, b, beta, i)
+
+            for n in model._master.tree.Leaves:
+                if n != target:
+                    if i == 0:
+                        print(target)
+                        print(model._master.big_m)
+                        print(e[i, n])
+                    model.cbLazy(e[i, n] >= model._master.big_m)
         func_end_time = time.time()
         func_time = func_end_time - func_start_time
         # print(model._callback_counter)
@@ -389,8 +395,8 @@ def main(argv):
         b_value_v1 = primal_v1.model.getAttr("X", primal_v1.b)
         b_value_v2 = primal_v2.model.getAttr("X", primal_v2.b)
         b_value_v3 = primal_v3.model.getAttr("X", primal_v3.b)
-        b_value_v4 = primal_v3.model.getAttr("X", primal_v4.b)
-        b_value_v5 = primal_v3.model.getAttr("X", primal_v5.b)
+        b_value_v4 = primal_v4.model.getAttr("X", primal_v4.b)
+        b_value_v5 = primal_v5.model.getAttr("X", primal_v5.b)
 
         beta_zero_v1 = primal_v1.model.getAttr("x", primal_v1.beta_zero)
         beta_v1 = None
@@ -406,6 +412,7 @@ def main(argv):
         # zeta = primal.model.getAttr("x", primal.zeta)
         z_v1 = primal_v1.model.getAttr("x", primal_v1.z)
         z_v2 = primal_v2.model.getAttr("x", primal_v2.z)
+        e_v5 = primal_v5.model.getAttr("x", primal_v5.e)
 
         lower_bound_v2 = primal_v2.model.getAttr("ObjBound")
 
@@ -423,6 +430,8 @@ def main(argv):
         print('\n\nbnf_v1', b_value_v1)
         print('bnf_v2', b_value_v2)
         print('bnf_v3', b_value_v3)
+        print('bnf_v5', b_value_v5)
+        print('\n\ne_v5', e_v5)
         print('\n\npi_n v1')
         print(z_v1)
         print('#####')
@@ -432,9 +441,12 @@ def main(argv):
         print(f'\n\nbeta_zero V1 {beta_zero_v1}')
         print(f'beta_zero V2 {beta_zero_v2}')
         print(f'beta_zero V3 {beta_zero_v3}')
-        print(f'beta V1 {beta_v1}')
+        print(f'beta_zero V4 {beta_zero_v4}')
+        print(f'beta_zero V5 {beta_zero_v5}')
+        print(f'\n\nbeta V1 {beta_v1}')
         print(f'beta V3 {beta_v3}')
-        print(f'lower_bound_v2 {lower_bound_v2}')
+        print(f'\n\nlower_bound_v2 {lower_bound_v2}')
+
 
         r2_v1, mse_v1, mae_v1, r2_lad_v1, r2_lad_alt_v1, reg_res_v1 = get_model_train_accuracy(data_train,
                                                                                                primal_v1.datapoints,

@@ -4,6 +4,7 @@ This module formulate the FlowOCT problem in gurobipy.
 
 from gurobipy import *
 
+
 class BendersORT:
     def __init__(self, data, label, tree, time_limit):
         '''
@@ -48,7 +49,6 @@ class BendersORT:
         # Decision Variables
         self.b = 0
         self.beta_zero = 0
-        self.g = 0
         self.e = 0
         self.labels = [1]
 
@@ -58,6 +58,9 @@ class BendersORT:
         To compare all approaches in a fair setting we limit the solver to use only one thread to merely evaluate 
         the strength of the formulation.
         '''
+
+        # The cuts we add in the callback function would be treated as lazy constraints
+        self.model.params.LazyConstraints = 1
         self.model.params.Threads = 1
         self.model.params.TimeLimit = time_limit
 
@@ -77,6 +80,10 @@ class BendersORT:
         self.model._callback_counter_general = 0
         self.model._callback_counter_general_success = 0
 
+        # We also pass the following information to the model as we need them in the callback
+        self.model._master = self
+        self.model._big_m = self.big_m
+
     ###########################################################
     # Create the MIP formulation
     ###########################################################
@@ -89,33 +96,32 @@ class BendersORT:
         # b[n,f] ==1 iff at node n we branch on feature f
         self.b = self.model.addVars(self.tree.Nodes, self.cat_features, vtype=GRB.BINARY, name='b')
 
-        # g[i] is the objective value for the subproblem[i]
-        self.g = self.model.addVars(self.datapoints, vtype=GRB.CONTINUOUS, ub=1, name='g')
-
         # TODO discretize leaves variable
         # e[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
         self.e = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                     name='e')
         # beta_zero[n] is the constant of the regression
-        self.beta_zero = self.model.addVars(self.tree.Leaves,self.labels, vtype=GRB.CONTINUOUS, lb=0,
+        self.beta_zero = self.model.addVars(self.tree.Leaves, self.labels, vtype=GRB.CONTINUOUS, lb=0,
                                             name='beta_zero')
 
         # we need these in the callback to have access to the value of the decision variables
-        self.model._vars_g = self.g
         self.model._vars_b = self.b
+        self.model._vars_e = self.e
         self.model._vars_beta_zero = self.beta_zero
+
+
 
         # define constraints
 
         # 1a) e[i,n] >=sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (self.e[i, n] >= self.beta_zero[n,1] - self.data.at[i, self.label]) for
+                (self.e[i, n] >= self.beta_zero[n, 1] - self.data.at[i, self.label]) for
                 i in self.datapoints)
         #  1b) -e[i,n] <= sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (-self.e[i, n] <= self.beta_zero[n,1] - self.data.at[i, self.label]) for
+                (-self.e[i, n] <= self.beta_zero[n, 1] - self.data.at[i, self.label]) for
                 i in self.datapoints)
 
         # 7) sum(b[n,f], f) = 1   forall n in Nodes
@@ -123,8 +129,11 @@ class BendersORT:
             (quicksum(self.b[n, f] for f in self.cat_features) == 1) for n in
             self.tree.Nodes)
 
+
+
         # define objective function
         obj = LinExpr(0)
         for i in self.datapoints:
-            obj.add((self.g[i]))
+            for n in self.tree.Leaves:
+                obj.add((self.e[i, n]))
         self.model.setObjective(obj, GRB.MINIMIZE)
