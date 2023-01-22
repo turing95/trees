@@ -370,33 +370,12 @@ def main(argv):
 
         solving_time_v3 = end_time - start_time
 
-        start_time = time.time()
-        primal_v4 = BendersOCT(data_train, label, tree, time_limit)
-
-        primal_v4.create_master_problem()
-        primal_v4.model.update()
-        primal_v4.model.optimize(mycallback_oct)
-        end_time = time.time()
-
-        solving_time_v4 = end_time - start_time
-
-        start_time = time.time()
-        primal_v5 = BendersORT(data_train, label, tree, time_limit)
-
-        primal_v5.create_master_problem()
-        primal_v5.model.update()
-        primal_v5.model.optimize(mycallback_ort)
-        end_time = time.time()
-
-        solving_time_v5 = end_time - start_time
         ##########################################################
         # Preparing the output
         ##########################################################
         b_value_v1 = primal_v1.model.getAttr("X", primal_v1.b)
         b_value_v2 = primal_v2.model.getAttr("X", primal_v2.b)
         b_value_v3 = primal_v3.model.getAttr("X", primal_v3.b)
-        b_value_v4 = primal_v4.model.getAttr("X", primal_v4.b)
-        b_value_v5 = primal_v5.model.getAttr("X", primal_v5.b)
 
         beta_zero_v1 = primal_v1.model.getAttr("x", primal_v1.beta_zero)
         beta_v1 = None
@@ -404,15 +383,7 @@ def main(argv):
         beta_v2 = None
         beta_zero_v3 = primal_v3.model.getAttr("x", primal_v3.beta)
         beta_v3 = None
-        beta_zero_v4 = primal_v4.model.getAttr("x", primal_v4.beta)
-        beta_v4 = None
-        beta_zero_v5 = primal_v5.model.getAttr("x", primal_v5.beta_zero)
-        beta_v5 = None
         # beta_v3 = None
-        # zeta = primal.model.getAttr("x", primal.zeta)
-        z_v1 = primal_v1.model.getAttr("x", primal_v1.z)
-        z_v2 = primal_v2.model.getAttr("x", primal_v2.z)
-        e_v5 = primal_v5.model.getAttr("x", primal_v5.e)
 
         lower_bound_v2 = primal_v2.model.getAttr("ObjBound")
 
@@ -420,56 +391,42 @@ def main(argv):
         print('\n\nTotal Solving Time v1', solving_time_v1)
         print('Total Solving Time v2', solving_time_v2)
         print('Total Solving Time v3', solving_time_v3)
-        print('Total Solving Time v4', solving_time_v4)
-        print('Total Solving Time v5', solving_time_v5)
         print("\n\nobj value v1", primal_v1.model.getAttr("ObjVal"))
         print("obj value v2", primal_v2.model.getAttr("ObjVal"))
         print("obj value v3", primal_v3.model.getAttr("ObjVal"))
-        print("obj value v4", primal_v4.model.getAttr("ObjVal"))
-        print("obj value v5", primal_v5.model.getAttr("ObjVal"))
         print('\n\nbnf_v1', b_value_v1)
         print('bnf_v2', b_value_v2)
         print('bnf_v3', b_value_v3)
-        print('bnf_v5', b_value_v5)
-        print('\n\ne_v5', e_v5)
         print('\n\npi_n v1')
-        print(z_v1)
         print('#####')
         print('pi_n v2')
-        print(z_v2)
 
         print(f'\n\nbeta_zero V1 {beta_zero_v1}')
         print(f'beta_zero V2 {beta_zero_v2}')
         print(f'beta_zero V3 {beta_zero_v3}')
-        print(f'beta_zero V4 {beta_zero_v4}')
-        print(f'beta_zero V5 {beta_zero_v5}')
         print(f'\n\nbeta V1 {beta_v1}')
         print(f'beta V3 {beta_v3}')
         print(f'\n\nlower_bound_v2 {lower_bound_v2}')
 
-
-        r2_v1, mse_v1, mae_v1, r2_lad_v1, r2_lad_alt_v1, reg_res_v1 = get_model_train_accuracy(data_train,
-                                                                                               primal_v1.datapoints,
-                                                                                               z_v1,
-                                                                                               beta_zero_v1,
-                                                                                               depth, primal_v1,
-                                                                                               beta_v1)
-        r2_v1_test, mse_v1_test, mae_v1_test, r2_lad_v1_test, r2_lad_alt_v1_test, reg_res_v1_test = get_model_test_accuracy(
+        reg_res_v1, mae_v1, mse_v1, r2_v1, r2_lad_alt_v1 = get_model_accuracy_v3(primal_v1,
+                                                                                 data_train,
+                                                                                 b_value_v1,
+                                                                                 beta_zero_v1,
+                                                                                 beta_v1)
+        reg_res_v1_test, mae_v1_test, mse_v1_test, r2_v1_test, r2_lad_alt_v1_test = get_model_accuracy_v3(
             primal_v1,
             data_test,
             b_value_v1,
             beta_zero_v1,
             beta_v1)
-        r2_v2, mse_v2, mae_v2, r2_lad_v2, r2_lad_alt_v2, reg_res_v2 = get_model_train_accuracy(data_train,
-                                                                                               primal_v2.datapoints,
-                                                                                               z_v2, beta_zero_v2,
-                                                                                               depth, primal_v2,
-                                                                                               beta_v2)
-        r2_v2_test, mse_v2_test, mae_v2_test, r2_lad_v2_test, r2_lad_alt_v2_test, reg_res_v2_test = get_model_test_accuracy(
-            primal_v2,
-            data_test,
-            b_value_v2,
-            beta_zero_v2, beta_v2)
+        reg_res_v2, mae_v2, mse_v2, r2_v2, r2_lad_alt_v2 = get_model_accuracy_v3(primal_v2, data_train, b_value_v2,
+                                                                                 beta_zero_v2,
+                                                                                 beta_v2)
+        reg_res_v2_test, mae_v2_test, mse_v2_test, r2_v2_test, r2_lad_alt_v2_test = get_model_accuracy_v3(primal_v2,
+                                                                                                          data_test,
+                                                                                                          b_value_v2,
+                                                                                                          beta_zero_v2,
+                                                                                                          beta_v2)
 
         reg_res_v3, mae_v3, mse_v3, r2_v3, r2_lad_alt_v3 = get_model_accuracy_v3(primal_v3, data_train, b_value_v3,
                                                                                  beta_zero_v3, beta_v3)
@@ -477,51 +434,33 @@ def main(argv):
         _, mae_v3_test, _, _, r2_lad_alt_v3_test = get_model_accuracy_v3(primal_v3, data_test, b_value_v3, beta_zero_v3,
                                                                          beta_v3)
 
-        reg_res_v4, mae_v4, mse_v4, r2_v4, r2_lad_alt_v4 = get_model_accuracy_v3(primal_v4, data_train, b_value_v4,
-                                                                                 beta_zero_v4, beta_v4)
-
-        _, mae_v4_test, _, _, r2_lad_alt_v4_test = get_model_accuracy_v3(primal_v4, data_test, b_value_v4, beta_zero_v4,
-                                                                         beta_v4)
-
-        reg_res_v5, mae_v5, mse_v5, r2_v5, r2_lad_alt_v5 = get_model_accuracy_v3(primal_v5, data_train, b_value_v5,
-                                                                                 beta_zero_v5, beta_v5)
-        _, mae_v5_test, _, _, r2_lad_alt_v5_test = get_model_accuracy_v3(primal_v5, data_test, b_value_v5, beta_zero_v5,
-                                                                         beta_v5)
         maes_train_v1.append(mae_v1)
         maes_train_v2.append(mae_v2)
         maes_train_v3.append(mae_v3)
-        maes_train_v4.append(mae_v4)
-        maes_train_v5.append(mae_v5)
+
         maes_test_v1.append(mae_v1_test)
         maes_test_v2.append(mae_v2_test)
         maes_test_v3.append(mae_v3_test)
-        maes_test_v4.append(mae_v4_test)
-        maes_test_v5.append(mae_v5_test)
+
         orig_obj_v1.append(reg_res_v1)
         orig_obj_v2.append(reg_res_v2)
         orig_obj_v3.append(reg_res_v3)
-        orig_obj_v4.append(reg_res_v4)
-        orig_obj_v5.append(reg_res_v5)
+
         mip_gaps_v1.append((reg_res_v1 - lower_bound_v2) / lower_bound_v2)
         mip_gaps_v2.append((reg_res_v2 - lower_bound_v2) / lower_bound_v2)
         mip_gaps_v3.append((reg_res_v3 - lower_bound_v2) / lower_bound_v2)
-        mip_gaps_v4.append((reg_res_v4 - lower_bound_v2) / lower_bound_v2)
-        mip_gaps_v5.append((reg_res_v5 - lower_bound_v2) / lower_bound_v2)
         solving_times_v1.append(solving_time_v1)
         solving_times_v2.append(solving_time_v2)
         solving_times_v3.append(solving_time_v3)
-        solving_times_v4.append(solving_time_v4)
-        solving_times_v5.append(solving_time_v5)
-        r2_lads_train_v1.append(1 - r2_lad_v1)
-        r2_lads_train_v2.append(1 - r2_lad_v2)
+
+        r2_lads_train_v1.append(r2_lad_alt_v1)
+        r2_lads_train_v2.append(r2_lad_alt_v2)
         r2_lads_train_v3.append(r2_lad_alt_v3)
-        r2_lads_train_v4.append(r2_lad_alt_v4)
-        r2_lads_train_v5.append(r2_lad_alt_v5)
+
         r2_lads_test_v1.append(r2_lad_alt_v1_test)
         r2_lads_test_v2.append(r2_lad_alt_v2_test)
         r2_lads_test_v3.append(r2_lad_alt_v3_test)
-        r2_lads_test_v4.append(r2_lad_alt_v4_test)
-        r2_lads_test_v5.append(r2_lad_alt_v5_test)
+
     # writing info to the file
     result_file_v1 = out_put_name_1 + '.csv'
     print('mip gaps v1', mip_gaps_v1)
@@ -558,12 +497,6 @@ def main(argv):
     row_3 = [approach_name_3, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v3) * 100,
              np.average(solving_times_v3), np.average(maes_train_v3), np.average(r2_lads_train_v3),
              np.average(maes_test_v3), np.average(r2_lads_test_v3)]
-    row_4 = [approach_name_4, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v4) * 100,
-             np.average(solving_times_v4), np.average(maes_train_v4), np.average(r2_lads_train_v4),
-             np.average(maes_test_v4), np.average(r2_lads_test_v4)]
-    row_5 = [approach_name_5, input_file, depth, n_k_folds, time_limit, np.average(mip_gaps_v5) * 100,
-             np.average(solving_times_v5), np.average(maes_train_v5), np.average(r2_lads_train_v5),
-             np.average(maes_test_v5), np.average(r2_lads_test_v5)]
     with open(out_put_path + result_file_v1, mode='a') as results:
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
@@ -583,11 +516,6 @@ def main(argv):
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
         results_writer.writerow(row_3)
-    result_file_v4 = out_put_name_4 + '.csv'
-    with open(out_put_path + result_file_v4, mode='a') as results:
-        results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
-
-        results_writer.writerow(row_4)
 
     result_file_v5 = out_put_name + '.csv'
     with open(out_put_path + result_file_v5, mode='a') as results:
@@ -596,8 +524,6 @@ def main(argv):
         results_writer.writerow(row_1)
         results_writer.writerow(row_2)
         results_writer.writerow(row_3)
-        results_writer.writerow(row_4)
-        results_writer.writerow(row_5)
 
 
 if __name__ == "__main__":

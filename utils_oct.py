@@ -30,7 +30,7 @@ def get_node_status(grb_model, b, beta_zero, n, i, local_data, beta=None):
 
     if n in grb_model.tree.Leaves:  # leaf
         leaf = True
-        value = beta_zero[n, 1]
+        value = beta_zero[n]
         if beta is not None:
             value += sum(beta[n, f] * local_data.at[i, f] for f in grb_model.cat_features)
 

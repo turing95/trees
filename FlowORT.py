@@ -52,7 +52,6 @@ class FlowORT:
         self.b = 0
         self.beta_zero = 0
         self.zeta = 0
-        self.z = 0
         self.e = 0
 
         # Gurobi model
@@ -92,13 +91,6 @@ class FlowORT:
         # b[n,f] ==1 iff at node n we branch on feature f
         self.b = self.model.addVars(self.tree.Nodes, self.cat_features, vtype=GRB.BINARY, name='b')
 
-        # zeta[i] potential at sink node t for point i
-        self.zeta = self.model.addVars(self.datapoints, vtype=GRB.CONTINUOUS, lb=0,
-                                       name='zeta')
-        # z[i,n] potential at node n for point i
-        self.z = self.model.addVars(self.datapoints, self.tree.Nodes + self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
-                                    name='z')
-
         # TODO discretize leaves variable
         # e[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
         self.e = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
@@ -106,62 +98,44 @@ class FlowORT:
         # beta_zero[n] is the constant of the regression
         self.beta_zero = self.model.addVars(self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                             name='beta_zero')
+
         ############################### define constraints
+
+        def path_length(node, i):
+            path_len = 0
+            while node is not None:
+                if node == 1:
+                    break
+                parent = self.tree.get_parent(node)
+                for f in self.cat_features:
+
+                    feature_value = self.data.at[i, f]
+                    path_len += 1 * self.b[parent, f] * ((node % 2) == feature_value)
+
+                node = parent
+            return path_len
 
         # 1a) e[i,n] >=sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (self.e[i, n] >= self.beta_zero[n] - self.data.at[i, self.label]) for
                 i in self.datapoints)
-        self.model.addConstrs(self.z[i, 1] == 0 for i in self.datapoints)
         #  1b) -e[i,n] <= sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (-self.e[i, n] <= self.beta_zero[n] - self.data.at[i, self.label]) for
                 i in self.datapoints)
 
-        # 2) zeta[i] - z[i,n] >= e[i,n] - M*(D-z[i,n])  forall i, n in Leaves
-        for n in self.tree.Leaves:
-            self.model.addConstrs(
-                (self.zeta[i] - self.z[i, n] >= self.e[i, n] - self.big_m * (self.d - self.z[i, n])) for i in
-                self.datapoints)
-        # 3) zeta[i] - d <= e[i,n]
-        for n in self.tree.Leaves:
-            self.model.addConstrs(
-                (self.zeta[i] - self.d <= self.e[i, n]) for i in
-                self.datapoints)
         # 4) e[i,n] >= M*(D-z[i,n])  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (self.e[i, n] >= self.big_m * (self.d - self.z[i, n])) for i in
+                (self.e[i, n] >= self.big_m * (self.d - path_length(n, i))) for i in
                 self.datapoints)
-
-        # 5) z[i,l(n)] - z[i,n] == sum(b[n,f], f if x[i,f]=0)    forall i, n in Nodes
-        for i in self.datapoints:
-            self.model.addConstrs((self.z[i, int(self.tree.get_left_children(n))] - self.z[i, n] == quicksum(
-                self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 0)) for n in self.tree.Nodes)
-
-        # 6) z[i,r(n)] - z[i,n] == sum(b[n,f], f if x[i,f]=0)    forall i, n in Nodes
-        for i in self.datapoints:
-            self.model.addConstrs((self.z[i, int(self.tree.get_right_children(n))] - self.z[i, n] == quicksum(
-                self.b[n, f] for f in self.cat_features if self.data.at[i, f] == 1)) for n in self.tree.Nodes)
 
         # 7) sum(b[n,f], f) = 1   forall n in Nodes
         self.model.addConstrs(
             (quicksum(self.b[n, f] for f in self.cat_features) == 1) for n in
             self.tree.Nodes)
-
-        # self.model.addConstrs(self.zeta[i] >= self.d for i in self.datapoints)
-
-        # sum(z[i,n] forall n in L+N[2^l:2^(l+1))>= level
-        '''for level in range(self.d):
-            if level == 0:
-                continue
-            nodes = self.tree.Nodes+self.tree.Leaves
-            self.model.addConstrs(
-                quicksum(self.z[i, n] for n in nodes[(np.power(2, level)-1):(np.power(2, level + 1))-1])
-                == level + (sum(np.power(2, level - l_ - 1) * l_ for l_ in range(level)))
-                for i in self.datapoints)'''
 
         # define objective function
         obj = LinExpr(0)

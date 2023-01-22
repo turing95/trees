@@ -90,7 +90,7 @@ class FlowOCT:
         For classification beta[n,k]=1 iff at node n we predict class k
         For the case regression beta[n,1] is the prediction value for node n
         '''
-        self.beta = self.model.addVars(self.tree.Leaves, self.labels, vtype=GRB.CONTINUOUS, lb=0,
+        self.beta = self.model.addVars(self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                        name='beta')
         # zeta[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
         #TODO remove nodes
@@ -131,15 +131,15 @@ class FlowOCT:
         # beta[n,k] = 1
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] - self.data.at[i, self.label] + self.beta[n, 1]
+                self.zeta[i, n] <= self.m[i] - self.data.at[i, self.label] + self.beta[n]
                 for i in self.datapoints)
 
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] + self.data.at[i, self.label] - self.beta[n, 1]
+                self.zeta[i, n] <= self.m[i] + self.data.at[i, self.label] - self.beta[n]
                 for i in self.datapoints)
 
         self.model.addConstrs(
-            (self.beta[n, 1] <= 1) for n in self.tree.Leaves)
+            (self.beta[n] <= 1) for n in self.tree.Leaves)
 
         for n in self.tree.Leaves:
             self.model.addConstrs(self.zeta[i, n] == self.z[i, n] for i in self.datapoints)
