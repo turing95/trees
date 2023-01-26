@@ -36,6 +36,7 @@ class BendersOCT:
         # Decision Variables
         self.g = 0
         self.b = 0
+        self.p = 0
         self.beta = 0
 
         # parameters
@@ -101,28 +102,45 @@ class BendersOCT:
         self.g = self.model.addVars(self.datapoints, vtype=GRB.CONTINUOUS, ub=1, name='g')
         # b[n,f] ==1 iff at node n we branch on feature f
         self.b = self.model.addVars(self.tree.Nodes, self.cat_features, vtype=GRB.BINARY, name='b')
+        # p[n] == 1 iff at node n we do not branch and we make a prediction
+        self.p = self.model.addVars(self.tree.Nodes + self.tree.Leaves, vtype=GRB.BINARY, name='p')
 
         '''
         For classification beta[n,k]=1 iff at node n we predict class k
         For the case regression beta[n,1] is the prediction value for node n
         '''
-        self.beta = self.model.addVars(self.tree.Leaves, self.labels, vtype=GRB.CONTINUOUS, lb=0,
+        self.beta = self.model.addVars(self.tree.Nodes + self.tree.Leaves, self.labels, vtype=GRB.CONTINUOUS, lb=0,
                                        name='beta')
 
         # we need these in the callback to have access to the value of the decision variables
         self.model._vars_g = self.g
         self.model._vars_b = self.b
+        self.model._vars_p = self.p
         self.model._vars_beta = self.beta
-
+        self.model.addConstrs(
+            (self.p[n] == 0) for n in self.tree.Nodes)
         # define constraints
-
+        # additional constraint to have balanced trees
         # sum(b[n,f], f) + p[n] + sum(p[m], m in A(n)) = 1   forall n in Nodes
         self.model.addConstrs(
-            (quicksum(self.b[n, f] for f in self.cat_features) == 1) for n in
+            (quicksum(self.b[n, f] for f in self.cat_features) + self.p[n] + quicksum(
+                self.p[m] for m in self.tree.get_ancestors(n)) == 1) for n in
             self.tree.Nodes)
 
+        # # sum(sum(b[n,f], f), n) <= branching_limit
+        # self.model.addConstr(
+        #     (quicksum(
+        #         quicksum(self.b[n, f] for f in self.cat_features) for n in self.tree.Nodes)) <= self.branching_limit)
+
         self.model.addConstrs(
-            (self.beta[n, 1] <= 1) for n in self.tree.Leaves)
+            (self.beta[n, 1] <= self.p[n]) for n in
+            self.tree.Nodes + self.tree.Leaves)
+
+        # p[n] + sum(p[m], m in A(n)) = 1   forall n in Leaves
+        self.model.addConstrs(
+            (self.p[n] + quicksum(
+                self.p[m] for m in self.tree.get_ancestors(n)) == 1) for n in
+            self.tree.Leaves)
 
         # define objective function
         obj = LinExpr(0)
