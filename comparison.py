@@ -277,6 +277,8 @@ def main(argv):
         beta_oct_no_p = None
 
         beta_zero_oct_with_p = primal_oct_with_p.model.getAttr("x", primal_oct_with_p.beta)
+        p_oct_with_p = primal_oct_with_p.model.getAttr("x", primal_oct_with_p.p)
+
         beta_oct_with_p = None
 
         beta_zero_benders_oct_with_p = primal_benders_oct_with_p.model.getAttr("x", primal_benders_oct_with_p.beta)
@@ -374,14 +376,14 @@ def main(argv):
                                                                                   beta_zero_oct_no_p,
                                                                                   beta_oct_no_p)
 
-        reg_res_oct_with_p, mae_oct_with_p, mse_oct_with_p, r2_oct_with_p, r2_lad_alt_oct_with_p = get_model_accuracy(
+        reg_res_oct_with_p, mae_oct_with_p, mse_oct_with_p, r2_oct_with_p, r2_lad_alt_oct_with_p = get_model_accuracy_with_p(
             primal_oct_with_p, data_train, b_value_oct_with_p,
-            beta_zero_oct_with_p, beta_oct_with_p)
+            beta_zero_oct_with_p, p_oct_with_p)
 
-        _, mae_oct_with_p_test, _, _, r2_lad_alt_oct_with_p_test = get_model_accuracy(primal_oct_with_p, data_test,
+        _, mae_oct_with_p_test, _, _, r2_lad_alt_oct_with_p_test = get_model_accuracy_with_p(primal_oct_with_p, data_test,
                                                                                   b_value_oct_with_p,
                                                                                   beta_zero_oct_with_p,
-                                                                                  beta_oct_with_p)
+                                                                                  p_oct_with_p)
 
         reg_res_benders_oct_with_p, mae_benders_oct_with_p, mse_benders_oct_with_p, r2_benders_oct_with_p, r2_lad_alt_benders_oct_with_p = get_model_accuracy_with_p(
             primal_benders_oct_with_p, data_train, b_value_benders_oct_with_p,
