@@ -3,6 +3,7 @@ This module formulate the FlowOCT problem in gurobipy.
 '''
 
 from gurobipy import *
+from utils.utils_oct_with_p import get_model_accuracy
 
 
 class FlowOCT:
@@ -183,3 +184,15 @@ class FlowOCT:
                 obj.add(-1 * self._lambda * self.b[n, f])
 
         self.model.setObjective(obj, GRB.MAXIMIZE)
+
+    def print_results(self, solving_time):
+        print('Total Solving Time oct_with_p', solving_time)
+        print("obj oct_with_p", self.model.getAttr("ObjVal"))
+        print('bnf oct_with_p', self.model.getAttr("X", self.b))
+        print(f'beta_zero oct_with_p', self.model.getAttr("x", self.beta))
+        print(f'p oct_with_p', self.model.getAttr("x", self.p))
+
+    def get_accuracy(self, data):
+        return get_model_accuracy(
+            self, data, self.model.getAttr("X", self.b),
+            self.model.getAttr("X", self.beta), self.model.getAttr("X", self.p))

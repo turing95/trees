@@ -3,7 +3,7 @@ This module formulate the FlowOCT problem in gurobipy.
 '''
 
 from gurobipy import *
-
+from utils.utils_oct_no_p import get_model_accuracy
 import numpy as np
 
 
@@ -53,6 +53,7 @@ class FlowORT:
         self.beta_zero = 0
         self.zeta = 0
         self.e = 0
+        self.beta = None
 
         # Gurobi model
         self.model = Model('FlowORT')
@@ -138,3 +139,17 @@ class FlowORT:
             obj.add(self.e[i])
 
         self.model.setObjective(obj, GRB.MINIMIZE)
+
+    def print_results(self, solving_time):
+        print('Total Solving Time light', solving_time)
+        print("obj value light", self.model.getAttr("ObjVal"))
+        print('bnf_light', self.model.getAttr("X", self.b))
+        print(f'beta_zero light', self.model.getAttr("x", self.beta_zero))
+
+    def get_accuracy(self, data):
+
+        return get_model_accuracy(self,
+                                  data,
+                                  self.model.getAttr("X", self.b),
+                                  self.model.getAttr("x", self.beta_zero),
+                                  None)
