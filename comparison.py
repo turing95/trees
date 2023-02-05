@@ -62,8 +62,6 @@ def main(argv):
     out_put_path = os.getcwd() + '/Results/'
     sys.stdout = logger(out_put_path + out_put_name + '.txt')
 
-
-
     approach_name_4 = 'BendersOCT_with_p'
     out_put_name_4 = input_file + '_' + approach_name_4 + '_d_' + str(depth) + '_t_' + str(
         time_limit) + '_constant_cross_validation'
@@ -134,10 +132,6 @@ def main(argv):
     r2_lads_test_light = []
     r2_lads_test_light_e_n = []
 
-    orig_obj_oct_with_p = []
-    orig_obj_benders_oct_with_p = []
-    orig_obj_light = []
-    orig_obj_light_e_n = []
     n_k_folds = kf.get_n_splits(x)
     for train_index, test_index in kf.split(x):
         print("TRAIN:", train_index, "TEST:", test_index)
@@ -180,7 +174,6 @@ def main(argv):
 
         solving_time_benders_oct_with_p = end_time - start_time
 
-
         start_time = time.time()
         primal_light_e_n = FlowORT_light_e_n(data_train, label, tree, time_limit)
 
@@ -207,7 +200,8 @@ def main(argv):
         reg_res_light_test, mae_light_test, mse_light_test, r2_light_test, r2_lad_alt_light_test = primal_light.get_accuracy(
             data_test)
 
-        reg_res_light_e_n, mae_light_e_n, mse_light_e_n, r2_light_e_n, r2_lad_alt_light_e_n = primal_light_e_n.get_accuracy(data_train)
+        reg_res_light_e_n, mae_light_e_n, mse_light_e_n, r2_light_e_n, r2_lad_alt_light_e_n = primal_light_e_n.get_accuracy(
+            data_train)
         reg_res_light_e_n_test, mae_light_e_n_test, mse_light_e_n_test, r2_light_e_n_test, r2_lad_alt_light_e_n_test = primal_light_e_n.get_accuracy(
             data_test)
 
@@ -231,15 +225,10 @@ def main(argv):
         maes_test_oct_with_p.append(mae_oct_with_p_test)
         maes_test_benders_oct_with_p.append(mae_benders_oct_with_p_test)
 
-        orig_obj_light.append(reg_res_light)
-        orig_obj_light_e_n.append(reg_res_light_e_n)
-        orig_obj_oct_with_p.append(reg_res_oct_with_p)
-        orig_obj_benders_oct_with_p.append(reg_res_benders_oct_with_p)
-
-        mip_gaps_light.append((reg_res_light - lower_bound_reference) / lower_bound_reference)
-        mip_gaps_light_e_n.append((reg_res_light_e_n - lower_bound_reference) / lower_bound_reference)
-        mip_gaps_oct_with_p.append((reg_res_oct_with_p - lower_bound_reference) / lower_bound_reference)
-        mip_gaps_benders_oct_with_p.append((reg_res_benders_oct_with_p - lower_bound_reference) / lower_bound_reference)
+        mip_gaps_light.append(primal_light.model.getAttr("MIPGap") * 100)
+        mip_gaps_light_e_n.append(primal_light_e_n.model.getAttr("MIPGap") * 100)
+        mip_gaps_oct_with_p.append(primal_oct_with_p.model.getAttr("MIPGap") * 100)
+        mip_gaps_benders_oct_with_p.append(primal_benders_oct_with_p.model.getAttr("MIPGap") * 100)
 
         solving_times_light.append(solving_time_light)
         solving_times_light_e_n.append(solving_time_light_e_n)
@@ -265,11 +254,6 @@ def main(argv):
     print('solving times light_e_n', solving_times_light_e_n)
     print('solving times oct_with_p', solving_times_oct_with_p)
     print('solving times benders_oct_with_p', solving_times_benders_oct_with_p)
-    print('\n')
-    print('orig obj light', orig_obj_light)
-    print('orig obj light_e_n', orig_obj_light_e_n)
-    print('orig obj oct_with_p', orig_obj_oct_with_p)
-    print('orig obj benders_oct_with_p', orig_obj_benders_oct_with_p)
     print('\n')
     print('maes light', maes_train_light)
     print('maes light_e_n', maes_train_light_e_n)
@@ -324,7 +308,6 @@ def main(argv):
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
         results_writer.writerow(row_7)
-
 
     result_file_light_e_n = out_put_name_8 + '.csv'
     with open(out_put_path + result_file_light_e_n, mode='a') as results:
