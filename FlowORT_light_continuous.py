@@ -47,6 +47,19 @@ class FlowORT:
             if y_min is None or y_i < y_min:
                 y_min = y_i
         self.big_m = y_max - y_min
+        self.w = {}
+        self.w_plus = 0
+        self.w_minus = 0
+        for f in self.cat_features:
+            data.sort_values(by=[f])
+            values = data[f].tolist()
+            diffs = [abs(a - b) for a, b in zip(values, values[1:])]
+            min_diff_f = min(d for d in diffs if d > 0)
+            self.w[f] = min_diff_f
+            if min_diff_f < self.w_minus:
+                self.w_minus = min_diff_f
+            if min_diff_f > self.w_plus:
+                self.w_plus = min_diff_f
         self.d = self.tree.depth
         # Decision Variables
         self.b = 0
@@ -98,50 +111,56 @@ class FlowORT:
         self.e = self.model.addVars(self.datapoints, vtype=GRB.CONTINUOUS, lb=0,
                                     name='e')
 
-        self.b = self.model.addVars(self.tree.Nodes, vtype=GRB.CONTINUOUS, lb=0,ub=1, name='b')
+        self.b = self.model.addVars(self.tree.Nodes, vtype=GRB.CONTINUOUS, lb=0, ub=1, name='b')
         # beta_zero[n] is the constant of the regression
         self.beta_zero = self.model.addVars(self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                             name='beta_zero')
 
         ############################### define constraints
 
-        def path_length(node, i):
-            path_len = 0
-            while node is not None:
-                if node == 1:
-                    break
-                parent = self.tree.get_parent(node)
-                for f in self.cat_features:
-                    feature_value = self.data.at[i, f]
-                    path_len += 1 * self.b[parent, f] * ((node % 2) == feature_value)
-
-                node = parent
-            return path_len
-
         # 1a) e[i,n] >=sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (self.e[i] + self.big_m * (1-self.g[i,n]) >= self.beta_zero[n] - self.data.at[
+                (self.e[i] + self.big_m * (1 - self.g[i, n]) >= self.beta_zero[n] - self.data.at[
                     i, self.label]) for
                 i in self.datapoints)
         #  1b) -e[i,n] <= sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (-self.e[i] - self.big_m * (1-self.g[i,n]) <= self.beta_zero[n] - self.data.at[
+                (-self.e[i] - self.big_m * (1 - self.g[i, n]) <= self.beta_zero[n] - self.data.at[
                     i, self.label]) for
                 i in self.datapoints)
 
         for n in self.tree.Nodes:
-            self.model.addConstrs(
-                (quicksum(self.a[n,f]*self.data.at[i,f]) ==1 for f in self.cat_features)for i in self.datapoints)
-        for n in self.tree.Leaves:
-            self.model.addConstrs(
-                (quicksum(self.g[i, n]) == 1) for i in self.datapoints)
+            left_leaves = self.tree.get_left_leaves(n)
+            right_leaves = self.tree.get_right_leaves(n)
+            no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
 
-        '''# 7) sum(b[n,f], f) = 1   forall n in Nodes
+            self.model.addConstrs(
+                (quicksum(self.a[n, f] * (self.data.at[i, f] + self.w[f] - self.w_minus) for f in
+                          self.cat_features) + self.w_minus <=
+                 self.b[n] + (1 + self.w_plus) * (1 - quicksum(self.g[i, x] for x in left_leaves))
+                 + (1 + self.w_plus) * quicksum(self.g[i, x] for x in no_reach))
+                for i in
+                self.datapoints)
+
+        for n in self.tree.Nodes:
+            left_leaves = self.tree.get_left_leaves(n)
+            right_leaves = self.tree.get_right_leaves(n)
+            no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
+            self.model.addConstrs(
+                (quicksum(self.a[n, f] * (self.data.at[i, f]) for f in
+                          self.cat_features) >=
+                 self.b[n] - (1 - quicksum(self.g[i, x] for x in right_leaves))
+                 - quicksum(self.g[i, x] for x in no_reach)) for i in
+                self.datapoints)
+
         self.model.addConstrs(
-            (quicksum(self.b[n, f] for f in self.cat_features) == 1) for n in
-            self.tree.Nodes)'''
+            (quicksum(self.g[i, n] for n in self.tree.Leaves) == 1) for i in self.datapoints)
+
+        self.model.addConstrs(
+            (quicksum(self.a[n, f] for f in self.cat_features) == 1) for n in
+            self.tree.Nodes)
 
         # define objective function
         obj = LinExpr(0)
@@ -153,13 +172,13 @@ class FlowORT:
     def print_results(self, solving_time):
         print('Total Solving Time light', solving_time)
         print("obj value light", self.model.getAttr("ObjVal"))
-        print('bnf_light', self.model.getAttr("X", self.b))
+        print('bnf_light', self.model.getAttr("X", self.a))
         print(f'beta_zero light', self.model.getAttr("x", self.beta_zero))
 
     def get_accuracy(self, data):
 
         return get_model_accuracy(self,
                                   data,
-                                  self.model.getAttr("X", self.b),
+                                  self.model.getAttr("X", self.a),
                                   self.model.getAttr("x", self.beta_zero),
                                   None)

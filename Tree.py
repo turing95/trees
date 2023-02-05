@@ -31,19 +31,32 @@ class Tree:
         else:
             raise Exception('Node index is not correct')
 
+    def get_right_leaves(self, n):
+        right_child = self.get_right_children(n)
+        if right_child in self.Leaves:
+            return [right_child]
+        else:
+            return self.get_right_leaves(right_child)+self.get_left_leaves(right_child)
+
+    def get_left_leaves(self, n):
+        left_child = self.get_left_children(n)
+        if left_child in self.Leaves:
+            return [left_child]
+        else:
+            return self.get_right_leaves(left_child)+ self.get_left_leaves(left_child)
+
     def get_parent(self, n):
         if (n in self.Nodes) or (n in self.Leaves):
-            return np.floor(n/2)
+            return np.floor(n / 2)
         else:
             raise Exception('Node index is not correct')
 
-
-    def get_ancestors(self,n):
+    def get_ancestors(self, n):
         ancestors = []
         if (n in self.Nodes) or (n in self.Leaves):
             current = n
             while current != 1:
-                current = int(np.floor(current/2))
+                current = int(np.floor(current / 2))
                 ancestors.append(current)
             return ancestors
 
