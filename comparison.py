@@ -66,7 +66,7 @@ def main(argv):
     out_put_name_4 = input_file + '_' + approach_name_4 + '_d_' + str(depth) + '_t_' + str(
         time_limit) + '_constant_cross_validation'
 
-    approach_name_6 = 'FlowORT_light'
+    approach_name_6 = 'FlowORT_light_lazy'
     out_put_name_6 = input_file + '_' + approach_name_6 + '_d_' + str(depth) + '_t_' + str(
         time_limit) + '_constant_cross_validation'
 
@@ -74,7 +74,7 @@ def main(argv):
     out_put_name_7 = input_file + '_' + approach_name_7 + '_d_' + str(depth) + '_t_' + str(
         time_limit) + '_constant_cross_validation'
 
-    approach_name_8 = 'FlowORT_light_e_n'
+    approach_name_8 = 'FlowORT_light_e_n_lazy'
     out_put_name_8 = input_file + '_' + approach_name_8 + '_d_' + str(depth) + '_t_' + str(
         time_limit) + '_constant_cross_validation'
     ##########################################################
