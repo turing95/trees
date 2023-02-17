@@ -99,6 +99,8 @@ def main(argv):
     r2_lads_train_light = []
 
     r2_lads_test_light = []
+    r2_train = []
+    r2_test = []
 
     n_k_folds = kf.get_n_splits(x)
     for train_index, test_index in kf.split(x):
@@ -147,6 +149,9 @@ def main(argv):
 
         r2_lads_test_light.append(r2_lad_alt_light_test)
 
+        r2_train.append(r2_light)
+        r2_test.append(r2_light_test)
+
     print('\n')
     print('mip gaps light', mip_gaps_light)
     print('\n')
@@ -160,7 +165,8 @@ def main(argv):
     row_1 = [approach_name_1, input_file, train_len, features_count, depth, n_k_folds, time_limit,
              np.average(mip_gaps_light) * 100,
              np.average(solving_times_light), np.average(maes_train_light), np.average(r2_lads_train_light),
-             np.average(maes_test_light), np.average(r2_lads_test_light)]
+             np.average(r2_train),
+             np.average(maes_test_light), np.average(r2_lads_test_light), np.average(r2_test)]
 
     result_file_light = out_put_name_1 + '.csv'
     with open(out_put_path + result_file_light, mode='a') as results:

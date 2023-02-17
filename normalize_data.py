@@ -1,8 +1,11 @@
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+import csv
+scaler = MinMaxScaler()
+file_name = 'airfoil_self_noise'
 
-file_name = 'car_evaluation_enc'
+df = pd.read_csv(f'./Datasets/{file_name}.dat',delim_whitespace=True)
 
-df = pd.read_csv(f'./Datasets/{file_name}.csv')
-
-df['target']=(df['target']-df['target'].min())/(df['target'].max()-df['target'].min())
-df.to_csv(f'./Datasets/{file_name}_reg.csv', index=False)
+df = scaler.fit_transform(df)
+df = pd.DataFrame.from_records(df)
+df.to_csv(f'./Datasets/{file_name}_reg.csv', index=False, quoting=csv.QUOTE_ALL)
