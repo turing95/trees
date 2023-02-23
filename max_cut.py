@@ -1,41 +1,106 @@
 import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
+from sklearn.metrics import davies_bouldin_score
 import numpy as np
 import time
+from joblib import Parallel, delayed
+import concurrent.futures
+import multiprocessing
 
 
 # linear svc
 # make blobs, an example of k means ++ initialization
 
-def func(df):
-    km = KMeans(n_clusters=2, random_state=0)
-    km.fit(df)
-    df['class'] = km.labels_
 
-
-def class_encoding(df, depth, level=0,node=0):
-    km = KMeans(n_clusters=2, random_state=0)
+def class_encoding_parallel(df, depth, level=0, node=1):
+    km = KMeans(n_clusters=2, random_state=0, n_init=10)
     km.fit(df)
-    cluster_labels = km.predict(df)
+    best_k = km
+    best_score = davies_bouldin_score(df, km.labels_)
+    for i in range(1, 100):
+        km = KMeans(n_clusters=2, random_state=i, n_init=10)
+        km.fit(df)
+        score = davies_bouldin_score(df, km.labels_)
+        if score > best_score:
+            best_score = score
+            best_k = km
+    cluster_labels = best_k.predict(df)
     df_0 = df[cluster_labels == 0]
     df_1 = df[cluster_labels == 1]
-    if level == 2:
-        print(df_0.shape)
-        print(df_1.shape)
-        exit()
-
-
     if level == depth:
         return [df_0, df_1]
     else:
-        try:
-            return class_encoding(df_0, depth, level + 1,node+1) + class_encoding(df_1, level + 1,node+2)
-        except Exception as e:
-            print('level',level)
-            print('rows 0',df_0.shape[0])
-            print('rows 1',df_1.shape[0])
-            raise e
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future_0 = executor.submit(class_encoding_parallel, df_0, depth, level=level + 1, node=node * 2)
+            future_1 = executor.submit(class_encoding_parallel, df_1, depth, level=level + 1, node=node * 2 + 1)
+            return future_0.result() + future_1.result()
+
+
+def class_encoding_jobs(df, depth, level=0, node=1):
+    def find_best_k(df, random_state):
+        km = KMeans(n_clusters=2, random_state=random_state, n_init=10)
+        km.fit(df)
+        score = davies_bouldin_score(df, km.labels_)
+        return (km, score)
+
+    # set up parallelization
+    num_cores = multiprocessing.cpu_count()
+    results = Parallel(n_jobs=num_cores)(
+        delayed(find_best_k)(df, i) for i in range(1, 100)
+    )
+
+    # find best KMeans model
+    best_k, best_score = results[0]
+    for km, score in results[1:]:
+        if score > best_score:
+            best_score = score
+            best_k = km
+    cluster_labels = best_k.predict(df)
+
+    df_0 = df[cluster_labels == 0]
+    df_1 = df[cluster_labels == 1]
+
+    if level == depth-1:
+        class_1 = node * 2 - 2 ** depth + 1
+        class_2 = node * 2 - 2 ** depth + 2
+        df_0['class'] = class_1
+        df_1['class'] = class_2
+        return [df_0, df_1]
+    else:
+        results = Parallel(n_jobs=num_cores)(
+            delayed(class_encoding_jobs)(
+                df_i, depth, level + 1, node * 2 + i)
+            for i, df_i in enumerate([df_0, df_1]))
+        return [item for sublist in results for item in sublist]
+
+
+def class_encoding(df, depth, level=0, node=1):
+    km = KMeans(n_clusters=2, random_state=0, n_init=10)
+    km.fit(df)
+    best_k = km
+    best_score = davies_bouldin_score(df, km.labels_)
+    for i in range(1, 100):
+        km = KMeans(n_clusters=2, random_state=i, n_init=10)
+        km.fit(df)
+        score = davies_bouldin_score(df, km.labels_)
+        if score > best_score:
+            best_score = score
+            best_k = km
+    cluster_labels = best_k.predict(df)
+    df_0 = df[cluster_labels == 0]
+    df_1 = df[cluster_labels == 1]
+    if level == depth - 1:
+        print(node)
+        class_1 = node * 2 - 2 ** depth + 1
+        class_2 = node * 2 - 2 ** depth + 2
+        print(class_1)
+        print(class_2)
+        df_0['class'] = class_1
+        df_1['class'] = class_2
+        return [df_0, df_1]
+    else:
+        return class_encoding(df_0, depth, level + 1, node * 2) + class_encoding(df_1, depth, level + 1, node * 2 + 1)
 
 
 def node_means_pca(df: pd.DataFrame, logging=False):
@@ -44,17 +109,17 @@ def node_means_pca(df: pd.DataFrame, logging=False):
     # usare una sola componente per pca
     # fare dataframe * autovettore
     rows = []
-    for cl in df['target'].unique():
+    for cl in df['class'].unique():
         new_row = {}
         for col in df.columns:
-            if col != 'target':
-                new_row[col] = df.loc[df['target'] != cl, col].mean()
+            if col != 'class':
+                new_row[col] = df.loc[df['class'] != cl, col].mean()
                 rows.append(new_row)
 
     pca = PCA(n_components=1)
     pca.fit(pd.DataFrame(rows))
     mat_2 = pca.components_[0]
-    df = df.drop('target', axis=1)
+    df = df.drop('class', axis=1)
     mat_1 = df.to_numpy()
 
     new_numpy_df = np.matmul(mat_1, mat_2)
@@ -115,11 +180,21 @@ def max_cut_v_2(df, feature, label):
 
 
 dataframe = pd.read_csv('./DataSets/car_evaluation_enc_reg.csv')
-clusters = class_encoding(dataframe,2)
-
+'''start = time.time()
+clusters = class_encoding_parallel(dataframe,6)
+print(f'time encoding parallel {time.time() - start}')
+'''
 start = time.time()
-new_df = node_means_pca(dataframe)
-new_df[1] = dataframe['target']
+clusters = class_encoding_jobs(dataframe,3)
+print(f'time encoding jobs {time.time() - start}')
+'''start = time.time()
+clusters = class_encoding(dataframe, 3)
+print(f'time encoding  {time.time() - start}')'''
+new_dataframe = pd.concat([df for df in clusters], ignore_index=True)
+print(new_dataframe['class'].unique())
+start = time.time()
+new_df = node_means_pca(new_dataframe)
+new_df[1] = new_dataframe['class']
 print(f'time pca {time.time() - start}')
 start = time.time()
 th = max_cut(new_df)
