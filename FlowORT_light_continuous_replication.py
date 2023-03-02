@@ -12,7 +12,8 @@ import csv
 import numpy as np
 from logger import logger
 from sklearn.model_selection import KFold
-from utils.utils_oct_with_p import mycallback
+from max_cut_node_means_pca import max_cut_node_means_pca,max_cut_node_means_pca_bottom_up
+from linear_svc import linear_svc
 
 
 def main(argv):
@@ -114,8 +115,8 @@ def main(argv):
 
         start_time = time.time()
         primal_light = FlowORT_light_continuous(data_train, label, tree, time_limit)
-
-        primal_light.create_primal_problem()
+        initial_a_b = max_cut_node_means_pca_bottom_up(data_train,tree.depth)
+        primal_light.create_primal_problem(initial_a_b)
         primal_light.model.update()
         primal_light.model.optimize()
 

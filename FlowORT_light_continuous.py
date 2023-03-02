@@ -98,14 +98,14 @@ class FlowORT:
     ###########################################################
     # Create the MIP formulation
     ###########################################################
-    def create_primal_problem(self):
+    def create_primal_problem(self,initial_a_b=None):
         '''
         This function create and return a gurobi model formulating the FlowORT problem
         :return:  gurobi model object with the FlowOCT formulation
         '''
         ############################### define variables
         # b[n,f] ==1 iff at node n we branch on feature f
-        self.a = self.model.addVars(self.tree.Nodes, self.cat_features, vtype=GRB.BINARY, name='b')
+        self.a = self.model.addVars(self.tree.Nodes, self.cat_features, vtype=GRB.BINARY, name='a')
         self.g = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.BINARY, name='g')
 
         self.e = self.model.addVars(self.datapoints, vtype=GRB.CONTINUOUS, lb=0,
@@ -117,7 +117,11 @@ class FlowORT:
                                             name='beta_zero')
 
         ############################### define constraints
-
+        if initial_a_b is not None:
+            for n in self.tree.Nodes:
+                self.b[n].VarHintVal = initial_a_b[n-1][1]
+                for idx,f in enumerate(self.cat_features):
+                    self.a[n,f].VarHintVal = initial_a_b[n-1][0][idx]
         # 1a) e[i,n] >=sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
@@ -133,26 +137,26 @@ class FlowORT:
 
         for n in self.tree.Nodes:
             left_leaves = self.tree.get_left_leaves(n)
-            right_leaves = self.tree.get_right_leaves(n)
-            no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
+            #right_leaves = self.tree.get_right_leaves(n)
+            #no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
 
             self.model.addConstrs(
                 (quicksum(self.a[n, f] * (self.data.at[i, f] + self.w[f] - self.w_minus) for f in
                           self.cat_features) + self.w_minus <=
                  self.b[n] + (1 + self.w_plus) * (1 - quicksum(self.g[i, x] for x in left_leaves))
-                 + (1 + self.w_plus) * quicksum(self.g[i, x] for x in no_reach))
+                 )
                 for i in
                 self.datapoints)
 
         for n in self.tree.Nodes:
-            left_leaves = self.tree.get_left_leaves(n)
+            #left_leaves = self.tree.get_left_leaves(n)
             right_leaves = self.tree.get_right_leaves(n)
-            no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
+            #no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
             self.model.addConstrs(
                 (quicksum(self.a[n, f] * (self.data.at[i, f]) for f in
                           self.cat_features) >=
                  self.b[n] - (1 - quicksum(self.g[i, x] for x in right_leaves))
-                 - quicksum(self.g[i, x] for x in no_reach)) for i in
+                 ) for i in
                 self.datapoints)
 
         self.model.addConstrs(
