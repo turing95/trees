@@ -5,7 +5,7 @@ from datetime import date
 import sys
 import time
 from Tree import Tree
-from FlowORT_light_continuous import FlowORT as FlowORT_light_continuous
+from FlowORT_light_continuous_linear import FlowORT as FlowORT_light_continuous
 import logger
 import getopt
 import csv
@@ -13,8 +13,7 @@ import numpy as np
 from logger import logger
 from sklearn.model_selection import KFold
 from max_cut_node_means_pca import max_cut_node_means_pca,max_cut_node_means_pca_bottom_up
-from linear_svc import linear_svc
-
+from initial_solution import get_initial_solution
 
 def main(argv):
     print(argv)
@@ -26,7 +25,9 @@ def main(argv):
     into train, test and calibration
     '''
     random_states_list = [41, 23, 45, 36, 19, 123]
-
+    input_file = 'yacht_hydrodynamics_reg.csv'
+    depth = 2
+    time_limit = 3600
     try:
         opts, args = getopt.getopt(argv, "f:d:t:l:i:c:m:",
                                    ["input_file=", "depth=", "timelimit=", "lambda="])
@@ -118,6 +119,7 @@ def main(argv):
         primal_light.create_primal_problem()
         primal_light.model.update()
         primal_light.model.optimize()
+        primal_light.model.write(f'model_{time.time()}.mps')
 
         end_time = time.time()
 

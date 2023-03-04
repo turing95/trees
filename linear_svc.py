@@ -32,7 +32,7 @@ def linear_svc(dataframe, depth):
 def linear_svc_alternative(dataframe, depth):
     clusters = class_encoding_jobs_alternative(dataframe, depth)
 
-    nodes_a_b = [([], 0) for i in range(1, np.power(2, depth))]
+    nodes_a_b = {}
 
     def recursive_linear_svc_bottom_up(level=0, node=1):
         # nodes_a_b = [([], 0) for i in range(1, np.power(2, depth))]
@@ -48,7 +48,7 @@ def linear_svc_alternative(dataframe, depth):
             y = df[['class']]
             X = df.drop(['class'], axis=1)
             lsvc.fit(X, np.ravel(y))
-            nodes_a_b[node - 1] = (lsvc.coef_[0], lsvc.intercept_[0])
+            nodes_a_b[node] = (lsvc.coef_[0], lsvc.intercept_[0])
         return df
 
     recursive_linear_svc_bottom_up()

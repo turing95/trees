@@ -4,8 +4,7 @@ This module formulate the FlowOCT problem in gurobipy.
 
 from gurobipy import *
 from utils.utils_oct_no_p import get_model_accuracy
-import numpy as np
-
+import time
 
 class FlowORT:
     def __init__(self, data, label, tree, time_limit):
@@ -115,44 +114,9 @@ class FlowORT:
         # beta_zero[n] is the constant of the regression
         self.beta_zero = self.model.addVars(self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                             name='beta_zero')
+        self.beta = self.model.addVars(self.tree.Leaves, self.cat_features, vtype=GRB.CONTINUOUS, name='beta')
 
         ############################### define constraints
-        # 1a) e[i,n] >=sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
-        for n in self.tree.Leaves:
-            self.model.addConstrs(
-                (self.e[i] + self.big_m * (1 - self.g[i, n]) >= self.beta_zero[n] - self.data.at[
-                    i, self.label]) for
-                i in self.datapoints)
-        #  1b) -e[i,n] <= sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
-        for n in self.tree.Leaves:
-            self.model.addConstrs(
-                (-self.e[i] - self.big_m * (1 - self.g[i, n]) <= self.beta_zero[n] - self.data.at[
-                    i, self.label]) for
-                i in self.datapoints)
-
-        for n in self.tree.Nodes:
-            left_leaves = self.tree.get_left_leaves(n)
-            #right_leaves = self.tree.get_right_leaves(n)
-            #no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
-
-            self.model.addConstrs(
-                (quicksum(self.a[n, f] * (self.data.at[i, f] + self.w[f] - self.w_minus) for f in
-                          self.cat_features) + self.w_minus <=
-                 self.b[n] + (1 + self.w_plus) * (1 - quicksum(self.g[i, x] for x in left_leaves))
-                 )
-                for i in
-                self.datapoints)
-
-        for n in self.tree.Nodes:
-            #left_leaves = self.tree.get_left_leaves(n)
-            right_leaves = self.tree.get_right_leaves(n)
-            #no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
-            self.model.addConstrs(
-                (quicksum(self.a[n, f] * (self.data.at[i, f]) for f in
-                          self.cat_features) >=
-                 self.b[n] - (1 - quicksum(self.g[i, x] for x in right_leaves))
-                 ) for i in
-                self.datapoints)
 
         self.model.addConstrs(
             (quicksum(self.g[i, n] for n in self.tree.Leaves) == 1) for i in self.datapoints)
@@ -173,6 +137,7 @@ class FlowORT:
         print("obj value light", self.model.getAttr("ObjVal"))
         print('bnf_light', self.model.getAttr("X", self.a))
         print(f'beta_zero light', self.model.getAttr("x", self.beta_zero))
+        print(f'beta', self.model.getAttr("x", self.beta))
 
     def get_accuracy(self, data):
 
@@ -180,4 +145,5 @@ class FlowORT:
                                   data,
                                   self.model.getAttr("X", self.a),
                                   self.model.getAttr("x", self.beta_zero),
-                                  None)
+                                  self.model.getAttr("x", self.beta))
+

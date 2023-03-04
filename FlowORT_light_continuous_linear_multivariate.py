@@ -4,8 +4,7 @@ This module formulate the FlowOCT problem in gurobipy.
 
 from gurobipy import *
 from utils.utils_oct_no_p import get_model_accuracy
-import numpy as np
-
+import time
 
 class FlowORT:
     def __init__(self, data, label, tree, time_limit):
@@ -98,14 +97,14 @@ class FlowORT:
     ###########################################################
     # Create the MIP formulation
     ###########################################################
-    def create_primal_problem(self):
+    def create_primal_problem(self, initial_a_b=None, init_beta_beta_zero=None, init_e_i_n=None):
         '''
         This function create and return a gurobi model formulating the FlowORT problem
         :return:  gurobi model object with the FlowOCT formulation
         '''
         ############################### define variables
         # b[n,f] ==1 iff at node n we branch on feature f
-        self.a = self.model.addVars(self.tree.Nodes, self.cat_features, vtype=GRB.BINARY, name='a')
+        self.a = self.model.addVars(self.tree.Nodes, self.cat_features, vtype=GRB.CONTINUOUS, name='a',lb=-1,ub=1)
         self.g = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.BINARY, name='g')
 
         self.e = self.model.addVars(self.datapoints, vtype=GRB.CONTINUOUS, lb=0,
@@ -115,25 +114,55 @@ class FlowORT:
         # beta_zero[n] is the constant of the regression
         self.beta_zero = self.model.addVars(self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                             name='beta_zero')
+        self.beta = self.model.addVars(self.tree.Leaves, self.cat_features, vtype=GRB.CONTINUOUS, name='beta')
 
         ############################### define constraints
-        # 1a) e[i,n] >=sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
+        if initial_a_b is not None:
+            for n in self.tree.Nodes:
+                v = initial_a_b[n]
+                self.b[n].Start = v[1]
+                for idx, f in enumerate(self.cat_features):
+                    self.a[n, f].Start = v[0][idx]
+        for n in self.tree.Leaves:
+            if init_beta_beta_zero is not None:
+                v = init_beta_beta_zero[n]
+                try:
+                    self.beta_zero[n].Start = v['intercept']
+                except Exception as e:
+                    print(v)
+                    continue
+                for idx, f in enumerate(self.cat_features):
+                    self.beta[n, f].Start = v['coef'][idx]
+
+            if init_e_i_n is not None:
+                for i in self.datapoints:
+                    try:
+                        e_value = init_e_i_n[i][n]
+                        self.e[i].Start = abs(e_value)
+                        self.g[i, n] = 1
+                    except KeyError:
+                        self.g[i, n] = 0
+                        continue
+
+                # 1a) e[i,n] >=sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (self.e[i] + self.big_m * (1 - self.g[i, n]) >= self.beta_zero[n] - self.data.at[
-                    i, self.label]) for
+                (self.e[i] + self.big_m * (1 - self.g[i, n]) >= self.beta_zero[n] + quicksum(
+                    self.beta[n, f] * self.data.at[i, f] for f in self.cat_features) - self.data.at[
+                     i, self.label]) for
                 i in self.datapoints)
         #  1b) -e[i,n] <= sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                (-self.e[i] - self.big_m * (1 - self.g[i, n]) <= self.beta_zero[n] - self.data.at[
-                    i, self.label]) for
+                (-self.e[i] - self.big_m * (1 - self.g[i, n]) <= self.beta_zero[n] + quicksum(
+                    self.beta[n, f] * self.data.at[i, f] for f in self.cat_features) - self.data.at[
+                     i, self.label]) for
                 i in self.datapoints)
 
         for n in self.tree.Nodes:
             left_leaves = self.tree.get_left_leaves(n)
-            #right_leaves = self.tree.get_right_leaves(n)
-            #no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
+            # right_leaves = self.tree.get_right_leaves(n)
+            # no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
 
             self.model.addConstrs(
                 (quicksum(self.a[n, f] * (self.data.at[i, f] + self.w[f] - self.w_minus) for f in
@@ -144,9 +173,9 @@ class FlowORT:
                 self.datapoints)
 
         for n in self.tree.Nodes:
-            #left_leaves = self.tree.get_left_leaves(n)
+            # left_leaves = self.tree.get_left_leaves(n)
             right_leaves = self.tree.get_right_leaves(n)
-            #no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
+            # no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
             self.model.addConstrs(
                 (quicksum(self.a[n, f] * (self.data.at[i, f]) for f in
                           self.cat_features) >=
@@ -173,6 +202,7 @@ class FlowORT:
         print("obj value light", self.model.getAttr("ObjVal"))
         print('bnf_light', self.model.getAttr("X", self.a))
         print(f'beta_zero light', self.model.getAttr("x", self.beta_zero))
+        print(f'beta', self.model.getAttr("x", self.beta))
 
     def get_accuracy(self, data):
 
@@ -180,4 +210,5 @@ class FlowORT:
                                   data,
                                   self.model.getAttr("X", self.a),
                                   self.model.getAttr("x", self.beta_zero),
-                                  None)
+                                  self.model.getAttr("x", self.beta))
+
