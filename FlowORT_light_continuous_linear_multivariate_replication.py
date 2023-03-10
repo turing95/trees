@@ -5,15 +5,27 @@ from datetime import date
 import sys
 import time
 from Tree import Tree
-from FlowORT_light_continuous_linear import FlowORT as FlowORT_light_continuous
+from FlowORT_light_continuous_linear_multivariate import FlowORT as FlowORT_light_continuous
 import logger
 import getopt
 import csv
 import numpy as np
 from logger import logger
 from sklearn.model_selection import KFold
-from max_cut_node_means_pca import max_cut_node_means_pca,max_cut_node_means_pca_bottom_up
+from max_cut_node_means_pca import max_cut_node_means_pca, max_cut_node_means_pca_bottom_up
 from initial_solution import get_initial_solution
+from validate_initial_solution import validate_initial_solution
+
+
+def normalize(a_b):
+    normalized_a_b = {}
+    for k, v in a_b.items():
+        l = len(v[0]) - 1
+        max_val = max(max(abs(v[0])), abs(v[1]))
+        den = max_val * l
+        normalized_a_b[k] = [[i / den for i in v[0]], v[1] / den]
+    return normalized_a_b
+
 
 def main(argv):
     print(argv)
@@ -25,8 +37,8 @@ def main(argv):
     into train, test and calibration
     '''
     random_states_list = [41, 23, 45, 36, 19, 123]
-    input_file = 'yacht_hydrodynamics_reg.csv'
-    depth = 2
+    input_file = 'airfoil_self_noise_reg.csv'
+    depth = 1
     time_limit = 3600
     try:
         opts, args = getopt.getopt(argv, "f:d:t:l:i:c:m:",
@@ -108,7 +120,7 @@ def main(argv):
     for train_index, test_index in kf.split(x):
         print("TRAIN:", train_index, "TEST:", test_index)
         data_train, data_test = data.iloc[train_index], data.iloc[test_index]
-
+        data_train = data
         ##########################################################
         # Creating and Solving the problem
         ##########################################################
@@ -116,12 +128,19 @@ def main(argv):
 
         start_time = time.time()
         primal_light = FlowORT_light_continuous(data_train, label, tree, time_limit)
-        #init_beta_beta_zero, initial_a_b,init_e_i_n = get_initial_solution(data_train,tree)
-        init_beta_beta_zero, initial_a_b, init_e_i_n = None,None,None
-        primal_light.create_primal_problem(initial_a_b,init_beta_beta_zero,init_e_i_n)
+        init_beta_beta_zero, initial_a_b, init_e_i_n, init_g_i_n,cl = get_initial_solution(data_train, tree)
+        normalized_a_b = normalize(initial_a_b)
+        a,b,c,d,obj = validate_initial_solution(init_beta_beta_zero,normalized_a_b,init_e_i_n,init_g_i_n,tree,data_train)
+        print('expected',obj)
+        print(obj)
+        init_beta_beta_zero, normalized_a_b, init_e_i_n = None, None, None
+        primal_light.create_primal_problem(normalized_a_b, init_beta_beta_zero, init_e_i_n,init_g_i_n)
+
         primal_light.model.update()
+        primal_light.model.write(f'init_model_{time.time()}.mps')
+
         primal_light.model.optimize()
-        primal_light.model.write(f'model_{time.time()}.mps')
+        primal_light.model.write(f'init_model_{time.time()}.mps')
 
         end_time = time.time()
 

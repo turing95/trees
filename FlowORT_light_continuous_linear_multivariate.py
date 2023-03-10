@@ -6,6 +6,7 @@ from gurobipy import *
 from utils.utils_oct_no_p import get_model_accuracy
 import time
 
+
 class FlowORT:
     def __init__(self, data, label, tree, time_limit):
         '''
@@ -30,6 +31,7 @@ class FlowORT:
         reg_features is the set of all features used for the linear regression prediction model in the leaves.  
         '''
         self.cat_features = self.data.columns[self.data.columns != self.label]
+        self.features = self.data.columns
         # self.reg_features = None
         # self.num_of_reg_features = 1
 
@@ -45,20 +47,8 @@ class FlowORT:
                 y_max = y_i
             if y_min is None or y_i < y_min:
                 y_min = y_i
-        self.big_m = y_max - y_min
-        self.w = {}
-        self.w_plus = 0
-        self.w_minus = 0
-        for f in self.cat_features:
-            data.sort_values(by=[f])
-            values = data[f].tolist()
-            diffs = [abs(a - b) for a, b in zip(values, values[1:])]
-            min_diff_f = min(d for d in diffs if d > 0)
-            self.w[f] = min_diff_f
-            if min_diff_f < self.w_minus:
-                self.w_minus = min_diff_f
-            if min_diff_f > self.w_plus:
-                self.w_plus = min_diff_f
+        self.big_m = len(data.index)
+        self.w = 0.0005
         self.d = self.tree.depth
         # Decision Variables
         self.b = 0
@@ -97,31 +87,29 @@ class FlowORT:
     ###########################################################
     # Create the MIP formulation
     ###########################################################
-    def create_primal_problem(self, initial_a_b=None, init_beta_beta_zero=None, init_e_i_n=None):
+    def create_primal_problem(self, initial_a_b=None, init_beta_beta_zero=None, init_e_i_n=None, init_g_i_n=None):
         '''
         This function create and return a gurobi model formulating the FlowORT problem
         :return:  gurobi model object with the FlowOCT formulation
         '''
         ############################### define variables
         # b[n,f] ==1 iff at node n we branch on feature f
-        self.a = self.model.addVars(self.tree.Nodes, self.cat_features, vtype=GRB.CONTINUOUS, name='a',lb=-1,ub=1)
+        self.a = self.model.addVars(self.tree.Nodes, self.features, vtype=GRB.CONTINUOUS, name='a', lb=-1, ub=1)
         self.g = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.BINARY, name='g')
 
         self.e = self.model.addVars(self.datapoints, vtype=GRB.CONTINUOUS, lb=0,
                                     name='e')
 
-        self.b = self.model.addVars(self.tree.Nodes, vtype=GRB.CONTINUOUS, lb=0, ub=1, name='b')
-        # beta_zero[n] is the constant of the regression
-        self.beta_zero = self.model.addVars(self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
-                                            name='beta_zero')
-        self.beta = self.model.addVars(self.tree.Leaves, self.cat_features, vtype=GRB.CONTINUOUS, name='beta')
+        self.b = self.model.addVars(self.tree.Nodes, vtype=GRB.CONTINUOUS, name='b',lb=-1, ub=1)
+        self.beta_zero = self.model.addVars(self.tree.Leaves, vtype=GRB.CONTINUOUS, name='beta_zero',lb=-GRB.INFINITY,ub=GRB.INFINITY)
+        self.beta = self.model.addVars(self.tree.Leaves, self.cat_features, vtype=GRB.CONTINUOUS, name='beta',lb=-GRB.INFINITY,ub=GRB.INFINITY)
 
         ############################### define constraints
         if initial_a_b is not None:
             for n in self.tree.Nodes:
                 v = initial_a_b[n]
-                self.b[n].Start = v[1]
-                for idx, f in enumerate(self.cat_features):
+                self.b[n].Start = -v[1]
+                for idx, f in enumerate(self.features):
                     self.a[n, f].Start = v[0][idx]
         for n in self.tree.Leaves:
             if init_beta_beta_zero is not None:
@@ -136,15 +124,15 @@ class FlowORT:
 
             if init_e_i_n is not None:
                 for i in self.datapoints:
+                    self.g[i, n].Start = init_g_i_n[i][n]
+
                     try:
                         e_value = init_e_i_n[i][n]
                         self.e[i].Start = abs(e_value)
-                        self.g[i, n] = 1
                     except KeyError:
-                        self.g[i, n] = 0
                         continue
 
-                # 1a) e[i,n] >=sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
+        # 1a) e[i,n] >=sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves'''
         for n in self.tree.Leaves:
             self.model.addConstrs(
                 (self.e[i] + self.big_m * (1 - self.g[i, n]) >= self.beta_zero[n] + quicksum(
@@ -165,9 +153,9 @@ class FlowORT:
             # no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
 
             self.model.addConstrs(
-                (quicksum(self.a[n, f] * (self.data.at[i, f] + self.w[f] - self.w_minus) for f in
-                          self.cat_features) + self.w_minus <=
-                 self.b[n] + (1 + self.w_plus) * (1 - quicksum(self.g[i, x] for x in left_leaves))
+                (quicksum(self.a[n, f] * self.data.at[i, f] for f in
+                          self.features) + self.w <=
+                 self.b[n] + (2 + self.w) * (1 - quicksum(self.g[i, x] for x in left_leaves))
                  )
                 for i in
                 self.datapoints)
@@ -178,17 +166,40 @@ class FlowORT:
             # no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
             self.model.addConstrs(
                 (quicksum(self.a[n, f] * (self.data.at[i, f]) for f in
-                          self.cat_features) >=
-                 self.b[n] - (1 - quicksum(self.g[i, x] for x in right_leaves))
+                          self.features) >=
+                 self.b[n] - 2 * (1 - quicksum(self.g[i, x] for x in right_leaves))
                  ) for i in
                 self.datapoints)
 
-        self.model.addConstrs(
-            (quicksum(self.g[i, n] for n in self.tree.Leaves) == 1) for i in self.datapoints)
+        '''for n in self.tree.Nodes:
+            left_leaves = self.tree.get_left_leaves(n)
+            # right_leaves = self.tree.get_right_leaves(n)
+            # no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
+
+            self.model.addConstrs(
+                quicksum(self.a[n, f] * self.data.at[i, f] for f in
+                         self.cat_features)+self.w <=
+                self.b[n] + (1 + len(self.cat_features)+self.w) * (1 - quicksum(self.g[i, x] for x in left_leaves))
+                for i in
+                self.datapoints)
+
+        for n in self.tree.Nodes:
+            # left_leaves = self.tree.get_left_leaves(n)
+            right_leaves = self.tree.get_right_leaves(n)
+            # no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
+            self.model.addConstrs(
+                (quicksum(self.a[n, f] * (self.data.at[i, f]) for f in
+                          self.cat_features) >=
+                 self.b[n] - (1 + len(self.cat_features)) * (1 - quicksum(self.g[i, x] for x in right_leaves))
+                 ) for i in
+                self.datapoints)'''
 
         self.model.addConstrs(
-            (quicksum(self.a[n, f] for f in self.cat_features) == 1) for n in
-            self.tree.Nodes)
+            (quicksum(self.g[i, n] for n in self.tree.Leaves) == 1) for i in self.datapoints)
+        self.model.addConstrs(
+            (quicksum(self.a[n, f] for f in self.features) <= 1) for n in self.tree.Nodes)
+        self.model.addConstrs(
+            (quicksum(self.a[n, f] for f in self.features) >= -1) for n in self.tree.Nodes)
 
         # define objective function
         obj = LinExpr(0)
@@ -211,4 +222,3 @@ class FlowORT:
                                   self.model.getAttr("X", self.a),
                                   self.model.getAttr("x", self.beta_zero),
                                   self.model.getAttr("x", self.beta))
-

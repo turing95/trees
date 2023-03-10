@@ -1,5 +1,5 @@
 from sklearn.cluster import KMeans
-from sklearn.metrics import davies_bouldin_score
+from sklearn.metrics import davies_bouldin_score,silhouette_score
 from joblib import Parallel, delayed
 import multiprocessing
 import pandas as pd
@@ -84,26 +84,28 @@ def get_best_k_means(df):
     # find best KMeans model
     best_k, best_score = results[0]
     for km, score in results[1:]:
-        if score > best_score:
+        if score < best_score:
             best_score = score
             best_k = km
     cluster_labels = best_k.predict(df)
 
     df_0 = df[cluster_labels == 0]
     df_1 = df[cluster_labels == 1]
-    return df_0, df_1
+    return df_0, df_1,best_score
 
 
 def class_encoding_jobs_alternative(df, depth):
     clusters = {}
 
-    def iterative_function(d,level=0,node=1):
-        clusters[node] = d
+    def iterative_function(d,score=None,level=0,node=1):
+        clusters[node] = {}
+        clusters[node]['cluster'] = d
+        clusters[node]['score'] = score
         if level == depth:
             return
-        df_0, df_1 = get_best_k_means(d)
-        iterative_function(df_0,level+1,node*2)
-        iterative_function(df_1,level+1,node*2+1)
+        df_0, df_1,score = get_best_k_means(d)
+        iterative_function(df_0,score,level+1,node*2)
+        iterative_function(df_1,score,level+1,node*2+1)
 
     iterative_function(df)
     return clusters
@@ -134,7 +136,7 @@ def class_encoding(df, depth, level=0, node=1):
         km = KMeans(n_clusters=2, random_state=i, n_init=10)
         km.fit(df)
         score = davies_bouldin_score(df, km.labels_)
-        if score > best_score:
+        if score < best_score:
             best_score = score
             best_k = km
     cluster_labels = best_k.predict(df)
@@ -154,6 +156,6 @@ def class_encoding(df, depth, level=0, node=1):
 
 
 if __name__ == "__main__":
-    dataframe = pd.read_csv('./DataSets/yacht_hydrodynamics_reg.csv')
-    cl = class_encoding_jobs_alternative(dataframe, 3)
+    dataframe = pd.read_csv('./DataSets/airfoil_self_noise_reg.csv')
+    cl = class_encoding_jobs_alternative(dataframe, 2)
     print('\n')
