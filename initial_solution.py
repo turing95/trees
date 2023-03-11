@@ -27,6 +27,7 @@ def get_predicted_value(data, i, tree, initial_a_b):
             a_x_n = get_a_x_n(data, i, initial_a_b, current)
 
             b_n = initial_a_b[current][1]
+            #TODO switch sign for linear_svc
             if a_x_n + b_n > 0:  # going right on the branch
                 current = tree.get_right_children(current)
             else:  # going left on the branch
@@ -131,7 +132,7 @@ def test_initial_solution_k_fold(data, tree):
 
 if __name__ == "__main__":
     dataframe = pd.read_csv('./DataSets/airfoil_self_noise_reg.csv')
-    depth = 3
+    depth = 1
     l, a_b, e_i, g_i_n, cl = get_initial_solution(dataframe, Tree(depth), check=False)
     # rs = test_initial_solution_k_fold(dataframe,Tree(depth))
     print('\n')

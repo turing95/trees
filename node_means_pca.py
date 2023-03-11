@@ -20,8 +20,8 @@ def node_means_pca(df: pd.DataFrame, label, logging=False):
     pca = PCA(n_components=1)
     pca.fit(pd.DataFrame(rows))
     mat_2 = pca.components_[0]
-    df = df.drop(label, axis=1)
-    mat_1 = df.to_numpy()
+    #df = df.drop(label, axis=1)
+    mat_1 = df.iloc[:,:-1].to_numpy()
 
     new_numpy_df = np.matmul(mat_1, mat_2)
     new_df = pd.DataFrame(new_numpy_df, columns=[0])

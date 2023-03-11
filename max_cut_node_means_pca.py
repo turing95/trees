@@ -30,21 +30,23 @@ def max_cut_node_means_pca(dataframe, depth):
 def max_cut_node_means_pca_bottom_up(dataframe, depth):
     clusters = class_encoding_jobs_alternative(dataframe, depth)
 
-    nodes_a_b = [([], 0) for i in range(1, np.power(2, depth))]
+    nodes_a_b = {}
 
     def iterative_process(level=0, node=1):
         # nodes_a_b = [([], 0) for i in range(1, np.power(2, depth))]
         if level == depth:
-            df = clusters[node]
-            df['class'] = node
+            df = clusters[node]['cluster']
+            df = df.drop('target', axis=1)
         else:
             cluster_sx = iterative_process(level + 1, node * 2)
             cluster_dx = iterative_process(level + 1, node * 2 + 1)
-            df = pd.concat([cluster_sx, cluster_dx], ignore_index=True)
+            df = pd.concat([cluster_sx, cluster_dx])
             n_m_pca, pca_component = node_means_pca(df, 'class')
             n_m_pca[1] = df['class']
             th, th_index = max_cut(n_m_pca)
-            nodes_a_b[node - 1] = (pca_component, th)
+            nodes_a_b[node] = [pca_component, th]
+        df['class'] = node
+
         return df
 
     iterative_process()
