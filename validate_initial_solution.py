@@ -69,15 +69,15 @@ def validate_initial_solution(initial_beta_beta_zero, initial_a_b, initial_e_i, 
 
         for n in tree.Nodes:
             v = initial_a_b[n]
-            if not -1 <= sum(v[0][idx] for idx, f in enumerate(features)) <= 1:
-                for idx, f in enumerate(features):
+            if not -1 <= sum(v[0][idx] for idx, f in enumerate(cat_features)) <= 1:
+                for idx, f in enumerate(cat_features):
                     print('hp val', v[0][idx])
                     print('feat', f)
                     print('idx', idx)
                 raise AssertionError
             left_leaves = tree.get_left_leaves(n)
             right_leaves = tree.get_right_leaves(n)
-            s_f = sum(v[0][idx] * data.at[i, f] for idx, f in enumerate(features))
+            s_f = sum(v[0][idx] * data.at[i, f] for idx, f in enumerate(cat_features))
             tau = -v[1]
             dt = data.loc[i]
             s_g_l = sum(init_g[i][x] for x in left_leaves)
@@ -98,7 +98,7 @@ def validate_initial_solution(initial_beta_beta_zero, initial_a_b, initial_e_i, 
 
 if __name__ == "__main__":
     dataframe = pd.read_csv('./DataSets/airfoil_self_noise_reg.csv')
-    depth = 3
+    depth = 2
     tr = Tree(depth)
     l, a_b, e_i, g_i, cl = get_initial_solution(dataframe, tr)
     cs_l, cs_r, cs_l_wrong, cs_r_wrong,obj = validate_initial_solution(l, normalize(a_b), e_i, g_i, tr, dataframe)

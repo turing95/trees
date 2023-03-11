@@ -3,7 +3,7 @@ This module formulate the FlowOCT problem in gurobipy.
 '''
 
 from gurobipy import *
-from utils.utils_oct_no_p import get_model_accuracy
+from utils.utils_multivariate import get_model_accuracy
 import time
 
 
@@ -94,7 +94,7 @@ class FlowORT:
         '''
         ############################### define variables
         # b[n,f] ==1 iff at node n we branch on feature f
-        self.a = self.model.addVars(self.tree.Nodes, self.features, vtype=GRB.CONTINUOUS, name='a', lb=-1, ub=1)
+        self.a = self.model.addVars(self.tree.Nodes, self.cat_features, vtype=GRB.CONTINUOUS, name='a', lb=-GRB.INFINITY,ub=GRB.INFINITY)
         self.g = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.BINARY, name='g')
 
         self.e = self.model.addVars(self.datapoints, vtype=GRB.CONTINUOUS, lb=0,
@@ -109,7 +109,7 @@ class FlowORT:
             for n in self.tree.Nodes:
                 v = initial_a_b[n]
                 self.b[n].Start = -v[1]
-                for idx, f in enumerate(self.features):
+                for idx, f in enumerate(self.cat_features):
                     self.a[n, f].Start = v[0][idx]
         for n in self.tree.Leaves:
             if init_beta_beta_zero is not None:
@@ -154,7 +154,7 @@ class FlowORT:
 
             self.model.addConstrs(
                 (quicksum(self.a[n, f] * self.data.at[i, f] for f in
-                          self.features) + self.w <=
+                          self.cat_features) + self.w <=
                  self.b[n] + (2 + self.w) * (1 - quicksum(self.g[i, x] for x in left_leaves))
                  )
                 for i in
@@ -166,7 +166,7 @@ class FlowORT:
             # no_reach = [x for x in self.tree.Leaves if x not in right_leaves + left_leaves]
             self.model.addConstrs(
                 (quicksum(self.a[n, f] * (self.data.at[i, f]) for f in
-                          self.features) >=
+                          self.cat_features) >=
                  self.b[n] - 2 * (1 - quicksum(self.g[i, x] for x in right_leaves))
                  ) for i in
                 self.datapoints)
@@ -197,9 +197,9 @@ class FlowORT:
         self.model.addConstrs(
             (quicksum(self.g[i, n] for n in self.tree.Leaves) == 1) for i in self.datapoints)
         self.model.addConstrs(
-            (quicksum(self.a[n, f] for f in self.features) <= 1) for n in self.tree.Nodes)
+            (quicksum(self.a[n, f] for f in self.cat_features) <= 1) for n in self.tree.Nodes)
         self.model.addConstrs(
-            (quicksum(self.a[n, f] for f in self.features) >= -1) for n in self.tree.Nodes)
+            (quicksum(self.a[n, f] for f in self.cat_features) >= -1) for n in self.tree.Nodes)
 
         # define objective function
         obj = LinExpr(0)
@@ -220,5 +220,6 @@ class FlowORT:
         return get_model_accuracy(self,
                                   data,
                                   self.model.getAttr("X", self.a),
+                                  self.model.getAttr("X", self.b),
                                   self.model.getAttr("x", self.beta_zero),
                                   self.model.getAttr("x", self.beta))

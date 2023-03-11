@@ -120,7 +120,6 @@ def main(argv):
     for train_index, test_index in kf.split(x):
         print("TRAIN:", train_index, "TEST:", test_index)
         data_train, data_test = data.iloc[train_index], data.iloc[test_index]
-        data_train = data
         ##########################################################
         # Creating and Solving the problem
         ##########################################################
@@ -130,17 +129,15 @@ def main(argv):
         primal_light = FlowORT_light_continuous(data_train, label, tree, time_limit)
         init_beta_beta_zero, initial_a_b, init_e_i_n, init_g_i_n,cl = get_initial_solution(data_train, tree)
         normalized_a_b = normalize(initial_a_b)
-        a,b,c,d,obj = validate_initial_solution(init_beta_beta_zero,normalized_a_b,init_e_i_n,init_g_i_n,tree,data_train)
+        '''a,b,c,d,obj = validate_initial_solution(init_beta_beta_zero,normalized_a_b,init_e_i_n,init_g_i_n,tree,data_train)
         print('expected',obj)
-        print(obj)
-        init_beta_beta_zero, normalized_a_b, init_e_i_n = None, None, None
+        print(obj)'''
+        #init_beta_beta_zero, normalized_a_b, init_e_i_n = None, None, None
         primal_light.create_primal_problem(normalized_a_b, init_beta_beta_zero, init_e_i_n,init_g_i_n)
 
         primal_light.model.update()
-        primal_light.model.write(f'init_model_{time.time()}.mps')
 
         primal_light.model.optimize()
-        primal_light.model.write(f'init_model_{time.time()}.mps')
 
         end_time = time.time()
 
@@ -174,16 +171,21 @@ def main(argv):
 
         r2_train.append(r2_light)
         r2_test.append(r2_light_test)
-
+        break
     print('\n')
     print('mip gaps light', mip_gaps_light)
+
     print('\n')
-    print('solving times light', solving_times_light)
+    print('maes light train', maes_train_light)
     print('\n')
     print('maes light test', maes_test_light)
 
     print('\n')
-    print('maes light train', maes_train_light)
+    print('r2 light traing ', r2_train)
+
+    print('\n')
+    print('r2 light test', r2_test)
+
 
     row_1 = [approach_name_1, input_file, train_len, features_count, depth, n_k_folds, time_limit,
              np.average(mip_gaps_light) * 100,
