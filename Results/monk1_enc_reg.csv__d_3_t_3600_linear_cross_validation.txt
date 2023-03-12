@@ -1,0 +1,860 @@
+TRAIN: [  0   1   3   4   5   6   7   8   9  10  11  12  13  14  15  16  18  19
+  20  21  22  23  24  25  26  27  28  29  30  32  34  35  36  37  38  39
+  40  41  42  43  44  47  49  50  52  53  54  55  56  57  58  59  60  61
+  62  63  64  66  68  69  70  71  72  74  75  76  77  79  81  82  84  86
+  87  88  90  91  92  93  94  95  96  97  99 101 103 104 105 107 108 109
+ 111 112 113 116 118 119 120 122 123] TEST: [  2  17  31  33  45  46  48  51  65  67  73  78  80  83  85  89  98 100
+ 102 106 110 114 115 117 121]
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 1591 rows, 332 columns and 46705 nonzeros
+Model fingerprint: 0x14ca3d77
+Variable types: 227 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 49.0000000
+Presolve removed 400 rows and 0 columns
+Presolve time: 0.04s
+Presolved: 1191 rows, 332 columns, 34993 nonzeros
+Variable types: 227 continuous, 105 integer (105 binary)
+
+Root relaxation: objective 0.000000e+00, 87 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    7   49.00000    0.00000   100%     -    0s
+H    0     0                      10.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   10.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8   10.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8   10.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    5   10.00000    0.00000   100%     -    0s
+H    0     0                       5.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    5    5.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    7    5.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    7    5.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9    5.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9    5.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9    5.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9    5.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    5.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    5.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    8    5.00000    0.00000   100%     -    0s
+*  112    70              36       3.0000000    0.00000   100%  36.4    0s
+*  155     3              24       0.0000000    0.00000  0.00%  33.9    0s
+
+Cutting planes:
+  MIR: 43
+
+Explored 156 nodes (5594 simplex iterations) in 0.56 seconds (0.81 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 5: 0 3 5 ... 49
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 4470 rows, 2510 columns and 26517 nonzeros
+Model fingerprint: 0xb792e82d
+Variable types: 2405 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+00]
+Found heuristic solution: objective -99.0000000
+Presolve removed 1893 rows and 1485 columns
+Presolve time: 0.04s
+Presolved: 2577 rows, 1025 columns, 21124 nonzeros
+Variable types: 920 continuous, 105 integer (105 binary)
+
+Root relaxation: objective -8.526513e-14, 1293 iterations, 0.10 seconds (0.13 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    2  -99.00000   -0.00000   100%     -    0s
+H    0     0                      -7.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   11   -7.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   11   -7.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    4   -7.00000   -0.00000   100%     -    0s
+H    0     0                      -4.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    5   -4.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    6   -4.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    3   -4.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    5   -4.00000   -0.00000   100%     -    0s
+H    0     0                      -0.0000000   -0.00000  0.00%     -    0s
+     0     0   -0.00000    0    5   -0.00000   -0.00000  0.00%     -    0s
+
+Cutting planes:
+  MIR: 19
+
+Explored 1 nodes (4446 simplex iterations) in 0.53 seconds (0.74 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 4: -0 -4 -7 -99 
+No other solutions better than -0
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -0.000000000000e+00, best bound -0.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 1591 rows, 1025 columns and 46705 nonzeros
+Model fingerprint: 0x9f6fff47
+Variable types: 920 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 49.0000000
+Presolve removed 400 rows and 0 columns
+Presolve time: 0.04s
+Presolved: 1191 rows, 1025 columns, 34993 nonzeros
+Variable types: 920 continuous, 105 integer (105 binary)
+
+Root relaxation: objective 0.000000e+00, 114 iterations, 0.01 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    9   49.00000    0.00000   100%     -    0s
+H    0     0                      10.0000000    0.00000   100%     -    0s
+H    0     0                       9.2500000    0.00000   100%     -    0s
+     0     0    0.00000    0    9    9.25000    0.00000   100%     -    0s
+H    0     0                       6.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    2    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+H    0     0                       5.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    5.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    5.00000    0.00000   100%     -    0s
+H    0     0                       4.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    4.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    4.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    6    4.00000    0.00000   100%     -    0s
+*   17     2              13       0.0000000    0.00000  0.00%  28.5    0s
+
+Cutting planes:
+  MIR: 22
+
+Explored 18 nodes (1219 simplex iterations) in 0.43 seconds (0.64 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 7: 0 4 5 ... 49
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap 0.0000%
+
+
+
+Total Solving Time light 1.2196860313415527
+obj value light 0.0
+bnf_light {(1, 'Feat_0.1'): -0.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): 1.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): -0.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): -0.0, (2, 'Feat_1.3'): -0.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): 1.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): -0.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): 1.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): 1.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): -0.0, (4, 'Feat_1.1'): -0.0, (4, 'Feat_1.2'): 0.0, (4, 'Feat_1.3'): -0.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): -0.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): 0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): -0.0, (5, 'Feat_0.1'): 1.0, (5, 'Feat_0.2'): -0.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): -0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): -0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): -0.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): -0.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): 1.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): -0.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): -0.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): 1.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+beta {(8, 'Feat_0.1'): 0.0, (8, 'Feat_0.2'): 0.0, (8, 'Feat_0.3'): 0.0, (8, 'Feat_1.1'): 0.0, (8, 'Feat_1.2'): 1.0, (8, 'Feat_1.3'): 0.0, (8, 'Feat_2.1'): 0.0, (8, 'Feat_3.1'): 0.0, (8, 'Feat_3.2'): 0.0, (8, 'Feat_3.3'): 0.0, (8, 'Feat_4.1'): 0.0, (8, 'Feat_4.2'): 0.0, (8, 'Feat_4.3'): 0.0, (8, 'Feat_4.4'): 0.0, (8, 'Feat_5.1'): 0.0, (9, 'Feat_0.1'): 0.0, (9, 'Feat_0.2'): 0.0, (9, 'Feat_0.3'): 1.0, (9, 'Feat_1.1'): 1.0, (9, 'Feat_1.2'): 0.0, (9, 'Feat_1.3'): 0.0, (9, 'Feat_2.1'): 0.0, (9, 'Feat_3.1'): 0.0, (9, 'Feat_3.2'): 0.0, (9, 'Feat_3.3'): 0.0, (9, 'Feat_4.1'): 0.0, (9, 'Feat_4.2'): 0.0, (9, 'Feat_4.3'): 0.0, (9, 'Feat_4.4'): 0.0, (9, 'Feat_5.1'): 0.0, (10, 'Feat_0.1'): 0.0, (10, 'Feat_0.2'): 0.0, (10, 'Feat_0.3'): 0.0, (10, 'Feat_1.1'): 0.0, (10, 'Feat_1.2'): 0.0, (10, 'Feat_1.3'): 0.0, (10, 'Feat_2.1'): 0.0, (10, 'Feat_3.1'): 0.0, (10, 'Feat_3.2'): 0.0, (10, 'Feat_3.3'): 0.0, (10, 'Feat_4.1'): 1.0, (10, 'Feat_4.2'): 0.0, (10, 'Feat_4.3'): 0.0, (10, 'Feat_4.4'): 0.0, (10, 'Feat_5.1'): 0.0, (11, 'Feat_0.1'): 0.0, (11, 'Feat_0.2'): 0.0, (11, 'Feat_0.3'): 0.0, (11, 'Feat_1.1'): 0.0, (11, 'Feat_1.2'): 0.0, (11, 'Feat_1.3'): 0.0, (11, 'Feat_2.1'): 0.0, (11, 'Feat_3.1'): 0.0, (11, 'Feat_3.2'): 0.0, (11, 'Feat_3.3'): 0.0, (11, 'Feat_4.1'): 1.0, (11, 'Feat_4.2'): 0.0, (11, 'Feat_4.3'): 0.0, (11, 'Feat_4.4'): 0.0, (11, 'Feat_5.1'): 0.0, (12, 'Feat_0.1'): 0.0, (12, 'Feat_0.2'): 0.0, (12, 'Feat_0.3'): 0.0, (12, 'Feat_1.1'): 0.0, (12, 'Feat_1.2'): 0.0, (12, 'Feat_1.3'): 0.0, (12, 'Feat_2.1'): 0.0, (12, 'Feat_3.1'): 0.0, (12, 'Feat_3.2'): 0.0, (12, 'Feat_3.3'): 0.0, (12, 'Feat_4.1'): 0.9999999999999999, (12, 'Feat_4.2'): 0.0, (12, 'Feat_4.3'): 0.0, (12, 'Feat_4.4'): 0.0, (12, 'Feat_5.1'): 1.0000000000000004, (13, 'Feat_0.1'): 0.0, (13, 'Feat_0.2'): 0.0, (13, 'Feat_0.3'): 0.0, (13, 'Feat_1.1'): 0.0, (13, 'Feat_1.2'): 0.0, (13, 'Feat_1.3'): 0.0, (13, 'Feat_2.1'): 0.0, (13, 'Feat_3.1'): 0.0, (13, 'Feat_3.2'): 0.0, (13, 'Feat_3.3'): 0.0, (13, 'Feat_4.1'): 0.0, (13, 'Feat_4.2'): 1.0, (13, 'Feat_4.3'): 0.0, (13, 'Feat_4.4'): 0.0, (13, 'Feat_5.1'): 0.0, (14, 'Feat_0.1'): 0.0, (14, 'Feat_0.2'): 0.0, (14, 'Feat_0.3'): 0.0, (14, 'Feat_1.1'): 0.0, (14, 'Feat_1.2'): 0.0, (14, 'Feat_1.3'): 1.0000000000000009, (14, 'Feat_2.1'): 0.0, (14, 'Feat_3.1'): 0.0, (14, 'Feat_3.2'): 0.0, (14, 'Feat_3.3'): 0.0, (14, 'Feat_4.1'): 1.0, (14, 'Feat_4.2'): 0.0, (14, 'Feat_4.3'): 0.0, (14, 'Feat_4.4'): 0.9999999999999997, (14, 'Feat_5.1'): 0.0, (15, 'Feat_0.1'): 0.0, (15, 'Feat_0.2'): 0.0, (15, 'Feat_0.3'): 1.000000000000001, (15, 'Feat_1.1'): 0.0, (15, 'Feat_1.2'): 0.0, (15, 'Feat_1.3'): 0.0, (15, 'Feat_2.1'): 0.0, (15, 'Feat_3.1'): 0.0, (15, 'Feat_3.2'): 0.0, (15, 'Feat_3.3'): 0.0, (15, 'Feat_4.1'): 0.0, (15, 'Feat_4.2'): 0.0, (15, 'Feat_4.3'): 0.0, (15, 'Feat_4.4'): 0.0, (15, 'Feat_5.1'): 0.0}
+Total Solving Time light 1.0838332176208496
+obj value light 0.0
+bnf_light {(1, 'Feat_0.1'): -0.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): -0.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): 1.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): 1.0, (2, 'Feat_1.2'): -0.0, (2, 'Feat_1.3'): -0.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): -0.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): 1.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): -0.0, (4, 'Feat_1.1'): -0.0, (4, 'Feat_1.2'): -0.0, (4, 'Feat_1.3'): 1.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): -0.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): 0.0, (4, 'Feat_5.1'): -0.0, (5, 'Feat_0.1'): -0.0, (5, 'Feat_0.2'): 1.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): 0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): -0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): 1.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): -0.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): -0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): 1.0, (7, 'Feat_0.2'): 0.0, (7, 'Feat_0.3'): -0.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+Total Solving Time oct_no_p 0.7898800373077393
+obj value oct_no_p -0.0
+bnf_oct_no_p {(1, 'Feat_0.1'): -0.0, (1, 'Feat_0.2'): 1.0, (1, 'Feat_0.3'): -0.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): -0.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): -0.0, (2, 'Feat_1.3'): -0.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): 1.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): -0.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): 1.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): 1.0, (4, 'Feat_1.1'): -0.0, (4, 'Feat_1.2'): -0.0, (4, 'Feat_1.3'): -0.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): -0.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): -0.0, (5, 'Feat_0.1'): -0.0, (5, 'Feat_0.2'): -0.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): 1.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): -0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): 1.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): -0.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): -0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): -0.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): 1.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+oct_beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+
+
+lower_bound_reference 0.0
+TRAIN: [  0   1   2   3   4   5   6   7   8   9  11  12  13  14  15  16  17  18
+  20  21  22  23  24  25  26  28  29  30  31  33  34  37  40  41  43  45
+  46  47  48  49  50  51  52  57  59  60  61  63  64  65  66  67  68  70
+  71  72  73  75  76  78  79  80  81  83  84  85  86  87  89  90  91  92
+  93  94  95  96  97  98 100 101 102 103 104 106 107 108 109 110 111 113
+ 114 115 116 117 118 119 120 121 122] TEST: [ 10  19  27  32  35  36  38  39  42  44  53  54  55  56  58  62  69  74
+  77  82  88  99 105 112 123]
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 1591 rows, 332 columns and 46865 nonzeros
+Model fingerprint: 0x3d3e636a
+Variable types: 227 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 53.0000000
+Presolve removed 368 rows and 0 columns
+Presolve time: 0.04s
+Presolved: 1223 rows, 332 columns, 36017 nonzeros
+Variable types: 227 continuous, 105 integer (105 binary)
+
+Root relaxation: objective 0.000000e+00, 106 iterations, 0.00 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    2   53.00000    0.00000   100%     -    0s
+H    0     0                      20.0000000    0.00000   100%     -    0s
+H    0     0                      11.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    4   11.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   11.00000    0.00000   100%     -    0s
+H    0     0                       6.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    7    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    6.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    6    6.00000    0.00000   100%     -    0s
+H   27    27                       3.0000000    0.00000   100%  15.1    0s
+*   33     2              33       0.0000000    0.00000  0.00%  18.2    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 31
+
+Explored 34 nodes (1122 simplex iterations) in 0.32 seconds (0.47 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 6: 0 3 6 ... 53
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 4470 rows, 2510 columns and 26677 nonzeros
+Model fingerprint: 0x96134c9c
+Variable types: 2405 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+00]
+Found heuristic solution: objective -99.0000000
+Presolve removed 1861 rows and 1485 columns
+Presolve time: 0.04s
+Presolved: 2609 rows, 1025 columns, 21428 nonzeros
+Variable types: 920 continuous, 105 integer (105 binary)
+
+Root relaxation: objective -5.684342e-14, 1162 iterations, 0.08 seconds (0.12 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    6  -99.00000   -0.00000   100%     -    0s
+H    0     0                     -18.0000000   -0.00000   100%     -    0s
+H    0     0                     -17.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   18  -17.00000   -0.00000   100%     -    0s
+H    0     0                     -16.3333333   -0.00000   100%     -    0s
+     0     0   -0.00000    0   18  -16.33333   -0.00000   100%     -    0s
+     0     0   -0.00000    0    5  -16.33333   -0.00000   100%     -    0s
+H    0     0                     -15.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -15.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    9  -15.00000   -0.00000   100%     -    0s
+H    0     0                     -13.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -13.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -13.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -13.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -13.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -13.00000   -0.00000   100%     -    0s
+     0     2   -0.00000    0    8  -13.00000   -0.00000   100%     -    0s
+*    8     3               5       0.0000000    0.00000  0.00%   215    0s
+
+Cutting planes:
+  MIR: 21
+
+Explored 9 nodes (6845 simplex iterations) in 0.82 seconds (1.11 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 7: 1.42109e-14 -13 -15 ... -99
+No other solutions better than 1.42109e-14
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.421085471520e-14, best bound 1.421085471520e-14, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 1591 rows, 1025 columns and 46865 nonzeros
+Model fingerprint: 0xbd7c79fd
+Variable types: 920 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 53.0000000
+Presolve removed 368 rows and 0 columns
+Presolve time: 0.04s
+Presolved: 1223 rows, 1025 columns, 36017 nonzeros
+Variable types: 920 continuous, 105 integer (105 binary)
+
+Root relaxation: objective 0.000000e+00, 88 iterations, 0.00 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    2   53.00000    0.00000   100%     -    0s
+H    0     0                      10.0000000    0.00000   100%     -    0s
+H    0     0                       9.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    9    9.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    9.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    9.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    9.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    9.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    9.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    9.00000    0.00000   100%     -    0s
+H    0     0                       8.0000000    0.00000   100%     -    0s
+     0     2    0.00000    0    8    8.00000    0.00000   100%     -    0s
+*   23     8              20       1.0000000    0.00000   100%  33.0    0s
+*   44     4              19       0.0000000    0.00000  0.00%  23.5    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 34
+
+Explored 45 nodes (1519 simplex iterations) in 0.40 seconds (0.59 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 6: 0 1 8 ... 53
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap 0.0000%
+
+
+
+Total Solving Time light 0.9637391567230225
+obj value light 0.0
+bnf_light {(1, 'Feat_0.1'): -0.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): -0.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): 1.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): -0.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): -0.0, (2, 'Feat_1.3'): -0.0, (2, 'Feat_2.1'): 0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): 1.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): 1.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): -0.0, (4, 'Feat_1.1'): 1.0, (4, 'Feat_1.2'): -0.0, (4, 'Feat_1.3'): -0.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): 0.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): 0.0, (4, 'Feat_4.4'): 0.0, (4, 'Feat_5.1'): -0.0, (5, 'Feat_0.1'): -0.0, (5, 'Feat_0.2'): -0.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): 1.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): -0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): -0.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): 1.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): -0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): -0.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): -0.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): 0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): 1.0}
+beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+beta {(8, 'Feat_0.1'): 0.0, (8, 'Feat_0.2'): 1.0000000000000555, (8, 'Feat_0.3'): 0.0, (8, 'Feat_1.1'): 0.0, (8, 'Feat_1.2'): 0.0, (8, 'Feat_1.3'): 0.0, (8, 'Feat_2.1'): 0.0, (8, 'Feat_3.1'): 0.0, (8, 'Feat_3.2'): 0.0, (8, 'Feat_3.3'): 0.0, (8, 'Feat_4.1'): 2.609024107869118e-15, (8, 'Feat_4.2'): 9.514611321037592e-14, (8, 'Feat_4.3'): 1.340039190722564e-13, (8, 'Feat_4.4'): 6.52811138479592e-14, (8, 'Feat_5.1'): 0.0, (9, 'Feat_0.1'): 0.9999999999999254, (9, 'Feat_0.2'): 0.0, (9, 'Feat_0.3'): 0.0, (9, 'Feat_1.1'): 0.0, (9, 'Feat_1.2'): 1.404432126150823e-14, (9, 'Feat_1.3'): 0.0, (9, 'Feat_2.1'): 0.0, (9, 'Feat_3.1'): 0.0, (9, 'Feat_3.2'): 0.0, (9, 'Feat_3.3'): 0.0, (9, 'Feat_4.1'): 0.0, (9, 'Feat_4.2'): 8.432143872028064e-14, (9, 'Feat_4.3'): 1.9961809982760315e-13, (9, 'Feat_4.4'): 0.0, (9, 'Feat_5.1'): 0.0, (10, 'Feat_0.1'): 0.0, (10, 'Feat_0.2'): 0.0, (10, 'Feat_0.3'): 0.0, (10, 'Feat_1.1'): 0.0, (10, 'Feat_1.2'): 0.0, (10, 'Feat_1.3'): 0.0, (10, 'Feat_2.1'): 0.0, (10, 'Feat_3.1'): 0.0, (10, 'Feat_3.2'): 0.0, (10, 'Feat_3.3'): 0.0, (10, 'Feat_4.1'): 1.0, (10, 'Feat_4.2'): 1.0000000000000004, (10, 'Feat_4.3'): 0.0, (10, 'Feat_4.4'): 1.0000000000000004, (10, 'Feat_5.1'): 0.0, (11, 'Feat_0.1'): 0.0, (11, 'Feat_0.2'): 0.0, (11, 'Feat_0.3'): 0.0, (11, 'Feat_1.1'): 0.0, (11, 'Feat_1.2'): 0.0, (11, 'Feat_1.3'): 0.0, (11, 'Feat_2.1'): 0.0, (11, 'Feat_3.1'): 0.0, (11, 'Feat_3.2'): 0.0, (11, 'Feat_3.3'): 0.0, (11, 'Feat_4.1'): 0.0, (11, 'Feat_4.2'): 0.0, (11, 'Feat_4.3'): 2.000000000000001, (11, 'Feat_4.4'): 2.000000000000001, (11, 'Feat_5.1'): 0.0, (12, 'Feat_0.1'): 0.0, (12, 'Feat_0.2'): 0.0, (12, 'Feat_0.3'): 1.0000000000000007, (12, 'Feat_1.1'): 0.0, (12, 'Feat_1.2'): 0.9999999999999964, (12, 'Feat_1.3'): 0.0, (12, 'Feat_2.1'): 0.0, (12, 'Feat_3.1'): 0.0, (12, 'Feat_3.2'): 0.0, (12, 'Feat_3.3'): 0.0, (12, 'Feat_4.1'): 0.9999999999999996, (12, 'Feat_4.2'): 0.0, (12, 'Feat_4.3'): 0.0, (12, 'Feat_4.4'): 0.0, (12, 'Feat_5.1'): 0.0, (13, 'Feat_0.1'): 0.0, (13, 'Feat_0.2'): 0.0, (13, 'Feat_0.3'): 1.0000000000000009, (13, 'Feat_1.1'): 0.0, (13, 'Feat_1.2'): 0.0, (13, 'Feat_1.3'): 0.0, (13, 'Feat_2.1'): 0.0, (13, 'Feat_3.1'): 0.0, (13, 'Feat_3.2'): 0.0, (13, 'Feat_3.3'): 0.0, (13, 'Feat_4.1'): 0.0, (13, 'Feat_4.2'): 0.0, (13, 'Feat_4.3'): 0.0, (13, 'Feat_4.4'): 0.0, (13, 'Feat_5.1'): 0.0, (14, 'Feat_0.1'): 0.0, (14, 'Feat_0.2'): 0.0, (14, 'Feat_0.3'): 0.0, (14, 'Feat_1.1'): 0.0, (14, 'Feat_1.2'): 0.0, (14, 'Feat_1.3'): 0.0, (14, 'Feat_2.1'): 0.0, (14, 'Feat_3.1'): 0.0, (14, 'Feat_3.2'): 0.0, (14, 'Feat_3.3'): 0.0, (14, 'Feat_4.1'): 1.0, (14, 'Feat_4.2'): 0.0, (14, 'Feat_4.3'): 0.0, (14, 'Feat_4.4'): 0.0, (14, 'Feat_5.1'): 0.0, (15, 'Feat_0.1'): 0.0, (15, 'Feat_0.2'): 0.0, (15, 'Feat_0.3'): 0.0, (15, 'Feat_1.1'): 0.0, (15, 'Feat_1.2'): 0.0, (15, 'Feat_1.3'): 0.0, (15, 'Feat_2.1'): 0.0, (15, 'Feat_3.1'): 0.0, (15, 'Feat_3.2'): 0.0, (15, 'Feat_3.3'): 0.0, (15, 'Feat_4.1'): 1.0, (15, 'Feat_4.2'): 0.0, (15, 'Feat_4.3'): 0.0, (15, 'Feat_4.4'): 0.0, (15, 'Feat_5.1'): 0.0}
+Total Solving Time light 1.0575439929962158
+obj value light 0.0
+bnf_light {(1, 'Feat_0.1'): -0.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): 1.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): 0.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): -0.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): 1.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): -0.0, (2, 'Feat_1.3'): -0.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): -0.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): -0.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): 1.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): -0.0, (4, 'Feat_1.1'): -0.0, (4, 'Feat_1.2'): 1.0, (4, 'Feat_1.3'): -0.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): -0.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): 0.0, (5, 'Feat_0.1'): -0.0, (5, 'Feat_0.2'): -0.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): 1.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): -0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): -0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): -0.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): -0.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): -0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): 0.0, (6, 'Feat_5.1'): 1.0, (7, 'Feat_0.1'): -0.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): -0.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): 1.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+Total Solving Time oct_no_p 1.0707728862762451
+obj value oct_no_p 1.4210854715202004e-14
+bnf_oct_no_p {(1, 'Feat_0.1'): -0.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): -0.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): 0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): 1.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): -0.0, (2, 'Feat_1.3'): 1.0, (2, 'Feat_2.1'): 0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): -0.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): 0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): -0.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): 0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): 1.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): -0.0, (4, 'Feat_1.1'): 0.0, (4, 'Feat_1.2'): 1.0, (4, 'Feat_1.3'): -0.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): -0.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): -0.0, (5, 'Feat_0.1'): -0.0, (5, 'Feat_0.2'): -0.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): -0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): 0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): -0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): 1.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): -0.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): -0.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): 0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): 1.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): -0.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): 1.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): 0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+oct_beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+
+
+lower_bound_reference 0.0
+TRAIN: [  0   1   2   3   5   6   7   8   9  10  11  12  13  14  16  17  18  19
+  20  22  25  27  28  29  30  31  32  33  35  36  37  38  39  42  44  45
+  46  47  48  50  51  53  54  55  56  57  58  60  61  62  63  64  65  67
+  68  69  71  72  73  74  75  76  77  78  79  80  81  82  83  84  85  86
+  87  88  89  92  94  96  98  99 100 101 102 105 106 107 109 110 111 112
+ 113 114 115 117 119 120 121 122 123] TEST: [  4  15  21  23  24  26  34  40  41  43  49  52  59  66  70  90  91  93
+  95  97 103 104 108 116 118]
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 1591 rows, 332 columns and 46833 nonzeros
+Model fingerprint: 0x458d31f7
+Variable types: 227 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 53.0000000
+Presolve removed 368 rows and 0 columns
+Presolve time: 0.04s
+Presolved: 1223 rows, 332 columns, 35977 nonzeros
+Variable types: 227 continuous, 105 integer (105 binary)
+
+Root relaxation: objective 0.000000e+00, 101 iterations, 0.00 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       0.0000000    0.00000  0.00%     -    0s
+     0     0    0.00000    0   12    0.00000    0.00000  0.00%     -    0s
+
+Explored 1 nodes (101 simplex iterations) in 0.05 seconds (0.08 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 2: 0 53 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 4470 rows, 2510 columns and 26645 nonzeros
+Model fingerprint: 0x932536aa
+Variable types: 2405 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+00]
+Found heuristic solution: objective -99.0000000
+Presolve removed 1861 rows and 1485 columns
+Presolve time: 0.04s
+Presolved: 2609 rows, 1025 columns, 21388 nonzeros
+Variable types: 920 continuous, 105 integer (105 binary)
+
+Root relaxation: objective -0.000000e+00, 931 iterations, 0.04 seconds (0.04 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    2  -99.00000   -0.00000   100%     -    0s
+H    0     0                      -9.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   22   -9.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   25   -9.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    2   -9.00000   -0.00000   100%     -    0s
+H    0     0                      -1.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    2   -1.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    2   -1.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8   -1.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    9   -1.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    9   -1.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    4   -1.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    4   -1.00000   -0.00000   100%     -    0s
+     0     2   -0.00000    0    4   -1.00000   -0.00000   100%     -    0s
+*   44     0              17      -0.0000000   -0.00000  0.00%  28.3    0s
+
+Cutting planes:
+  MIR: 29
+
+Explored 45 nodes (7048 simplex iterations) in 0.82 seconds (1.06 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 4: -0 -1 -9 -99 
+No other solutions better than -0
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -0.000000000000e+00, best bound -0.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 1591 rows, 1025 columns and 46833 nonzeros
+Model fingerprint: 0x39ec4ca4
+Variable types: 920 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 53.0000000
+Presolve removed 368 rows and 0 columns
+Presolve time: 0.04s
+Presolved: 1223 rows, 1025 columns, 35977 nonzeros
+Variable types: 920 continuous, 105 integer (105 binary)
+
+Root relaxation: objective 0.000000e+00, 103 iterations, 0.01 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    8   53.00000    0.00000   100%     -    0s
+H    0     0                      10.5000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   10.50000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   10.50000    0.00000   100%     -    0s
+H    0     0                       4.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    4.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    4.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    4.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    6    4.00000    0.00000   100%     -    0s
+*   25     2              21       0.0000000    0.00000  0.00%  22.3    0s
+
+Cutting planes:
+  MIR: 50
+
+Explored 26 nodes (1158 simplex iterations) in 0.37 seconds (0.52 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 4: 0 4 10.5 53 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap 0.0000%
+
+
+
+Total Solving Time light 0.7057149410247803
+obj value light 0.0
+bnf_light {(1, 'Feat_0.1'): 0.0, (1, 'Feat_0.2'): 0.0, (1, 'Feat_0.3'): 0.0, (1, 'Feat_1.1'): 0.0, (1, 'Feat_1.2'): 0.0, (1, 'Feat_1.3'): 0.0, (1, 'Feat_2.1'): 0.0, (1, 'Feat_3.1'): 0.0, (1, 'Feat_3.2'): 0.0, (1, 'Feat_3.3'): 0.0, (1, 'Feat_4.1'): 1.0, (1, 'Feat_4.2'): 0.0, (1, 'Feat_4.3'): 0.0, (1, 'Feat_4.4'): 0.0, (1, 'Feat_5.1'): 0.0, (2, 'Feat_0.1'): 0.0, (2, 'Feat_0.2'): 0.0, (2, 'Feat_0.3'): 0.0, (2, 'Feat_1.1'): 0.0, (2, 'Feat_1.2'): 0.0, (2, 'Feat_1.3'): 1.0, (2, 'Feat_2.1'): 0.0, (2, 'Feat_3.1'): 0.0, (2, 'Feat_3.2'): 0.0, (2, 'Feat_3.3'): 0.0, (2, 'Feat_4.1'): 0.0, (2, 'Feat_4.2'): 0.0, (2, 'Feat_4.3'): 0.0, (2, 'Feat_4.4'): 0.0, (2, 'Feat_5.1'): 0.0, (3, 'Feat_0.1'): 0.0, (3, 'Feat_0.2'): 0.0, (3, 'Feat_0.3'): 0.0, (3, 'Feat_1.1'): 0.0, (3, 'Feat_1.2'): 0.0, (3, 'Feat_1.3'): 0.0, (3, 'Feat_2.1'): 0.0, (3, 'Feat_3.1'): 0.0, (3, 'Feat_3.2'): 0.0, (3, 'Feat_3.3'): 0.0, (3, 'Feat_4.1'): 0.0, (3, 'Feat_4.2'): 0.0, (3, 'Feat_4.3'): 0.0, (3, 'Feat_4.4'): 1.0, (3, 'Feat_5.1'): 0.0, (4, 'Feat_0.1'): 0.0, (4, 'Feat_0.2'): 0.0, (4, 'Feat_0.3'): 0.0, (4, 'Feat_1.1'): 0.0, (4, 'Feat_1.2'): 1.0, (4, 'Feat_1.3'): 0.0, (4, 'Feat_2.1'): 0.0, (4, 'Feat_3.1'): 0.0, (4, 'Feat_3.2'): 0.0, (4, 'Feat_3.3'): 0.0, (4, 'Feat_4.1'): 0.0, (4, 'Feat_4.2'): 0.0, (4, 'Feat_4.3'): 0.0, (4, 'Feat_4.4'): 0.0, (4, 'Feat_5.1'): 0.0, (5, 'Feat_0.1'): 0.0, (5, 'Feat_0.2'): 0.0, (5, 'Feat_0.3'): 1.0, (5, 'Feat_1.1'): 0.0, (5, 'Feat_1.2'): 0.0, (5, 'Feat_1.3'): 0.0, (5, 'Feat_2.1'): 0.0, (5, 'Feat_3.1'): 0.0, (5, 'Feat_3.2'): 0.0, (5, 'Feat_3.3'): 0.0, (5, 'Feat_4.1'): 0.0, (5, 'Feat_4.2'): 0.0, (5, 'Feat_4.3'): 0.0, (5, 'Feat_4.4'): 0.0, (5, 'Feat_5.1'): 0.0, (6, 'Feat_0.1'): 0.0, (6, 'Feat_0.2'): 0.0, (6, 'Feat_0.3'): 1.0, (6, 'Feat_1.1'): 0.0, (6, 'Feat_1.2'): 0.0, (6, 'Feat_1.3'): 0.0, (6, 'Feat_2.1'): 0.0, (6, 'Feat_3.1'): 0.0, (6, 'Feat_3.2'): 0.0, (6, 'Feat_3.3'): 0.0, (6, 'Feat_4.1'): 0.0, (6, 'Feat_4.2'): 0.0, (6, 'Feat_4.3'): 0.0, (6, 'Feat_4.4'): 0.0, (6, 'Feat_5.1'): 0.0, (7, 'Feat_0.1'): 0.0, (7, 'Feat_0.2'): 0.0, (7, 'Feat_0.3'): 0.0, (7, 'Feat_1.1'): 0.0, (7, 'Feat_1.2'): 0.0, (7, 'Feat_1.3'): 0.0, (7, 'Feat_2.1'): 0.0, (7, 'Feat_3.1'): 0.0, (7, 'Feat_3.2'): 0.0, (7, 'Feat_3.3'): 0.0, (7, 'Feat_4.1'): 0.0, (7, 'Feat_4.2'): 1.0, (7, 'Feat_4.3'): 0.0, (7, 'Feat_4.4'): 0.0, (7, 'Feat_5.1'): 0.0}
+beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+beta {(8, 'Feat_0.1'): 1.0000000000000002, (8, 'Feat_0.2'): 2.220446049250313e-16, (8, 'Feat_0.3'): 0.0, (8, 'Feat_1.1'): 0.0, (8, 'Feat_1.2'): 0.0, (8, 'Feat_1.3'): 0.0, (8, 'Feat_2.1'): 0.0, (8, 'Feat_3.1'): 0.0, (8, 'Feat_3.2'): 0.0, (8, 'Feat_3.3'): 0.0, (8, 'Feat_4.1'): 1.0000000000000002, (8, 'Feat_4.2'): 2.220446049250313e-16, (8, 'Feat_4.3'): 0.0, (8, 'Feat_4.4'): 0.0, (8, 'Feat_5.1'): 0.0, (9, 'Feat_0.1'): 0.0, (9, 'Feat_0.2'): 0.9999999999999998, (9, 'Feat_0.3'): 0.0, (9, 'Feat_1.1'): 0.0, (9, 'Feat_1.2'): 0.0, (9, 'Feat_1.3'): 1.0, (9, 'Feat_2.1'): 0.0, (9, 'Feat_3.1'): 0.0, (9, 'Feat_3.2'): 0.0, (9, 'Feat_3.3'): 0.0, (9, 'Feat_4.1'): 1.0, (9, 'Feat_4.2'): 0.0, (9, 'Feat_4.3'): 0.0, (9, 'Feat_4.4'): 0.0, (9, 'Feat_5.1'): 0.0, (10, 'Feat_0.1'): 0.0, (10, 'Feat_0.2'): 0.0, (10, 'Feat_0.3'): 0.0, (10, 'Feat_1.1'): 0.0, (10, 'Feat_1.2'): 0.0, (10, 'Feat_1.3'): 0.0, (10, 'Feat_2.1'): 0.0, (10, 'Feat_3.1'): 0.0, (10, 'Feat_3.2'): 0.0, (10, 'Feat_3.3'): 0.0, (10, 'Feat_4.1'): 1.0, (10, 'Feat_4.2'): 0.0, (10, 'Feat_4.3'): 0.0, (10, 'Feat_4.4'): 0.0, (10, 'Feat_5.1'): 0.0, (11, 'Feat_0.1'): 0.0, (11, 'Feat_0.2'): 0.0, (11, 'Feat_0.3'): 0.0, (11, 'Feat_1.1'): 0.0, (11, 'Feat_1.2'): 0.0, (11, 'Feat_1.3'): 0.0, (11, 'Feat_2.1'): 0.0, (11, 'Feat_3.1'): 0.0, (11, 'Feat_3.2'): 0.0, (11, 'Feat_3.3'): 0.0, (11, 'Feat_4.1'): 1.0, (11, 'Feat_4.2'): 1.0, (11, 'Feat_4.3'): 1.0, (11, 'Feat_4.4'): 1.0, (11, 'Feat_5.1'): 0.0, (12, 'Feat_0.1'): 0.0, (12, 'Feat_0.2'): 0.0, (12, 'Feat_0.3'): 0.0, (12, 'Feat_1.1'): 0.0, (12, 'Feat_1.2'): 0.0, (12, 'Feat_1.3'): 0.0, (12, 'Feat_2.1'): 0.0, (12, 'Feat_3.1'): 0.0, (12, 'Feat_3.2'): 0.0, (12, 'Feat_3.3'): 0.0, (12, 'Feat_4.1'): 1.0, (12, 'Feat_4.2'): 0.0, (12, 'Feat_4.3'): 0.0, (12, 'Feat_4.4'): 0.0, (12, 'Feat_5.1'): 0.0, (13, 'Feat_0.1'): 0.0, (13, 'Feat_0.2'): 0.0, (13, 'Feat_0.3'): 1.0, (13, 'Feat_1.1'): 0.0, (13, 'Feat_1.2'): 0.0, (13, 'Feat_1.3'): 0.0, (13, 'Feat_2.1'): 0.0, (13, 'Feat_3.1'): 0.0, (13, 'Feat_3.2'): 0.0, (13, 'Feat_3.3'): 0.0, (13, 'Feat_4.1'): 0.0, (13, 'Feat_4.2'): 0.0, (13, 'Feat_4.3'): 0.0, (13, 'Feat_4.4'): 0.0, (13, 'Feat_5.1'): 0.0, (14, 'Feat_0.1'): 0.0, (14, 'Feat_0.2'): 0.0, (14, 'Feat_0.3'): 0.0, (14, 'Feat_1.1'): 0.0, (14, 'Feat_1.2'): 1.0, (14, 'Feat_1.3'): 1.0, (14, 'Feat_2.1'): 0.0, (14, 'Feat_3.1'): 0.0, (14, 'Feat_3.2'): 0.0, (14, 'Feat_3.3'): 0.0, (14, 'Feat_4.1'): 1.0, (14, 'Feat_4.2'): 0.0, (14, 'Feat_4.3'): 0.0, (14, 'Feat_4.4'): 0.0, (14, 'Feat_5.1'): 0.0, (15, 'Feat_0.1'): 0.0, (15, 'Feat_0.2'): 0.9999999999999996, (15, 'Feat_0.3'): 1.0, (15, 'Feat_1.1'): 0.0, (15, 'Feat_1.2'): 0.0, (15, 'Feat_1.3'): 0.0, (15, 'Feat_2.1'): 0.0, (15, 'Feat_3.1'): 0.0, (15, 'Feat_3.2'): 0.0, (15, 'Feat_3.3'): 0.0, (15, 'Feat_4.1'): 2.220446049250313e-16, (15, 'Feat_4.2'): 0.0, (15, 'Feat_4.3'): 0.0, (15, 'Feat_4.4'): 1.1102230246251565e-16, (15, 'Feat_5.1'): 0.0}
+Total Solving Time light 1.0258519649505615
+obj value light 0.0
+bnf_light {(1, 'Feat_0.1'): -0.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): -0.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): 1.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): 1.0, (2, 'Feat_1.3'): -0.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): -0.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): -0.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): 1.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): -0.0, (4, 'Feat_1.1'): 1.0, (4, 'Feat_1.2'): 0.0, (4, 'Feat_1.3'): -0.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): -0.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): -0.0, (5, 'Feat_0.1'): -0.0, (5, 'Feat_0.2'): 1.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): -0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): 0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): -0.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): 1.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): -0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): 0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): -0.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): 1.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+Total Solving Time oct_no_p 1.0770461559295654
+obj value oct_no_p -0.0
+bnf_oct_no_p {(1, 'Feat_0.1'): -0.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): -0.0, (1, 'Feat_1.1'): 1.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): -0.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): 0.0, (2, 'Feat_1.3'): 1.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): -0.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): -0.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): 1.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): 0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): -0.0, (4, 'Feat_1.1'): 0.0, (4, 'Feat_1.2'): -0.0, (4, 'Feat_1.3'): -0.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): 1.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): -0.0, (5, 'Feat_0.1'): -0.0, (5, 'Feat_0.2'): -0.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): -0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): 1.0, (5, 'Feat_4.2'): 0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): -0.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): -0.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): 0.0, (6, 'Feat_2.1'): 0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): 1.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): -0.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): -0.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): 1.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): 0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+oct_beta_zero light {8: 0.0, 9: 1.1102230246251565e-16, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+
+
+lower_bound_reference 0.0
+TRAIN: [  1   2   4   5   6   9  10  11  12  15  16  17  18  19  20  21  23  24
+  25  26  27  28  29  31  32  33  34  35  36  37  38  39  40  41  42  43
+  44  45  46  48  49  50  51  52  53  54  55  56  58  59  62  64  65  66
+  67  69  70  71  72  73  74  75  76  77  78  79  80  82  83  84  85  88
+  89  90  91  93  95  97  98  99 100 101 102 103 104 105 106 107 108 109
+ 110 112 114 115 116 117 118 121 123] TEST: [  0   3   7   8  13  14  22  30  47  57  60  61  63  68  81  86  87  92
+  94  96 111 113 119 120 122]
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 1591 rows, 332 columns and 46785 nonzeros
+Model fingerprint: 0x9abc727a
+Variable types: 227 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 45.0000000
+Presolve removed 432 rows and 0 columns
+Presolve time: 0.04s
+Presolved: 1159 rows, 332 columns, 34057 nonzeros
+Variable types: 227 continuous, 105 integer (105 binary)
+
+Root relaxation: objective 0.000000e+00, 40 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    2   45.00000    0.00000   100%     -    0s
+H    0     0                       6.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    2    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    2    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    4    6.00000    0.00000   100%     -    0s
+*   10     2              10       0.0000000    0.00000  0.00%  20.3    0s
+
+Cutting planes:
+  MIR: 22
+
+Explored 11 nodes (329 simplex iterations) in 0.20 seconds (0.28 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 3: 0 6 45 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 4470 rows, 2510 columns and 26597 nonzeros
+Model fingerprint: 0x4f8cf68e
+Variable types: 2405 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+00]
+Found heuristic solution: objective -99.0000000
+Presolve removed 1925 rows and 1485 columns
+Presolve time: 0.04s
+Presolved: 2545 rows, 1025 columns, 20908 nonzeros
+Variable types: 920 continuous, 105 integer (105 binary)
+
+Root relaxation: objective 1.278977e-13, 917 iterations, 0.04 seconds (0.06 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    2  -99.00000   -0.00000   100%     -    0s
+H    0     0                      -3.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    4   -3.00000   -0.00000   100%     -    0s
+H    0     0                      -0.0000000   -0.00000  0.00%     -    0s
+     0     0   -0.00000    0    4   -0.00000   -0.00000  0.00%     -    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 2
+
+Explored 1 nodes (2386 simplex iterations) in 0.25 seconds (0.37 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 3: -0 -3 -99 
+No other solutions better than -0
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -0.000000000000e+00, best bound -0.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 1591 rows, 1025 columns and 46785 nonzeros
+Model fingerprint: 0xadddbeba
+Variable types: 920 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 45.0000000
+Presolve removed 432 rows and 0 columns
+Presolve time: 0.04s
+Presolved: 1159 rows, 1025 columns, 34057 nonzeros
+Variable types: 920 continuous, 105 integer (105 binary)
+
+Root relaxation: objective 0.000000e+00, 40 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    2   45.00000    0.00000   100%     -    0s
+H    0     0                       6.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    2    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    2    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    2    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    4    6.00000    0.00000   100%     -    0s
+*   10     2               7       0.0000000    0.00000  0.00%  20.6    0s
+
+Cutting planes:
+  MIR: 22
+
+Explored 11 nodes (351 simplex iterations) in 0.24 seconds (0.32 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 3: 0 6 45 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap 0.0000%
+
+
+
+Total Solving Time light 0.8665041923522949
+obj value light 0.0
+bnf_light {(1, 'Feat_0.1'): 1.0, (1, 'Feat_0.2'): 0.0, (1, 'Feat_0.3'): -0.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): -0.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): -0.0, (2, 'Feat_1.3'): -0.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): 1.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): 1.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): 1.0, (4, 'Feat_1.1'): -0.0, (4, 'Feat_1.2'): 0.0, (4, 'Feat_1.3'): -0.0, (4, 'Feat_2.1'): 0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): -0.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): 0.0, (5, 'Feat_0.1'): -0.0, (5, 'Feat_0.2'): -0.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): 1.0, (5, 'Feat_1.3'): -0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): -0.0, (5, 'Feat_4.3'): 0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): 1.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): -0.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): -0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): 1.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): -0.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+beta {(8, 'Feat_0.1'): 0.0, (8, 'Feat_0.2'): 0.0, (8, 'Feat_0.3'): 0.0, (8, 'Feat_1.1'): 0.0, (8, 'Feat_1.2'): 1.0000000000000002, (8, 'Feat_1.3'): 2.7755575615628914e-16, (8, 'Feat_2.1'): 0.0, (8, 'Feat_3.1'): 2.636779683484747e-16, (8, 'Feat_3.2'): 0.0, (8, 'Feat_3.3'): 3.3306690738754696e-16, (8, 'Feat_4.1'): 0.9999999999999993, (8, 'Feat_4.2'): 0.0, (8, 'Feat_4.3'): 0.0, (8, 'Feat_4.4'): 0.0, (8, 'Feat_5.1'): 0.0, (9, 'Feat_0.1'): 0.0, (9, 'Feat_0.2'): 5.273559366969494e-16, (9, 'Feat_0.3'): 0.0, (9, 'Feat_1.1'): 0.0, (9, 'Feat_1.2'): 0.0, (9, 'Feat_1.3'): 1.0000000000000002, (9, 'Feat_2.1'): 3.885780586188048e-16, (9, 'Feat_3.1'): 3.885780586188048e-16, (9, 'Feat_3.2'): 8.326672684688674e-17, (9, 'Feat_3.3'): 0.0, (9, 'Feat_4.1'): 7.771561172376096e-16, (9, 'Feat_4.2'): 0.0, (9, 'Feat_4.3'): 0.0, (9, 'Feat_4.4'): 0.0, (9, 'Feat_5.1'): 0.0, (10, 'Feat_0.1'): 0.0, (10, 'Feat_0.2'): 0.0, (10, 'Feat_0.3'): 0.0, (10, 'Feat_1.1'): 0.0, (10, 'Feat_1.2'): 0.0, (10, 'Feat_1.3'): 5.273559366969494e-16, (10, 'Feat_2.1'): 0.0, (10, 'Feat_3.1'): 0.0, (10, 'Feat_3.2'): 0.0, (10, 'Feat_3.3'): 0.0, (10, 'Feat_4.1'): 0.9999999999999999, (10, 'Feat_4.2'): 0.0, (10, 'Feat_4.3'): 0.0, (10, 'Feat_4.4'): 0.0, (10, 'Feat_5.1'): 0.0, (11, 'Feat_0.1'): 0.0, (11, 'Feat_0.2'): 0.0, (11, 'Feat_0.3'): 0.0, (11, 'Feat_1.1'): 0.0, (11, 'Feat_1.2'): 0.0, (11, 'Feat_1.3'): 0.0, (11, 'Feat_2.1'): 0.0, (11, 'Feat_3.1'): 0.0, (11, 'Feat_3.2'): 0.0, (11, 'Feat_3.3'): 0.0, (11, 'Feat_4.1'): 1.0000000000000002, (11, 'Feat_4.2'): 0.0, (11, 'Feat_4.3'): 5.273559366969494e-16, (11, 'Feat_4.4'): 0.0, (11, 'Feat_5.1'): 0.0, (12, 'Feat_0.1'): 0.0, (12, 'Feat_0.2'): 0.0, (12, 'Feat_0.3'): 0.0, (12, 'Feat_1.1'): 0.0, (12, 'Feat_1.2'): 0.0, (12, 'Feat_1.3'): 0.0, (12, 'Feat_2.1'): 0.0, (12, 'Feat_3.1'): 0.0, (12, 'Feat_3.2'): 0.0, (12, 'Feat_3.3'): 0.0, (12, 'Feat_4.1'): 0.0, (12, 'Feat_4.2'): 0.0, (12, 'Feat_4.3'): 0.0, (12, 'Feat_4.4'): 0.0, (12, 'Feat_5.1'): 0.0, (13, 'Feat_0.1'): 0.0, (13, 'Feat_0.2'): 0.0, (13, 'Feat_0.3'): 0.0, (13, 'Feat_1.1'): 0.0, (13, 'Feat_1.2'): 0.0, (13, 'Feat_1.3'): 0.0, (13, 'Feat_2.1'): 0.0, (13, 'Feat_3.1'): 0.0, (13, 'Feat_3.2'): 0.0, (13, 'Feat_3.3'): 0.0, (13, 'Feat_4.1'): 0.0, (13, 'Feat_4.2'): 0.0, (13, 'Feat_4.3'): 0.0, (13, 'Feat_4.4'): 0.0, (13, 'Feat_5.1'): 0.0, (14, 'Feat_0.1'): 0.0, (14, 'Feat_0.2'): 0.0, (14, 'Feat_0.3'): 0.0, (14, 'Feat_1.1'): 0.0, (14, 'Feat_1.2'): 0.0, (14, 'Feat_1.3'): 0.0, (14, 'Feat_2.1'): 0.0, (14, 'Feat_3.1'): 0.0, (14, 'Feat_3.2'): 0.0, (14, 'Feat_3.3'): 0.0, (14, 'Feat_4.1'): 0.0, (14, 'Feat_4.2'): 0.0, (14, 'Feat_4.3'): 0.0, (14, 'Feat_4.4'): 0.0, (14, 'Feat_5.1'): 0.0, (15, 'Feat_0.1'): 0.0, (15, 'Feat_0.2'): 0.0, (15, 'Feat_0.3'): 0.0, (15, 'Feat_1.1'): 1.0000000000000002, (15, 'Feat_1.2'): 0.0, (15, 'Feat_1.3'): 0.0, (15, 'Feat_2.1'): 0.0, (15, 'Feat_3.1'): 0.0, (15, 'Feat_3.2'): 0.0, (15, 'Feat_3.3'): 0.0, (15, 'Feat_4.1'): 1.0000000000000002, (15, 'Feat_4.2'): 0.0, (15, 'Feat_4.3'): 0.0, (15, 'Feat_4.4'): 0.0, (15, 'Feat_5.1'): 0.0}
+Total Solving Time light 0.8833680152893066
+obj value light 0.0
+bnf_light {(1, 'Feat_0.1'): 1.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): -0.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): -0.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): -0.0, (2, 'Feat_1.3'): -0.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): 1.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): 1.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): 1.0, (4, 'Feat_0.3'): 0.0, (4, 'Feat_1.1'): -0.0, (4, 'Feat_1.2'): -0.0, (4, 'Feat_1.3'): -0.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): -0.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): -0.0, (5, 'Feat_0.1'): 1.0, (5, 'Feat_0.2'): -0.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): -0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): -0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): 1.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): -0.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): -0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): 1.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): -0.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+Total Solving Time oct_no_p 0.5049700736999512
+obj value oct_no_p -0.0
+bnf_oct_no_p {(1, 'Feat_0.1'): -0.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): -0.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): 1.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): -0.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): 1.0, (2, 'Feat_1.2'): -0.0, (2, 'Feat_1.3'): -0.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): -0.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): -0.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): 1.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): -0.0, (4, 'Feat_1.1'): -0.0, (4, 'Feat_1.2'): -0.0, (4, 'Feat_1.3'): -0.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): -0.0, (4, 'Feat_4.1'): 1.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): -0.0, (5, 'Feat_0.1'): -0.0, (5, 'Feat_0.2'): 1.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): -0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): -0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): -0.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): 1.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): -0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): -0.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): -0.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): 1.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+oct_beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+
+
+lower_bound_reference 0.0
+TRAIN: [  0   2   3   4   7   8  10  13  14  15  17  19  21  22  23  24  26  27
+  30  31  32  33  34  35  36  38  39  40  41  42  43  44  45  46  47  48
+  49  51  52  53  54  55  56  57  58  59  60  61  62  63  65  66  67  68
+  69  70  73  74  77  78  80  81  82  83  85  86  87  88  89  90  91  92
+  93  94  95  96  97  98  99 100 102 103 104 105 106 108 110 111 112 113
+ 114 115 116 117 118 119 120 121 122 123] TEST: [  1   5   6   9  11  12  16  18  20  25  28  29  37  50  64  71  72  75
+  76  79  84 101 107 109]
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 1607 rows, 333 columns and 47257 nonzeros
+Model fingerprint: 0x9e467012
+Variable types: 228 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 48.0000000
+Presolve removed 416 rows and 0 columns
+Presolve time: 0.04s
+Presolved: 1191 rows, 333 columns, 35033 nonzeros
+Variable types: 228 continuous, 105 integer (105 binary)
+
+Root relaxation: objective 0.000000e+00, 86 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    6   48.00000    0.00000   100%     -    0s
+H    0     0                       7.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    7.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    7    7.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    7    7.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9    7.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    7.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    7.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    7.00000    0.00000   100%     -    0s
+H    0     0                       6.0000000    0.00000   100%     -    0s
+     0     2    0.00000    0    6    6.00000    0.00000   100%     -    0s
+*   81     3              11       0.0000000    0.00000  0.00%  31.6    0s
+
+Cutting planes:
+  MIR: 23
+
+Explored 82 nodes (3419 simplex iterations) in 0.44 seconds (0.64 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 4: 0 6 7 48 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 4515 rows, 2533 columns and 26865 nonzeros
+Model fingerprint: 0x4fe1b9cf
+Variable types: 2428 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+00]
+Found heuristic solution: objective -100.0000000
+Presolve removed 1924 rows and 1500 columns
+Presolve time: 0.04s
+Presolved: 2591 rows, 1033 columns, 21293 nonzeros
+Variable types: 928 continuous, 105 integer (105 binary)
+
+Root relaxation: objective -1.136868e-13, 1105 iterations, 0.07 seconds (0.10 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    4 -100.00000   -0.00000   100%     -    0s
+H    0     0                      -7.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   13   -7.00000   -0.00000   100%     -    0s
+H    0     0                      -5.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   13   -5.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    6   -5.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   26   -5.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    2   -5.00000   -0.00000   100%     -    0s
+H    0     0                      -4.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    2   -4.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    2   -4.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    7   -4.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    7   -4.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8   -4.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8   -4.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8   -4.00000   -0.00000   100%     -    0s
+H    0     0                      -1.0000000   -0.00000   100%     -    0s
+     0     2   -0.00000    0    8   -1.00000   -0.00000   100%     -    0s
+*   16     1              10      -0.0000000   -0.00000  0.00%  69.4    0s
+
+Cutting planes:
+  MIR: 25
+  Relax-and-lift: 1
+
+Explored 17 nodes (7518 simplex iterations) in 0.88 seconds (1.26 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 6: -0 -1 -4 ... -100
+No other solutions better than -0
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -0.000000000000e+00, best bound -0.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 9.5.0 build v9.5.0rc5 (mac64[arm])
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+Optimize a model with 1607 rows, 1033 columns and 47257 nonzeros
+Model fingerprint: 0x96dfe08a
+Variable types: 928 continuous, 105 integer (105 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 4e+00]
+Found heuristic solution: objective 48.0000000
+Presolve removed 416 rows and 0 columns
+Presolve time: 0.04s
+Presolved: 1191 rows, 1033 columns, 35033 nonzeros
+Variable types: 928 continuous, 105 integer (105 binary)
+
+Root relaxation: objective 0.000000e+00, 96 iterations, 0.00 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    2   48.00000    0.00000   100%     -    0s
+H    0     0                       6.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    4    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    6.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    8    6.00000    0.00000   100%     -    0s
+*   18     2              15       0.0000000    0.00000  0.00%  24.2    0s
+
+Cutting planes:
+  MIR: 24
+
+Explored 19 nodes (1113 simplex iterations) in 0.36 seconds (0.52 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 3: 0 6 48 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 0.000000000000e+00, best bound 0.000000000000e+00, gap 0.0000%
+
+
+
+Total Solving Time light 1.0973589420318604
+obj value light 0.0
+bnf_light {(1, 'Feat_0.1'): 1.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): 0.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): -0.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): 1.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): -0.0, (2, 'Feat_1.3'): -0.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): -0.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): -0.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): 1.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): 0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): -0.0, (4, 'Feat_1.1'): -0.0, (4, 'Feat_1.2'): -0.0, (4, 'Feat_1.3'): 1.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): -0.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): -0.0, (5, 'Feat_0.1'): -0.0, (5, 'Feat_0.2'): -0.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): -0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): 1.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): -0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): -0.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): -0.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): -0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): 1.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): 1.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): -0.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): 0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+beta {(8, 'Feat_0.1'): 0.0, (8, 'Feat_0.2'): 0.0, (8, 'Feat_0.3'): 0.0, (8, 'Feat_1.1'): 0.0, (8, 'Feat_1.2'): 0.0, (8, 'Feat_1.3'): 1.0, (8, 'Feat_2.1'): 0.0, (8, 'Feat_3.1'): 0.0, (8, 'Feat_3.2'): 0.0, (8, 'Feat_3.3'): 0.0, (8, 'Feat_4.1'): 1.0, (8, 'Feat_4.2'): 0.0, (8, 'Feat_4.3'): 0.0, (8, 'Feat_4.4'): 0.0, (8, 'Feat_5.1'): 0.0, (9, 'Feat_0.1'): 0.0, (9, 'Feat_0.2'): 0.0, (9, 'Feat_0.3'): 0.0, (9, 'Feat_1.1'): 0.0, (9, 'Feat_1.2'): 0.0, (9, 'Feat_1.3'): 0.0, (9, 'Feat_2.1'): 0.0, (9, 'Feat_3.1'): 0.0, (9, 'Feat_3.2'): 0.0, (9, 'Feat_3.3'): 0.0, (9, 'Feat_4.1'): 1.0, (9, 'Feat_4.2'): 1.0, (9, 'Feat_4.3'): 1.0, (9, 'Feat_4.4'): 1.0, (9, 'Feat_5.1'): 0.0, (10, 'Feat_0.1'): 0.0, (10, 'Feat_0.2'): 0.0, (10, 'Feat_0.3'): 0.0, (10, 'Feat_1.1'): 0.0, (10, 'Feat_1.2'): 1.0, (10, 'Feat_1.3'): 0.0, (10, 'Feat_2.1'): 0.0, (10, 'Feat_3.1'): 0.0, (10, 'Feat_3.2'): 0.0, (10, 'Feat_3.3'): 0.0, (10, 'Feat_4.1'): 0.0, (10, 'Feat_4.2'): 0.0, (10, 'Feat_4.3'): 0.0, (10, 'Feat_4.4'): 0.0, (10, 'Feat_5.1'): 0.0, (11, 'Feat_0.1'): 1.0, (11, 'Feat_0.2'): 0.0, (11, 'Feat_0.3'): 0.0, (11, 'Feat_1.1'): 0.0, (11, 'Feat_1.2'): 1.0, (11, 'Feat_1.3'): 0.0, (11, 'Feat_2.1'): 0.0, (11, 'Feat_3.1'): 0.0, (11, 'Feat_3.2'): 0.0, (11, 'Feat_3.3'): 0.0, (11, 'Feat_4.1'): 1.0, (11, 'Feat_4.2'): 0.0, (11, 'Feat_4.3'): 0.0, (11, 'Feat_4.4'): 0.0, (11, 'Feat_5.1'): 0.0, (12, 'Feat_0.1'): 0.0, (12, 'Feat_0.2'): 0.0, (12, 'Feat_0.3'): 0.0, (12, 'Feat_1.1'): 1.0, (12, 'Feat_1.2'): 0.0, (12, 'Feat_1.3'): 0.0, (12, 'Feat_2.1'): 0.0, (12, 'Feat_3.1'): 0.0, (12, 'Feat_3.2'): 0.0, (12, 'Feat_3.3'): 0.0, (12, 'Feat_4.1'): 1.0, (12, 'Feat_4.2'): 0.0, (12, 'Feat_4.3'): 0.0, (12, 'Feat_4.4'): 0.0, (12, 'Feat_5.1'): 0.0, (13, 'Feat_0.1'): 0.0, (13, 'Feat_0.2'): 0.0, (13, 'Feat_0.3'): 0.0, (13, 'Feat_1.1'): 0.0, (13, 'Feat_1.2'): 0.0, (13, 'Feat_1.3'): 0.0, (13, 'Feat_2.1'): 0.0, (13, 'Feat_3.1'): 0.0, (13, 'Feat_3.2'): 0.0, (13, 'Feat_3.3'): 0.0, (13, 'Feat_4.1'): 1.0, (13, 'Feat_4.2'): 0.0, (13, 'Feat_4.3'): 0.0, (13, 'Feat_4.4'): 1.0, (13, 'Feat_5.1'): 0.0, (14, 'Feat_0.1'): 0.0, (14, 'Feat_0.2'): 0.0, (14, 'Feat_0.3'): 0.0, (14, 'Feat_1.1'): 0.0, (14, 'Feat_1.2'): 0.0, (14, 'Feat_1.3'): 0.0, (14, 'Feat_2.1'): 0.0, (14, 'Feat_3.1'): 0.0, (14, 'Feat_3.2'): 0.0, (14, 'Feat_3.3'): 0.0, (14, 'Feat_4.1'): 0.0, (14, 'Feat_4.2'): 0.0, (14, 'Feat_4.3'): 0.0, (14, 'Feat_4.4'): 0.0, (14, 'Feat_5.1'): 0.0, (15, 'Feat_0.1'): 0.0, (15, 'Feat_0.2'): 0.0, (15, 'Feat_0.3'): 0.0, (15, 'Feat_1.1'): 1.0, (15, 'Feat_1.2'): 0.0, (15, 'Feat_1.3'): 0.0, (15, 'Feat_2.1'): 0.0, (15, 'Feat_3.1'): 0.0, (15, 'Feat_3.2'): 0.0, (15, 'Feat_3.3'): 0.0, (15, 'Feat_4.1'): 0.0, (15, 'Feat_4.2'): 0.0, (15, 'Feat_4.3'): 0.0, (15, 'Feat_4.4'): 0.0, (15, 'Feat_5.1'): 0.0}
+Total Solving Time light 1.0178799629211426
+obj value light 0.0
+bnf_light {(1, 'Feat_0.1'): -0.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): -0.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): -0.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): -0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): 1.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): -0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): 0.0, (2, 'Feat_1.3'): 1.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): -0.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): -0.0, (3, 'Feat_0.2'): -0.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): -0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): -0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): -0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): -0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): 1.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): -0.0, (4, 'Feat_1.1'): -0.0, (4, 'Feat_1.2'): 1.0, (4, 'Feat_1.3'): -0.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): -0.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): -0.0, (5, 'Feat_0.1'): 1.0, (5, 'Feat_0.2'): -0.0, (5, 'Feat_0.3'): -0.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): -0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): -0.0, (5, 'Feat_3.2'): -0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): -0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): 1.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): -0.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): -0.0, (6, 'Feat_1.3'): 0.0, (6, 'Feat_2.1'): -0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): -0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): 1.0, (7, 'Feat_0.2'): -0.0, (7, 'Feat_0.3'): -0.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): -0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+Total Solving Time oct_no_p 1.1392619609832764
+obj value oct_no_p -0.0
+bnf_oct_no_p {(1, 'Feat_0.1'): -0.0, (1, 'Feat_0.2'): -0.0, (1, 'Feat_0.3'): -0.0, (1, 'Feat_1.1'): -0.0, (1, 'Feat_1.2'): 1.0, (1, 'Feat_1.3'): -0.0, (1, 'Feat_2.1'): 0.0, (1, 'Feat_3.1'): -0.0, (1, 'Feat_3.2'): -0.0, (1, 'Feat_3.3'): -0.0, (1, 'Feat_4.1'): -0.0, (1, 'Feat_4.2'): -0.0, (1, 'Feat_4.3'): -0.0, (1, 'Feat_4.4'): -0.0, (1, 'Feat_5.1'): -0.0, (2, 'Feat_0.1'): 0.0, (2, 'Feat_0.2'): -0.0, (2, 'Feat_0.3'): -0.0, (2, 'Feat_1.1'): -0.0, (2, 'Feat_1.2'): -0.0, (2, 'Feat_1.3'): 1.0, (2, 'Feat_2.1'): -0.0, (2, 'Feat_3.1'): -0.0, (2, 'Feat_3.2'): -0.0, (2, 'Feat_3.3'): -0.0, (2, 'Feat_4.1'): -0.0, (2, 'Feat_4.2'): -0.0, (2, 'Feat_4.3'): -0.0, (2, 'Feat_4.4'): -0.0, (2, 'Feat_5.1'): -0.0, (3, 'Feat_0.1'): -0.0, (3, 'Feat_0.2'): 1.0, (3, 'Feat_0.3'): -0.0, (3, 'Feat_1.1'): 0.0, (3, 'Feat_1.2'): -0.0, (3, 'Feat_1.3'): 0.0, (3, 'Feat_2.1'): -0.0, (3, 'Feat_3.1'): -0.0, (3, 'Feat_3.2'): -0.0, (3, 'Feat_3.3'): 0.0, (3, 'Feat_4.1'): -0.0, (3, 'Feat_4.2'): -0.0, (3, 'Feat_4.3'): 0.0, (3, 'Feat_4.4'): -0.0, (3, 'Feat_5.1'): -0.0, (4, 'Feat_0.1'): -0.0, (4, 'Feat_0.2'): -0.0, (4, 'Feat_0.3'): -0.0, (4, 'Feat_1.1'): -0.0, (4, 'Feat_1.2'): -0.0, (4, 'Feat_1.3'): 0.0, (4, 'Feat_2.1'): -0.0, (4, 'Feat_3.1'): -0.0, (4, 'Feat_3.2'): -0.0, (4, 'Feat_3.3'): 1.0, (4, 'Feat_4.1'): -0.0, (4, 'Feat_4.2'): -0.0, (4, 'Feat_4.3'): -0.0, (4, 'Feat_4.4'): -0.0, (4, 'Feat_5.1'): 0.0, (5, 'Feat_0.1'): -0.0, (5, 'Feat_0.2'): -0.0, (5, 'Feat_0.3'): 1.0, (5, 'Feat_1.1'): -0.0, (5, 'Feat_1.2'): -0.0, (5, 'Feat_1.3'): -0.0, (5, 'Feat_2.1'): -0.0, (5, 'Feat_3.1'): 0.0, (5, 'Feat_3.2'): 0.0, (5, 'Feat_3.3'): -0.0, (5, 'Feat_4.1'): -0.0, (5, 'Feat_4.2'): 0.0, (5, 'Feat_4.3'): -0.0, (5, 'Feat_4.4'): -0.0, (5, 'Feat_5.1'): -0.0, (6, 'Feat_0.1'): -0.0, (6, 'Feat_0.2'): -0.0, (6, 'Feat_0.3'): -0.0, (6, 'Feat_1.1'): -0.0, (6, 'Feat_1.2'): 1.0, (6, 'Feat_1.3'): -0.0, (6, 'Feat_2.1'): 0.0, (6, 'Feat_3.1'): -0.0, (6, 'Feat_3.2'): 0.0, (6, 'Feat_3.3'): -0.0, (6, 'Feat_4.1'): -0.0, (6, 'Feat_4.2'): -0.0, (6, 'Feat_4.3'): -0.0, (6, 'Feat_4.4'): -0.0, (6, 'Feat_5.1'): -0.0, (7, 'Feat_0.1'): -0.0, (7, 'Feat_0.2'): 1.0, (7, 'Feat_0.3'): -0.0, (7, 'Feat_1.1'): -0.0, (7, 'Feat_1.2'): -0.0, (7, 'Feat_1.3'): -0.0, (7, 'Feat_2.1'): -0.0, (7, 'Feat_3.1'): -0.0, (7, 'Feat_3.2'): -0.0, (7, 'Feat_3.3'): -0.0, (7, 'Feat_4.1'): -0.0, (7, 'Feat_4.2'): 0.0, (7, 'Feat_4.3'): -0.0, (7, 'Feat_4.4'): -0.0, (7, 'Feat_5.1'): -0.0}
+oct_beta_zero light {8: 0.0, 9: 0.0, 10: 0.0, 11: 0.0, 12: 0.0, 13: 0.0, 14: 0.0, 15: 0.0}
+
+
+lower_bound_reference 0.0
+
+
+mip gaps light [0.0, 0.0, 0.0, 0.0, 0.0]
+mip gaps light_e_n [0.0, 0.0, 0.0, 0.0, 0.0]
+mip gaps oct_no_p [0.0, 0.0, 0.0, 0.0, 0.0]
+mip gaps benders_oct_with_p []
+
+
+solving times light [1.2196860313415527, 0.9637391567230225, 0.7057149410247803, 0.8665041923522949, 1.0973589420318604]
+solving times light_e_n [1.0838332176208496, 1.0575439929962158, 1.0258519649505615, 0.8833680152893066, 1.0178799629211426]
+solving times oct_with_p [0.7898800373077393, 1.0707728862762451, 1.0770461559295654, 0.5049700736999512, 1.1392619609832764]
+solving times benders_oct_with_p []
+
+
+maes light [1.345724878333523e-16, 5.3332759084455436e-14, 7.850061790278885e-17, 2.3886616590420033e-16, 0.0]
+maes light_e_n [2.5793060168059192e-17, 3.9250308951394423e-17, 3.140024716111554e-17, 0.0, 8.881784197001253e-17]
+maes oct_with_p [0.0, 1.8137848125789015e-15, 1.1214373986112692e-17, 0.0, 0.0]
+maes benders_oct_with_p []
+
+
+maes light test [0.12000000000000015, 3.973932294343285e-14, 8.881784197001253e-17, 0.0400000000000003, 0.125]
+maes light_e_n test [5.995204332975846e-17, 4.884981308350689e-17, 0.04000000000000001, 0.04, 1.6653345369377348e-16]
+maes oct_with_p test [0.0, 1.5343282200319664e-15, 0.08000000000000002, 0.04, 0.0]
+maes benders_oct_with_p test []

@@ -99,7 +99,7 @@ class FlowORT:
         # beta_zero[n] is the constant of the regression
         self.beta_zero = self.model.addVars(self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                             name='beta_zero')
-
+        self.beta = self.model.addVars(self.tree.Leaves, self.cat_features, vtype=GRB.CONTINUOUS, name='beta')
         ############################### define constraints
 
         def path_length(node, i):
@@ -117,20 +117,18 @@ class FlowORT:
 
         # 1a) e[i,n] >=sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
-            constrs = self.model.addConstrs(
-                (self.e[i,n] + self.big_m * (self.d - path_length(n, i)) >= self.beta_zero[n] - self.data.at[
+            self.model.addConstrs(
+                (self.e[i,n] + self.big_m * (self.d - path_length(n, i)) >= self.beta_zero[n]+ quicksum(
+                    self.beta[n, f] * self.data.at[i, f] for f in self.cat_features) - self.data.at[
                     i, self.label]) for
                 i in self.datapoints)
-            for i in self.datapoints:
-                constrs[i].Lazy = 1
         #  1b) -e[i,n] <= sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
-            constrs = self.model.addConstrs(
-                (-self.e[i,n] - self.big_m * (self.d - path_length(n, i)) <= self.beta_zero[n] - self.data.at[
+            self.model.addConstrs(
+                (-self.e[i,n] - self.big_m * (self.d - path_length(n, i)) <= self.beta_zero[n]+ quicksum(
+                    self.beta[n, f] * self.data.at[i, f] for f in self.cat_features) - self.data.at[
                     i, self.label]) for
                 i in self.datapoints)
-            for i in self.datapoints:
-                constrs[i].Lazy = 1
 
         # 7) sum(b[n,f], f) = 1   forall n in Nodes
         self.model.addConstrs(
@@ -157,4 +155,4 @@ class FlowORT:
                                   data,
                                   self.model.getAttr("X", self.b),
                                   self.model.getAttr("x", self.beta_zero),
-                                  None)
+                                  self.model.getAttr("x", self.beta))

@@ -47,6 +47,7 @@ class FlowOCT:
 
         # Decision Variables
         self.b = 0
+        self.beta_zero = 0
         self.beta = 0
         self.zeta = 0
         self.z = 0
@@ -91,16 +92,16 @@ class FlowOCT:
         For classification beta[n,k]=1 iff at node n we predict class k
         For the case regression beta[n,1] is the prediction value for node n
         '''
-        self.beta = self.model.addVars(self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
-                                       name='beta')
+        self.beta_zero = self.model.addVars(self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
+                                            name='beta_zero')
         # zeta[i,n] is the amount of flow through the edge connecting node n to sink node t for datapoint i
-        #TODO remove nodes
+        # TODO remove nodes
         self.zeta = self.model.addVars(self.datapoints, self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                        name='zeta')
         # z[i,n] is the incoming flow to node n for datapoint i
         self.z = self.model.addVars(self.datapoints, self.tree.Nodes + self.tree.Leaves, vtype=GRB.CONTINUOUS, lb=0,
                                     name='z')
-
+        self.beta = self.model.addVars(self.tree.Leaves, self.cat_features, vtype=GRB.CONTINUOUS, name='beta')
         ############################### define constraints
         # z[i,n] = z[i,l(n)] + z[i,r(n)] + zeta[i,n]    forall i, n in Nodes
         for n in self.tree.Nodes:
@@ -132,15 +133,17 @@ class FlowOCT:
         # beta[n,k] = 1
         for n in self.tree.Leaves:
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] - self.data.at[i, self.label] + self.beta[n]
+                self.zeta[i, n] <= self.m[i] - self.data.at[i, self.label] + self.beta_zero[n] + quicksum(
+                    self.beta[n, f] * self.data.at[i, f] for f in self.cat_features)
                 for i in self.datapoints)
 
             self.model.addConstrs(
-                self.zeta[i, n] <= self.m[i] + self.data.at[i, self.label] - self.beta[n]
+                self.zeta[i, n] <= self.m[i] + self.data.at[i, self.label] - self.beta_zero[n] - quicksum(
+                    self.beta[n, f] * self.data.at[i, f] for f in self.cat_features)
                 for i in self.datapoints)
 
         self.model.addConstrs(
-            (self.beta[n] <= 1) for n in self.tree.Leaves)
+            (self.beta_zero[n] <= 1) for n in self.tree.Leaves)
 
         for n in self.tree.Leaves:
             self.model.addConstrs(self.zeta[i, n] == self.z[i, n] for i in self.datapoints)
@@ -160,7 +163,7 @@ class FlowOCT:
         print('Total Solving Time oct_no_p', solving_time)
         print("obj value oct_no_p", self.model.getAttr("ObjVal"))
         print('bnf_oct_no_p', self.model.getAttr("X", self.b))
-        print(f'oct_beta_zero light', self.model.getAttr("x", self.beta))
+        print(f'oct_beta_zero light', self.model.getAttr("x", self.beta_zero))
 
     def get_accuracy(self, data):
 
@@ -168,4 +171,4 @@ class FlowOCT:
                                   data,
                                   self.model.getAttr("X", self.b),
                                   self.model.getAttr("x", self.beta_zero),
-                                  None)
+                                  self.model.getAttr("x", self.beta))
