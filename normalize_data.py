@@ -1,6 +1,6 @@
 import pandas as pd
 
-file_name = 'car_evaluation_enc'
+file_name = 'tic-tac-toe_enc'
 
 df = pd.read_csv(f'./Datasets/{file_name}.csv')
 

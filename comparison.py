@@ -66,7 +66,7 @@ def main(argv):
     out_put_name_4 = input_file + '_' + approach_name_4 + '_d_' + str(depth) + '_t_' + str(
         time_limit) + '_constant_cross_validation'
 
-    approach_name_6 = 'FlowORT_light_lazy'
+    approach_name_6 = 'FlowORT_light'
     out_put_name_6 = input_file + '_' + approach_name_6 + '_d_' + str(depth) + '_t_' + str(
         time_limit) + '_constant_cross_validation'
 
@@ -74,7 +74,7 @@ def main(argv):
     out_put_name_7 = input_file + '_' + approach_name_7 + '_d_' + str(depth) + '_t_' + str(
         time_limit) + '_constant_cross_validation'
 
-    approach_name_8 = 'FlowORT_light_e_n_lazy'
+    approach_name_8 = 'FlowORT_light_e_n'
     out_put_name_8 = input_file + '_' + approach_name_8 + '_d_' + str(depth) + '_t_' + str(
         time_limit) + '_constant_cross_validation'
     ##########################################################
@@ -175,7 +175,7 @@ def main(argv):
         solving_time_benders_oct_with_p = end_time - start_time
 
         start_time = time.time()
-        primal_light_e_n = FlowORT_light_e_n(data_train, label, tree, time_limit)
+        primal_light_e_n = FlowORT_light_e_n(data_train, label, tree, 1)
 
         primal_light_e_n.create_primal_problem()
         primal_light_e_n.model.update()
