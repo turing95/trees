@@ -44,7 +44,7 @@ def linear_svc_alternative(dataframe, depth):
             cluster_sx = recursive_linear_svc_bottom_up(level + 1, node * 2)
             cluster_dx = recursive_linear_svc_bottom_up(level + 1, node * 2 + 1)
             df = pd.concat([cluster_sx, cluster_dx])
-            lsvc = LinearSVC(random_state=0, tol=1e-5, C=1000,max_iter=4000)
+            lsvc = LinearSVC(random_state=0, tol=1e-5, C=1000,max_iter=100000)
             y = df.iloc[:, -1]
             X = df.iloc[:, :-1]
             lsvc.fit(X.values, y.values)
@@ -54,7 +54,7 @@ def linear_svc_alternative(dataframe, depth):
                     predicted_class = lsvc.predict([df.loc[_i, [c for c in df.columns if c != df.columns[-1]]]])[0]
                     if df.loc[_i,'class'] != predicted_class:
                         df.loc[_i, 'class'] = predicted_class
-                lsvc = LinearSVC(random_state=0, tol=1e-5, C=1000, max_iter=4000)
+                lsvc = LinearSVC(random_state=0, tol=1e-5, C=1000, max_iter=100000)
                 y = df.iloc[:, -1]
                 X = df.iloc[:, :-1]
                 lsvc.fit(X.values, y.values)

@@ -24,7 +24,7 @@ def node_means_pca(df: pd.DataFrame, label, logging=False):
     mat_1 = df.iloc[:,:-1].to_numpy()
 
     new_numpy_df = np.matmul(mat_1, mat_2)
-    new_df = pd.DataFrame(new_numpy_df, columns=[0])
+    new_df = pd.DataFrame(new_numpy_df, columns=[0],index=df.index)
     if logging is True:
         print(f'pca input is {rows}\n')
         print(f'matrix 1 (df - label) is {mat_1} with shape {mat_1.shape}\n')

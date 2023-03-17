@@ -48,7 +48,8 @@ class FlowORT:
             if y_min is None or y_i < y_min:
                 y_min = y_i
         self.big_m = len(data.index)
-        self.w = 0.0005
+        #self.big_m = 9213365350734
+        self.w = 0.0000005
         self.d = self.tree.depth
         # Decision Variables
         self.b = 0

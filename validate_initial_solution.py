@@ -20,6 +20,7 @@ def validate_initial_solution(initial_beta_beta_zero, initial_a_b, initial_e_i, 
                 self.beta[n, f] * self.data.at[i, f] for f in self.cat_features) - self.data.at[
                  i, self.label]) for
             i in self.datapoints)'''
+    valid = True
     y_max = None
     y_min = None
     # M = maxyi- minyi
@@ -32,8 +33,8 @@ def validate_initial_solution(initial_beta_beta_zero, initial_a_b, initial_e_i, 
             y_max = y_i
         if y_min is None or y_i < y_min:
             y_min = y_i
-    big_m = len(data.index)
-    w = 0.0005
+    big_m = 9213365350734
+    w = 0.0000005
     d = tree.depth
     cs_1_wrong = []
     cs_1 = []
@@ -89,17 +90,18 @@ def validate_initial_solution(initial_beta_beta_zero, initial_a_b, initial_e_i, 
             if not s_f + w <= tau + (2 + w) * (1 - s_g_l):
                 cs_1_wrong.append(c_l)
                 print(f'n{n} \n i {i}\n {data.loc[i]}\n ds_f {s_f}\n tau {tau}\n hp {v[0]}\n s_g_l {s_g_l}\n w {w} \n')
+                valid = False
             if not s_f >= tau - 2 * (1 - s_g_r):
                 cs_2_wrong.append(c_r)
                 print(f'n{n} \n i {i}\n {data.loc[i]}\n s_f {s_f}\n tau {tau}\n hp {v[0]}\n s_g_r {s_g_r}\n w {w} \n')
-
-    return cs_1, cs_2, cs_1_wrong, cs_2_wrong,obj
+                valid = False
+    return cs_1, cs_2, cs_1_wrong, cs_2_wrong,obj,valid
 
 
 if __name__ == "__main__":
-    dataframe = pd.read_csv('./DataSets/airfoil_self_noise_reg.csv')
-    depth = 2
+    dataframe = pd.read_csv('./DataSets/housing_reg.csv')
+    depth = 1
     tr = Tree(depth)
     l, a_b, e_i, g_i, cl = get_initial_solution(dataframe, tr)
-    cs_l, cs_r, cs_l_wrong, cs_r_wrong,obj = validate_initial_solution(l, normalize(a_b), e_i, g_i, tr, dataframe)
+    cs_l, cs_r, cs_l_wrong, cs_r_wrong,obj,valid = validate_initial_solution(l, normalize(a_b), e_i, g_i, tr, dataframe)
     print('\n')
