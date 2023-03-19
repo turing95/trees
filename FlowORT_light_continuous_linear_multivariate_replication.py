@@ -40,9 +40,10 @@ def main(argv):
     input_file = 'winequality-white_reg.csv'
     depth = 1
     time_limit = 3600
+    initial = 1
     try:
-        opts, args = getopt.getopt(argv, "f:d:t:l:i:c:m:",
-                                   ["input_file=", "depth=", "timelimit=", "lambda="])
+        opts, args = getopt.getopt(argv, "f:d:t:i:",
+                                   ["input_file=", "depth=", "timelimit=", "initial="])
     except getopt.GetoptError:
         sys.exit(2)
     for opt, arg in opts:
@@ -52,6 +53,8 @@ def main(argv):
             depth = int(arg)
         elif opt in ("-t", "--timelimit"):
             time_limit = int(arg)
+        elif opt in ("-i", "--initial"):
+            initial = int(arg)
 
     data_path = os.getcwd() + '/DataSets/'
     data = pd.read_csv(data_path + input_file)
@@ -116,7 +119,10 @@ def main(argv):
     r2_train = []
     r2_test = []
     solutions = []
-
+    normalized_a_b= None
+    init_beta_beta_zero = None
+    init_e_i_n = None
+    init_g_i_n = None
     n_k_folds = kf.get_n_splits(x)
     for train_index, test_index in kf.split(x):
         print("TRAIN:", train_index, "TEST:", test_index)
@@ -128,13 +134,15 @@ def main(argv):
 
         start_time = time.time()
         primal_light = FlowORT_light_continuous(data_train, label, tree, time_limit)
-        init_beta_beta_zero, initial_a_b, init_e_i_n, init_g_i_n,cl = get_initial_solution(data_train, tree)
-        normalized_a_b = normalize(initial_a_b)
-        a,b,c,d,obj,valid = validate_initial_solution(init_beta_beta_zero,normalized_a_b,init_e_i_n,init_g_i_n,tree,data_train)
-        print('expected',obj)
-        print(obj)
-        #init_beta_beta_zero, normalized_a_b, init_e_i_n = None, None, None
-        primal_light.create_primal_problem(normalized_a_b, init_beta_beta_zero, init_e_i_n,init_g_i_n)
+        if initial == 1:
+            init_beta_beta_zero, initial_a_b, init_e_i_n, init_g_i_n, cl = get_initial_solution(data_train, tree)
+            normalized_a_b = normalize(initial_a_b)
+            a, b, c, d, obj, valid = validate_initial_solution(init_beta_beta_zero, normalized_a_b, init_e_i_n, init_g_i_n,
+                                                               tree, data_train)
+            print('expected', obj)
+            print(obj)
+        # init_beta_beta_zero, normalized_a_b, init_e_i_n = None, None, None
+        primal_light.create_primal_problem(normalized_a_b, init_beta_beta_zero, init_e_i_n, init_g_i_n)
 
         primal_light.model.update()
 
@@ -172,7 +180,7 @@ def main(argv):
 
         r2_train.append(r2_light)
         r2_test.append(r2_light_test)
-        solutions.append(valid)
+        break
     print('\n')
     print('mip gaps light', mip_gaps_light)
 
@@ -187,12 +195,12 @@ def main(argv):
     print('\n')
     print('r2 light test', r2_test)
 
-
     row_1 = [approach_name_1, input_file, train_len, features_count, depth, n_k_folds, time_limit,
              np.average(mip_gaps_light) * 100,
              np.average(solving_times_light), np.average(maes_train_light), np.average(r2_lads_train_light),
              np.average(r2_train),
-             np.average(maes_test_light), np.average(r2_lads_test_light), np.average(r2_test)," ".join(str(x) for x in solutions)]
+             np.average(maes_test_light), np.average(r2_lads_test_light), np.average(r2_test),
+             " ".join(str(x) for x in solutions)]
 
     result_file_light = out_put_name_1 + '.csv'
     with open(out_put_path + result_file_light, mode='a') as results:

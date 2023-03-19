@@ -27,7 +27,7 @@ def get_predicted_value(data, i, tree, initial_a_b):
 
             b_n = initial_a_b[current][1]
             #TODO switch sign for linear_svc
-            if a_x_n - b_n > 0:  # going right on the branch
+            if a_x_n + b_n > 0:  # going right on the branch
                 current = tree.get_right_children(current)
             else:  # going left on the branch
                 current = tree.get_left_children(current)
@@ -106,7 +106,7 @@ def check_leaves_clusters(leaves_predictions, clusters):
 
 
 def get_initial_solution(data, tree, check=False):
-    initial_a_b, clusters = max_cut_node_means_pca_bottom_up(data.copy(), tree.depth)
+    initial_a_b, clusters = linear_svc_alternative(data.copy(), tree.depth)
     leaves_predictions = get_beta_zeros(data.copy(), tree, initial_a_b, clusters)
     if check is True:
         check_leaves_clusters(leaves_predictions, clusters)
