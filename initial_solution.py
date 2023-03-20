@@ -130,7 +130,7 @@ def test_initial_solution_k_fold(data, tree):
 
 if __name__ == "__main__":
     dataframe = pd.read_csv('./DataSets/airfoil_self_noise_reg.csv')
-    depth = 1
+    depth = 2
     l, a_b, e_i, g_i_n, cl = get_initial_solution(dataframe, Tree(depth), check=False)
     # rs = test_initial_solution_k_fold(dataframe,Tree(depth))
     print('\n')
