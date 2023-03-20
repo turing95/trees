@@ -143,7 +143,7 @@ def main(argv):
         # We create the MIP problem by passing the required arguments
 
         start_time = time.time()
-        primal_light = FlowORT_light(data_train, label, tree, time_limit)
+        primal_light = FlowORT_light(data_train, label, tree, 20)
 
         primal_light.create_primal_problem()
         primal_light.model.update()
@@ -154,7 +154,7 @@ def main(argv):
         solving_time_light = end_time - start_time
 
         start_time = time.time()
-        primal_oct_with_p = FlowOCT_with_p(data_train, label, tree, time_limit)
+        primal_oct_with_p = FlowOCT_with_p(data_train, label, tree, 20)
 
         primal_oct_with_p.create_primal_problem()
         primal_oct_with_p.model.update()
@@ -165,7 +165,7 @@ def main(argv):
         solving_time_oct_with_p = end_time - start_time
 
         start_time = time.time()
-        primal_benders_oct_with_p = BendersOCT_with_p(data_train, label, tree, time_limit)
+        primal_benders_oct_with_p = BendersOCT_with_p(data_train, label, tree, 20)
 
         primal_benders_oct_with_p.create_master_problem()
         primal_benders_oct_with_p.model.update()
@@ -175,7 +175,7 @@ def main(argv):
         solving_time_benders_oct_with_p = end_time - start_time
 
         start_time = time.time()
-        primal_light_e_n = FlowORT_light_e_n(data_train, label, tree, 1)
+        primal_light_e_n = FlowORT_light_e_n(data_train, label, tree, time_limit)
 
         primal_light_e_n.create_primal_problem()
         primal_light_e_n.model.update()

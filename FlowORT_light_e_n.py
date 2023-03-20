@@ -117,20 +117,17 @@ class FlowORT:
 
         # 1a) e[i,n] >=sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
-            constrs = self.model.addConstrs(
+            self.model.addConstrs(
                 (self.e[i,n] + self.big_m * (self.d - path_length(n, i)) >= self.beta_zero[n] - self.data.at[
                     i, self.label]) for
                 i in self.datapoints)
-            for i in self.datapoints:
-                constrs[i].Lazy = 1
         #  1b) -e[i,n] <= sum( beta[n,f]*x[i,f]) - y[i]  forall i, n in Leaves
         for n in self.tree.Leaves:
-            constrs = self.model.addConstrs(
+            self.model.addConstrs(
                 (-self.e[i,n] - self.big_m * (self.d - path_length(n, i)) <= self.beta_zero[n] - self.data.at[
                     i, self.label]) for
                 i in self.datapoints)
-            for i in self.datapoints:
-                constrs[i].Lazy = 1
+
 
         # 7) sum(b[n,f], f) = 1   forall n in Nodes
         self.model.addConstrs(
