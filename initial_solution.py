@@ -11,7 +11,6 @@ def get_a_x_n(data, i, initial_a_b, current):
     curr_a_b = initial_a_b[current]
     a_x_n = 0
     for idx, a in enumerate(curr_a_b[0]):
-
         a_x_n += a * data.at[i, data.columns[idx]]
     return a_x_n
 
@@ -26,11 +25,11 @@ def get_predicted_value(data, i, tree, initial_a_b):
             a_x_n = get_a_x_n(data, i, initial_a_b, current)
 
             b_n = initial_a_b[current][1]
-            #TODO switch sign for linear_svc
-            if a_x_n + b_n > 0:  # going right on the branch
-                current = tree.get_right_children(current)
-            else:  # going left on the branch
+            # TODO switch sign for linear_svc
+            if a_x_n + 0.00005 + b_n <= 0:  # going right on the branch
                 current = tree.get_left_children(current)
+            else:  # going left on the branch
+                current = tree.get_right_children(current)
     '''lsvc = initial_a_b[1][-1]
     return lsvc.predict([data.loc[i]])[0], data.at[i, 'target']'''
 

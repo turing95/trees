@@ -12,7 +12,6 @@ import csv
 import numpy as np
 from logger import logger
 from sklearn.model_selection import KFold
-from max_cut_node_means_pca import max_cut_node_means_pca, max_cut_node_means_pca_bottom_up
 from initial_solution import get_initial_solution
 from validate_initial_solution import validate_initial_solution
 
@@ -37,9 +36,9 @@ def main(argv):
     into train, test and calibration
     '''
     random_states_list = [41, 23, 45, 36, 19, 123]
-    input_file = 'winequality-white_reg.csv'
+    input_file = 'abalone_reg.csv'
     depth = 1
-    time_limit = 3600
+    time_limit = 0
     initial = 1
     try:
         opts, args = getopt.getopt(argv, "f:d:t:i:",
@@ -114,12 +113,14 @@ def main(argv):
     solving_times_light = []
 
     r2_lads_train_light = []
-
+    reg_res_light = []
     r2_lads_test_light = []
     r2_train = []
     r2_test = []
     solutions = []
-    normalized_a_b= None
+    t_sol = []
+    s_e = []
+    normalized_a_b = None
     init_beta_beta_zero = None
     init_e_i_n = None
     init_g_i_n = None
@@ -135,12 +136,15 @@ def main(argv):
         start_time = time.time()
         primal_light = FlowORT_light_continuous(data_train, label, tree, time_limit)
         if initial == 1:
+            sol_start_time = time.time()
             init_beta_beta_zero, initial_a_b, init_e_i_n, init_g_i_n, cl = get_initial_solution(data_train, tree)
             normalized_a_b = normalize(initial_a_b)
-            a, b, c, d, obj, valid = validate_initial_solution(init_beta_beta_zero, normalized_a_b, init_e_i_n, init_g_i_n,
+            time_sol = time.time()-sol_start_time
+            a, b, c, d, obj, valid = validate_initial_solution(init_beta_beta_zero, normalized_a_b, init_e_i_n,
+                                                               init_g_i_n,
                                                                tree, data_train)
-            print('expected', obj)
-            print(obj)
+            solutions.append(valid)
+            t_sol.append(time_sol)
         # init_beta_beta_zero, normalized_a_b, init_e_i_n = None, None, None
         primal_light.create_primal_problem(normalized_a_b, init_beta_beta_zero, init_e_i_n, init_g_i_n)
 
@@ -162,24 +166,19 @@ def main(argv):
 
         print(f'\n\nlower_bound_reference {lower_bound_reference}')
 
-        reg_res_light, mae_light, mse_light, r2_light, r2_lad_alt_light = primal_light.get_accuracy(data_train)
-        reg_res_light_test, mae_light_test, mse_light_test, r2_light_test, r2_lad_alt_light_test = primal_light.get_accuracy(
+        mae_light, r2_light = primal_light.get_accuracy(data_train)
+        mae_light_test, r2_light_test = primal_light.get_accuracy(
             data_test)
+        maes_test_light.append(mae_light_test)
+        r2_test.append(r2_light_test)
 
         maes_train_light.append(mae_light)
-
-        maes_test_light.append(mae_light_test)
 
         mip_gaps_light.append(primal_light.model.getAttr("MIPGap"))
 
         solving_times_light.append(solving_time_light)
 
-        r2_lads_train_light.append(r2_lad_alt_light)
-
-        r2_lads_test_light.append(r2_lad_alt_light_test)
-
         r2_train.append(r2_light)
-        r2_test.append(r2_light_test)
         break
     print('\n')
     print('mip gaps light', mip_gaps_light)
@@ -197,10 +196,8 @@ def main(argv):
 
     row_1 = [approach_name_1, input_file, train_len, features_count, depth, n_k_folds, time_limit,
              np.average(mip_gaps_light) * 100,
-             np.average(solving_times_light), np.average(maes_train_light), np.average(r2_lads_train_light),
-             np.average(r2_train),
-             np.average(maes_test_light), np.average(r2_lads_test_light), np.average(r2_test),
-             " ".join(str(x) for x in solutions)]
+             np.average(solving_times_light), np.average(maes_train_light),
+             np.average(r2_train),np.average(maes_test_light),np.average(r2_test),solutions,np.average(t_sol) if t_sol else 0]
 
     result_file_light = out_put_name_1 + '.csv'
     with open(out_put_path + result_file_light, mode='a') as results:

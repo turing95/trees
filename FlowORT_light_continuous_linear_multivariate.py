@@ -49,7 +49,8 @@ class FlowORT:
                 y_min = y_i
         self.big_m = len(data.index)
         #self.big_m = 9213365350734
-        self.w = 0.0000005
+        #self.w = 0.0000005
+        self.w = 0.00005
         self.d = self.tree.depth
         # Decision Variables
         self.b = 0
@@ -213,7 +214,7 @@ class FlowORT:
         print('Total Solving Time light', solving_time)
         print("obj value light", self.model.getAttr("ObjVal"))
         print('bnf_light', self.model.getAttr("X", self.a))
-        print(f'beta_zero light', self.model.getAttr("x", self.beta_zero))
+        print(f'beta_zero light', self.model.getAttr("X", self.beta_zero))
         print(f'beta', self.model.getAttr("x", self.beta))
 
     def get_accuracy(self, data):
@@ -222,5 +223,6 @@ class FlowORT:
                                   data,
                                   self.model.getAttr("X", self.a),
                                   self.model.getAttr("X", self.b),
-                                  self.model.getAttr("x", self.beta_zero),
-                                  self.model.getAttr("x", self.beta))
+                                  self.model.getAttr("X", self.beta_zero),
+                                  self.model.getAttr("X", self.beta),
+                                  self.model.getAttr("X", self.g))

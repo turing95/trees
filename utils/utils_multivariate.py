@@ -43,20 +43,9 @@ def get_node_status(grb_model, a, b, beta_zero, n, i, data, beta=None):
     return pruned, branching, a_x_n, b_n, leaf, value
 
 
-def get_predicted_value(grb_model, local_data, a, b, beta_zero, i, beta):
-    '''
-    This function returns the predicted value for a given datapoint
-    :param grb_model: The gurobi model we solved
-    :param local_data: The dataset we want to compute accuracy for
-    :param b: The value of decision variable b
-    :param beta: The value of decision variable beta
-    :param p: The value of decision variable p
-    :param i: Index of the datapoint we are interested in
-    :return: The predicted value for datapoint i in dataset local_data
-    '''
+def get_predicted_value(grb_model, local_data, a, b, beta_zero, i, beta, g):
     tree = grb_model.tree
     current = 1
-
     while True:
         pruned, branching, a_n_f, b_n, leaf, value = get_node_status(grb_model, a, b, beta_zero, current, i,
                                                                      local_data, beta)
@@ -64,22 +53,29 @@ def get_predicted_value(grb_model, local_data, a, b, beta_zero, i, beta):
             return value
         elif branching:
             if a_n_f > b_n:  # going right on the branch
+
                 current = tree.get_right_children(current)
             else:  # going left on the branch
                 current = tree.get_left_children(current)
 
 
-def get_res_err(grb_model, local_data, a, b, beta_zero, beta=None):
+'''def get_predicted_value(grb_model, local_data, a, b, beta_zero, i, beta, g):
+    for n in grb_model.tree.Leaves:
+        if g[i, n] > 0.5:
+            return beta_zero[n] + sum(beta[n, f] * local_data.at[i, f] for f in grb_model.cat_features)'''
+
+
+def get_res_err(grb_model, local_data, a, b, beta_zero, g, beta=None):
     label = grb_model.label
     res_err = 0
     for i in local_data.index:
-        yhat_i = get_predicted_value(grb_model, local_data, a, b, beta_zero, i, beta)
+        yhat_i = get_predicted_value(grb_model, local_data, a, b, beta_zero, i, beta, g)
         y_i = local_data.at[i, label]
         res_err += abs(yhat_i - y_i)
     return res_err
 
 
-def get_mae(grb_model, local_data, a, b, beta_zero, beta=None):
+def get_mae(grb_model, local_data, a, b, beta_zero, g, beta=None):
     '''
     This function returns the MAE for a given dataset
     :param grb_model: The gurobi model we solved
@@ -89,7 +85,7 @@ def get_mae(grb_model, local_data, a, b, beta_zero, beta=None):
     :param p: The value of decision variable p
     :return: The MAE
     '''
-    res_err = get_res_err(grb_model, local_data, a, b, beta_zero, beta)
+    res_err = get_res_err(grb_model, local_data, a, b, beta_zero, g, beta)
 
     err = res_err / len(local_data.index)
     return err
@@ -116,7 +112,7 @@ def get_mse(grb_model, local_data, a, b, beta_zero, beta=None):
     return err
 
 
-def get_r_squared(grb_model, local_data, a, b, beta_zero, beta=None):
+def get_r_squared(grb_model, local_data, a, b, beta_zero, g, beta=None):
     '''
     This function returns the R^2 for a given dataset
     :param grb_model: The gurobi model we solved
@@ -133,7 +129,7 @@ def get_r_squared(grb_model, local_data, a, b, beta_zero, beta=None):
     SS_Residuals = 0
     SS_Total = 0
     for i in local_data.index:
-        yhat_i = get_predicted_value(grb_model, local_data, a, b, beta_zero, i, beta)
+        yhat_i = get_predicted_value(grb_model, local_data, a, b, beta_zero, i, beta, g)
         y_i = local_data.at[i, label]
         SS_Residuals += np.power(yhat_i - y_i, 2)
         SS_Total += np.power(y_bar - y_i, 2)
@@ -161,13 +157,9 @@ def get_r_lad(label, local_data, mae):
     return r2_lad
 
 
-def get_model_accuracy(model, data, a, b, beta_zero, beta):
-    err = get_res_err(model, data, a, b, beta_zero, beta)
-    mae = get_mae(model, data, a, b, beta_zero, beta)
+def get_model_accuracy(model, data, a, b, beta_zero, beta, g):
+    mae = get_mae(model, data, a, b, beta_zero, g, beta)
 
-    mse = get_mse(model, data, a, b, beta_zero, beta)
+    r2 = get_r_squared(model, data, a, b, beta_zero, g, beta)
 
-    r2 = get_r_squared(model, data, a, b, beta_zero, beta)
-
-    r2_lad_alt = 1 - get_r_lad(model.label, data, mae)
-    return err, mae, mse, r2, r2_lad_alt
+    return mae, r2
