@@ -26,7 +26,7 @@ def get_predicted_value(data, i, tree, initial_a_b):
 
             b_n = initial_a_b[current][1]
             # TODO switch sign for linear_svc
-            if a_x_n + 0.00005 + b_n <= 0:  # going right on the branch
+            if a_x_n + b_n < 0:  # going right on the branch
                 current = tree.get_left_children(current)
             else:  # going left on the branch
                 current = tree.get_right_children(current)
@@ -88,8 +88,6 @@ def get_e_g_i_n(data, tree, predictions):
             else:
                 g[i][n] = 0
 
-        if i == 628:
-            pass
     return e, g
 
 

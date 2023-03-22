@@ -16,14 +16,6 @@ from initial_solution import get_initial_solution
 from validate_initial_solution import validate_initial_solution
 
 
-def normalize(a_b):
-    normalized_a_b = {}
-    for k, v in a_b.items():
-        l = len(v[0]) - 1
-        max_val = max(max(abs(v[0])), abs(v[1]))
-        den = max_val * l
-        normalized_a_b[k] = [[i / den for i in v[0]], v[1] / den]
-    return normalized_a_b
 
 
 def main(argv):
@@ -120,10 +112,10 @@ def main(argv):
     solutions = []
     t_sol = []
     s_e = []
-    normalized_a_b = None
     init_beta_beta_zero = None
     init_e_i_n = None
     init_g_i_n = None
+    initial_a_b = None
     n_k_folds = kf.get_n_splits(x)
     for train_index, test_index in kf.split(x):
         print("TRAIN:", train_index, "TEST:", test_index)
@@ -138,15 +130,14 @@ def main(argv):
         if initial == 1:
             sol_start_time = time.time()
             init_beta_beta_zero, initial_a_b, init_e_i_n, init_g_i_n, cl = get_initial_solution(data_train, tree)
-            normalized_a_b = normalize(initial_a_b)
             time_sol = time.time()-sol_start_time
-            a, b, c, d, obj, valid = validate_initial_solution(init_beta_beta_zero, normalized_a_b, init_e_i_n,
+            a, b, c, d, obj, valid = validate_initial_solution(init_beta_beta_zero, initial_a_b, init_e_i_n,
                                                                init_g_i_n,
                                                                tree, data_train)
             solutions.append(valid)
             t_sol.append(time_sol)
         # init_beta_beta_zero, normalized_a_b, init_e_i_n = None, None, None
-        primal_light.create_primal_problem(normalized_a_b, init_beta_beta_zero, init_e_i_n, init_g_i_n)
+        primal_light.create_primal_problem(initial_a_b, init_beta_beta_zero, init_e_i_n, init_g_i_n)
 
         primal_light.model.update()
 

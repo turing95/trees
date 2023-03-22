@@ -3,14 +3,6 @@ from Tree import Tree
 import pandas as pd
 
 
-def normalize(a_b):
-    normalized_a_b = {}
-    for k, v in a_b.items():
-        l = len(v[0]) - 1
-        max_val = max(max(abs(v[0])), abs(v[1]))
-        den = max_val * l
-        normalized_a_b[k] = [[i / den for i in v[0]], v[1] / den]
-    return normalized_a_b
 
 
 def validate_initial_solution(initial_beta_beta_zero, initial_a_b, initial_e_i, init_g, tree, data):
@@ -34,7 +26,7 @@ def validate_initial_solution(initial_beta_beta_zero, initial_a_b, initial_e_i, 
         if y_min is None or y_i < y_min:
             y_min = y_i
     big_m = 9213365350734
-    w = 0.00005
+    w = 0.000005
     d = tree.depth
     cs_1_wrong = []
     cs_1 = []
@@ -99,9 +91,9 @@ def validate_initial_solution(initial_beta_beta_zero, initial_a_b, initial_e_i, 
 
 
 if __name__ == "__main__":
-    dataframe = pd.read_csv('./DataSets/housing_reg.csv')
-    depth = 2
+    dataframe = pd.read_csv('./DataSets/yacht_hydrodynamics_reg.csv')
+    depth = 3
     tr = Tree(depth)
     l, a_b, e_i, g_i, cl = get_initial_solution(dataframe, tr)
-    cs_l, cs_r, cs_l_wrong, cs_r_wrong,obj,valid = validate_initial_solution(l, normalize(a_b), e_i, g_i, tr, dataframe)
+    cs_l, cs_r, cs_l_wrong, cs_r_wrong,obj,valid = validate_initial_solution(l, a_b, e_i, g_i, tr, dataframe)
     print('\n')

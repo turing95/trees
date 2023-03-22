@@ -29,7 +29,17 @@ def linear_svc(dataframe, depth):
     recursive_linear_svc_bottom_up()
     return nodes_a_b, clusters
 
-
+def normalize(a_b):
+    normalized_a_b = {}
+    for k, v in a_b.items():
+        l = len(v[0]) - 1
+        max_val = max(max(abs(v[0])), abs(v[1]))
+        if max_val >= 1:
+            den = max_val * l
+            normalized_a_b[k] = [[i / den for i in v[0]], v[1] / den]
+        else:
+            normalized_a_b[k] = [[i for i in v[0]], v[1]]
+    return normalized_a_b
 def linear_svc_alternative(dataframe, depth):
     clusters = class_encoding_jobs_alternative(dataframe, depth)
 
@@ -65,7 +75,9 @@ def linear_svc_alternative(dataframe, depth):
         return df
 
     recursive_linear_svc_bottom_up()
-    return nodes_a_b, clusters
+
+
+    return normalize(nodes_a_b), clusters
 
 
 if __name__ == '__main__':

@@ -50,7 +50,7 @@ class FlowORT:
         self.big_m = len(data.index)
         #self.big_m = 9213365350734
         #self.w = 0.0000005
-        self.w = 0.00005
+        self.w = 0.000005
         self.d = self.tree.depth
         # Decision Variables
         self.b = 0
