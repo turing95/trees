@@ -1,14 +1,14 @@
-python3 comparison.py -f breast-cancer_enc_reg.csv -d 2 -t 3600
-python3 comparison.py -f balance-scale_enc_reg.csv -d 2 -t 3600
-python3 comparison.py -f car_evaluation_enc_reg.csv -d 2 -t 3600
-python3 comparison.py -f hayes-roth_enc_reg.csv -d 2 -t 3600
-python3 comparison.py -f house-votes-84_enc_reg.csv -d 2 -t 3600
-python3 comparison.py -f kr-vs-kp_enc_reg.csv -d 2 -t 3600
-python3 comparison.py -f monk1_enc_reg.csv -d 2 -t 3600
-python3 comparison.py -f monk2_enc_reg.csv -d 2 -t 3600
-python3 comparison.py -f monk3_enc_reg.csv -d 2 -t 3600
-python3 comparison.py -f soybean-small_enc_reg.csv -d 2 -t 3600
-python3 comparison.py -f tic-tac-toe_enc_reg.csv -d 2 -t 3600
+python3 comparison_seeded.py -f breast-cancer -d 2 -t 3600
+python3 comparison_seeded.py -f balance-scale -d 2 -t 3600 &
+python3 comparison_seeded.py -f car_evaluation -d 2 -t 3600
+python3 comparison_seeded.py -f hayes-roth -d 2 -t 3600
+python3 comparison_seeded.py -f house-votes-84 -d 2 -t 3600
+python3 comparison_seeded.py -f kr-vs-kp -d 2 -t 3600
+python3 comparison_seeded.py -f monk1 -d 2 -t 3600
+python3 comparison_seeded.py -f monk2 -d 2 -t 3600
+python3 comparison_seeded.py -f monk3 -d 2 -t 3600
+python3 comparison_seeded.py -f soybean-small -d 2 -t 3600
+python3 comparison_seeded.py -f tic-tac-toe -d 2 -t 3600
 
 
 
