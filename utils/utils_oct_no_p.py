@@ -1,5 +1,5 @@
 import numpy as np
-
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 def get_node_status(grb_model, b, beta_zero, n, i, local_data, beta=None):
     '''
@@ -112,10 +112,16 @@ def get_mae(grb_model, local_data, b, beta_zero, beta=None):
     :param p: The value of decision variable p
     :return: The MAE
     '''
-    res_err = get_res_err(grb_model, local_data, b, beta_zero, beta)
-
-    err = res_err / len(local_data.index)
-    return err
+    y_trues = []
+    y_preds = []
+    label = grb_model.label
+    for i in local_data.index:
+        yhat_i = get_predicted_value(grb_model, local_data, b, beta_zero, i, beta)
+        y_i = local_data.at[i, label]
+        y_trues.append(y_i)
+        y_preds.append(yhat_i)
+    mae = mean_absolute_error(y_trues, y_preds)
+    return mae
 
 
 def get_mse(grb_model, local_data, b, beta_zero, beta=None):
@@ -186,11 +192,16 @@ def get_r_lad(label, local_data, mae):
 
 def get_model_accuracy(model, data, b, beta_zero, beta):
     err = get_res_err(model, data, b, beta_zero, beta)
-    mae = get_mae(model, data, b, beta_zero, beta)
-
-    mse = get_mse(model, data, b, beta_zero, beta)
-
-    r2 = get_r_squared(model, data, b, beta_zero, beta)
-
+    y_trues = []
+    y_preds = []
+    label = model.label
+    for i in data.index:
+        yhat_i = get_predicted_value(model, data, b, beta_zero, i, beta)
+        y_i = data.at[i, label]
+        y_trues.append(y_i)
+        y_preds.append(yhat_i)
+    mae = mean_absolute_error(y_trues, y_preds)
+    r2 = r2_score(y_trues, y_preds)
+    mse = mean_squared_error(y_trues, y_preds)
     r2_lad_alt = 1 - get_r_lad(model.label, data, mae)
     return err, mae, mse, r2, r2_lad_alt
