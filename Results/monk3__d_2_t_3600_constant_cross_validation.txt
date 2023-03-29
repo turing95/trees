@@ -1,0 +1,1239 @@
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 779 rows, 146 columns and 13237 nonzeros
+Model fingerprint: 0x846b4ab6
+Variable types: 101 continuous, 45 integer (45 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 3e+00]
+Found heuristic solution: objective 49.0000000
+Presolve removed 192 rows and 0 columns
+Presolve time: 0.03s
+Presolved: 587 rows, 146 columns, 9973 nonzeros
+Variable types: 101 continuous, 45 integer (45 binary)
+
+Root relaxation: objective 0.000000e+00, 11 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    4   49.00000    0.00000   100%     -    0s
+H    0     0                      47.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   47.00000    0.00000   100%     -    0s
+H    0     0                       6.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   10    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   10    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    6.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6    6.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    6    6.00000    0.00000   100%     -    0s
+
+Cutting planes:
+  MIR: 28
+
+Explored 71 nodes (2227 simplex iterations) in 0.63 seconds (0.31 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 3: 6 47 49 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 6.000000000000e+00, best bound 6.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 2636 rows, 1417 columns and 10697 nonzeros
+Model fingerprint: 0x053aaa90
+Variable types: 1365 continuous, 52 integer (52 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 2e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective -97.0000000
+Presolve removed 1663 rows and 980 columns
+Presolve time: 0.04s
+Presolved: 973 rows, 437 columns, 5962 nonzeros
+Variable types: 392 continuous, 45 integer (45 binary)
+
+Root relaxation: objective 5.684342e-14, 587 iterations, 0.02 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    9  -97.00000    0.00000   100%     -    0s
+H    0     0                     -39.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   23  -39.00000    0.00000   100%     -    0s
+     0     0   -0.00000    0   19  -39.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    6  -39.00000   -0.00000   100%     -    0s
+H    0     0                     -22.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    6  -22.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   13  -22.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   13  -22.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   12  -22.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   22  -22.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    5  -22.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   18  -22.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   15  -22.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -22.00000   -0.00000   100%     -    1s
+     0     2   -0.00000    0    8  -22.00000   -0.00000   100%     -    1s
+*   70    50              10     -21.0000000   -0.45570  97.8%  74.5    1s
+*  150    42              25     -17.0000000   -0.59434  96.5%  51.2    1s
+H  197    15                     -11.0000000   -2.00000  81.8%  51.1    1s
+*  217     7              19      -6.0000000   -4.30000  28.3%  51.6    1s
+
+Cutting planes:
+  Gomory: 6
+  MIR: 56
+  RLT: 3
+
+Explored 252 nodes (16516 simplex iterations) in 1.99 seconds (0.97 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 7: -6 -11 -17 ... -97
+No other solutions better than -6
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -6.000000000000e+00, best bound -6.000000000000e+00, gap 0.0000%
+Set parameter LazyConstraints to value 1
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 17 rows, 156 columns and 79 nonzeros
+Model fingerprint: 0xa7af0db9
+Variable types: 104 continuous, 52 integer (52 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Presolve removed 14 rows and 10 columns
+Presolve time: 0.00s
+Presolved: 3 rows, 146 columns, 45 nonzeros
+Variable types: 101 continuous, 45 integer (45 binary)
+
+Root relaxation: objective -0.000000e+00, 18 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    2          -   -0.00000      -     -    0s
+H    0     0                     -40.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -40.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    6  -40.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    6  -40.00000   -0.00000   100%     -    0s
+     0     2   -0.00000    0    6  -40.00000   -0.00000   100%     -    1s
+*   43    41              29     -38.0000000   -0.00000   100%  30.8    1s
+*   66    36              19     -17.0000000   -0.00000   100%  27.4    1s
+*  217    10              11      -6.0000000   -2.00000  66.7%  30.5    1s
+
+Cutting planes:
+  MIR: 24
+  Lazy constraints: 338
+
+Explored 260 nodes (7341 simplex iterations) in 1.73 seconds (0.19 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 4: -6 -17 -38 -40 
+No other solutions better than -6
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -6.000000000000e+00, best bound -6.000000000000e+00, gap 0.0000%
+
+User-callback calls 907, time in user-callback 1.24 sec
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 1
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 779 rows, 437 columns and 13237 nonzeros
+Model fingerprint: 0xaec57ec9
+Variable types: 392 continuous, 45 integer (45 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 3e+00]
+Found heuristic solution: objective 49.0000000
+Presolve removed 192 rows and 0 columns
+Presolve time: 0.03s
+Presolved: 587 rows, 437 columns, 9973 nonzeros
+Variable types: 392 continuous, 45 integer (45 binary)
+
+Root relaxation: objective 0.000000e+00, 11 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    4   49.00000    0.00000   100%     -    0s
+H    0     0                      47.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   47.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8   47.00000    0.00000   100%     -    0s
+H    0     0                      40.0000000    0.00000   100%     -    0s
+H    0     0                      29.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   11   29.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   14   29.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   11   29.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   12   29.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   29.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   29.00000    0.00000   100%     -    0s
+H    0     0                      25.0000000    0.00000   100%     -    0s
+     0     2    0.00000    0    9   25.00000    0.00000   100%     -    0s
+*   64    43              22      22.0000000    0.50000  97.7%  24.8    0s
+*  159    15              10       6.0000000    1.60000  73.3%  21.5    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 45
+
+Explored 199 nodes (4766 simplex iterations) in 0.85 seconds (0.42 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 7: 6 22 25 ... 49
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 6.000000000000e+00, best bound 6.000000000000e+00, gap 0.0000%
+
+
+
+Total Solving Time light 1.9165887832641602
+obj value light 6.0
+bnf_light {(1, 'Feat0.1'): 0.0, (1, 'Feat0.2'): 0.0, (1, 'Feat0.3'): 0.0, (1, 'Feat1.1'): 0.0, (1, 'Feat1.2'): 0.0, (1, 'Feat1.3'): 0.0, (1, 'Feat2.1'): 0.0, (1, 'Feat3.1'): 0.0, (1, 'Feat3.2'): 0.0, (1, 'Feat3.3'): 0.0, (1, 'Feat4.1'): 0.0, (1, 'Feat4.2'): 0.0, (1, 'Feat4.3'): 0.0, (1, 'Feat4.4'): 1.0, (1, 'Feat5.1'): 0.0, (2, 'Feat0.1'): 0.0, (2, 'Feat0.2'): 0.0, (2, 'Feat0.3'): 0.0, (2, 'Feat1.1'): 0.0, (2, 'Feat1.2'): 0.0, (2, 'Feat1.3'): 1.0, (2, 'Feat2.1'): 0.0, (2, 'Feat3.1'): 0.0, (2, 'Feat3.2'): 0.0, (2, 'Feat3.3'): 0.0, (2, 'Feat4.1'): 0.0, (2, 'Feat4.2'): 0.0, (2, 'Feat4.3'): 0.0, (2, 'Feat4.4'): 0.0, (2, 'Feat5.1'): 0.0, (3, 'Feat0.1'): 0.0, (3, 'Feat0.2'): 1.0, (3, 'Feat0.3'): 0.0, (3, 'Feat1.1'): 0.0, (3, 'Feat1.2'): 0.0, (3, 'Feat1.3'): 0.0, (3, 'Feat2.1'): 0.0, (3, 'Feat3.1'): 0.0, (3, 'Feat3.2'): 0.0, (3, 'Feat3.3'): 0.0, (3, 'Feat4.1'): 0.0, (3, 'Feat4.2'): 0.0, (3, 'Feat4.3'): 0.0, (3, 'Feat4.4'): 0.0, (3, 'Feat5.1'): 0.0}
+beta_zero light {4: 1.0, 5: 0.0, 6: 0.0, 7: 0.0}
+Total Solving Time light 2.119957208633423
+obj value light 6.0
+bnf_light {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): 1.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): -0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): 0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): 0.0, (2, 'Feat0.2'): 0.0, (2, 'Feat0.3'): 0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): 0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): 0.0, (2, 'Feat4.4'): 1.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): 0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): 0.0, (3, 'Feat3.1'): 1.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): 0.0, (3, 'Feat4.4'): 0.0, (3, 'Feat5.1'): 0.0}
+beta_zero light {4: 1.0, 5: 0.0, 6: 0.0, 7: 0.0}
+Total Solving Time oct_with_p 2.6404261589050293
+obj oct_with_p -6.0
+bnf oct_with_p {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): 1.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): 0.0, (1, 'Feat3.2'): 0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): 0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): 0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): 0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): 0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): 1.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): 0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): 1.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): 0.0, (3, 'Feat5.1'): -0.0}
+beta_zero oct_with_p {(1, 1): 0.0, (2, 1): 0.0, (3, 1): 0.0, (4, 1): 1.0, (5, 1): 0.0, (6, 1): 0.0, (7, 1): 0.0}
+p oct_with_p {1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0}
+Total Solving Time oct_with_p 1.740875482559204
+obj oct_with_p -6.0
+bnf oct_with_p {(1, 'Feat0.1'): 0.0, (1, 'Feat0.2'): 0.0, (1, 'Feat0.3'): 0.0, (1, 'Feat1.1'): 0.0, (1, 'Feat1.2'): 0.0, (1, 'Feat1.3'): 1.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): -0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): 0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): 0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): 0.0, (2, 'Feat4.4'): 1.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): 0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): 1.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): -0.0, (3, 'Feat5.1'): -0.0}
+beta_zero oct_with_p {(1, 1): 0.0, (2, 1): 0.0, (3, 1): 0.0, (4, 1): 1.0, (5, 1): 0.0, (6, 1): 0.0, (7, 1): 0.0}
+p oct_with_p {1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0}
+
+
+lower_bound_reference 6.0
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 779 rows, 146 columns and 13237 nonzeros
+Model fingerprint: 0xd56019f3
+Variable types: 101 continuous, 45 integer (45 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 3e+00]
+Found heuristic solution: objective 47.0000000
+Presolve removed 200 rows and 0 columns
+Presolve time: 0.03s
+Presolved: 579 rows, 146 columns, 9837 nonzeros
+Variable types: 101 continuous, 45 integer (45 binary)
+
+Root relaxation: objective 0.000000e+00, 13 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    4   47.00000    0.00000   100%     -    0s
+H    0     0                      41.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   10   41.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   41.00000    0.00000   100%     -    0s
+H    0     0                      24.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   24.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8   24.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    7   24.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   13   24.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   11   24.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   11   24.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    4   24.00000    0.00000   100%     -    0s
+*  147    52              13      14.0000000    0.50000  96.4%  26.6    0s
+H  165    27                       7.0000000    0.83333  88.1%  26.0    0s
+
+Cutting planes:
+  MIR: 69
+
+Explored 232 nodes (6420 simplex iterations) in 0.88 seconds (0.45 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 5: 7 14 24 ... 47
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 7.000000000000e+00, best bound 7.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 2636 rows, 1417 columns and 10711 nonzeros
+Model fingerprint: 0x43ae27b5
+Variable types: 1365 continuous, 52 integer (52 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 2e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective -97.0000000
+Presolve removed 1663 rows and 980 columns
+Presolve time: 0.04s
+Presolved: 973 rows, 437 columns, 5962 nonzeros
+Variable types: 392 continuous, 45 integer (45 binary)
+
+Root relaxation: objective -2.842171e-14, 587 iterations, 0.03 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    6  -97.00000   -0.00000   100%     -    0s
+H    0     0                     -40.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   12  -40.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   12  -40.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    6  -40.00000   -0.00000   100%     -    0s
+H    0     0                     -39.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   14  -39.00000   -0.00000   100%     -    0s
+H    0     0                     -29.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   19  -29.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    4  -29.00000   -0.00000   100%     -    0s
+H    0     0                     -24.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   19  -24.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -24.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   21  -24.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -24.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -24.00000   -0.00000   100%     -    0s
+     0     2   -0.00000    0    8  -24.00000   -0.00000   100%     -    1s
+*   69    46              23     -17.0000000   -0.50000  97.1%  54.0    1s
+*   92    35              25      -7.0000000   -0.53425  92.4%  59.7    1s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 135
+  Relax-and-lift: 2
+
+Explored 163 nodes (12947 simplex iterations) in 1.73 seconds (0.83 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 7: -7 -17 -24 ... -97
+No other solutions better than -7
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -7.000000000000e+00, best bound -7.000000000000e+00, gap 0.0000%
+Set parameter LazyConstraints to value 1
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 17 rows, 156 columns and 79 nonzeros
+Model fingerprint: 0xa7af0db9
+Variable types: 104 continuous, 52 integer (52 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Presolve removed 14 rows and 10 columns
+Presolve time: 0.00s
+Presolved: 3 rows, 146 columns, 45 nonzeros
+Variable types: 101 continuous, 45 integer (45 binary)
+
+Root relaxation: objective -0.000000e+00, 13 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    -          -   -0.00000      -     -    0s
+     0     0   -0.00000    0   11          -   -0.00000      -     -    0s
+H    0     0                     -32.0000000   -0.00000   100%     -    0s
+H    0     0                     -24.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    6  -24.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    6  -24.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    6  -24.00000   -0.00000   100%     -    0s
+     0     2   -0.00000    0    7  -24.00000   -0.00000   100%     -    1s
+*   87    46              22     -17.0000000   -0.00000   100%  24.5    1s
+*  138    13               3      -7.0000000   -1.50000  78.6%  25.6    1s
+
+Cutting planes:
+  MIR: 8
+  Lazy constraints: 314
+
+Explored 178 nodes (4578 simplex iterations) in 1.55 seconds (0.13 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 4: -7 -17 -24 -32 
+No other solutions better than -7
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -7.000000000000e+00, best bound -7.000000000000e+00, gap 0.0000%
+
+User-callback calls 679, time in user-callback 1.18 sec
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 1
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 779 rows, 437 columns and 13237 nonzeros
+Model fingerprint: 0x2ef491f3
+Variable types: 392 continuous, 45 integer (45 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 3e+00]
+Found heuristic solution: objective 47.0000000
+Presolve removed 200 rows and 0 columns
+Presolve time: 0.03s
+Presolved: 579 rows, 437 columns, 9837 nonzeros
+Variable types: 392 continuous, 45 integer (45 binary)
+
+Root relaxation: objective 0.000000e+00, 13 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    4   47.00000    0.00000   100%     -    0s
+H    0     0                      41.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   41.00000    0.00000   100%     -    0s
+H    0     0                      24.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   24.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    7   24.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   24.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   15   24.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4   24.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4   24.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    4   24.00000    0.00000   100%     -    0s
+*   28    21              24      22.0000000    0.00000   100%  18.7    0s
+*   49    19               8      14.0000000    0.38235  97.3%  21.1    0s
+*  179    16              20       7.0000000    4.66667  33.3%  21.1    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 65
+
+Explored 226 nodes (4850 simplex iterations) in 0.86 seconds (0.43 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 6: 7 14 22 ... 47
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 7.000000000000e+00, best bound 7.000000000000e+00, gap 0.0000%
+
+
+
+Total Solving Time light 2.1507766246795654
+obj value light 7.0
+bnf_light {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): 1.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): -0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): 0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): 0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): 0.0, (2, 'Feat3.3'): 0.0, (2, 'Feat4.1'): 0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): 1.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): 1.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): 0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): -0.0, (3, 'Feat5.1'): -0.0}
+beta_zero light {4: 1.0, 5: 0.0, 6: 0.0, 7: 0.0}
+Total Solving Time light 2.1234848499298096
+obj value light 7.0
+bnf_light {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): -0.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): 0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): 1.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): 0.0, (2, 'Feat0.3'): 0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): 0.0, (2, 'Feat1.3'): 1.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): 0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): -0.0, (2, 'Feat5.1'): 0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): 0.0, (3, 'Feat0.3'): 0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): 0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): 0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): 1.0, (3, 'Feat5.1'): -0.0}
+beta_zero light {4: 1.0, 5: 0.0, 6: 1.0, 7: 0.0}
+Total Solving Time oct_with_p 2.379157304763794
+obj oct_with_p -7.0
+bnf oct_with_p {(1, 'Feat0.1'): 0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): 0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): -0.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): 0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): 1.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): 1.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): 0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): 0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): 0.0, (2, 'Feat4.4'): -0.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): 0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): 0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): 1.0, (3, 'Feat5.1'): -0.0}
+beta_zero oct_with_p {(1, 1): 0.0, (2, 1): 0.0, (3, 1): 0.0, (4, 1): 1.0000000000000002, (5, 1): 0.0, (6, 1): 1.0000000000000004, (7, 1): 0.0}
+p oct_with_p {1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0}
+Total Solving Time oct_with_p 1.552966594696045
+obj oct_with_p -7.0
+bnf oct_with_p {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): -0.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): 0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): 1.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): 0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): 0.0, (2, 'Feat1.2'): 0.0, (2, 'Feat1.3'): 1.0, (2, 'Feat2.1'): 0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): 0.0, (2, 'Feat3.3'): 0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): 0.0, (2, 'Feat4.3'): 0.0, (2, 'Feat4.4'): -0.0, (2, 'Feat5.1'): 0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): 0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): 0.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): 1.0, (3, 'Feat5.1'): -0.0}
+beta_zero oct_with_p {(1, 1): 0.0, (2, 1): 0.0, (3, 1): 0.0, (4, 1): 1.0, (5, 1): 0.0, (6, 1): 1.0, (7, 1): -3.885780586188048e-16}
+p oct_with_p {1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0}
+
+
+lower_bound_reference 7.0
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 787 rows, 147 columns and 13373 nonzeros
+Model fingerprint: 0xb2b05bac
+Variable types: 102 continuous, 45 integer (45 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 3e+00]
+Found heuristic solution: objective 48.0000000
+Presolve removed 200 rows and 0 columns
+Presolve time: 0.03s
+Presolved: 587 rows, 147 columns, 9973 nonzeros
+Variable types: 102 continuous, 45 integer (45 binary)
+
+Root relaxation: objective 0.000000e+00, 13 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    4   48.00000    0.00000   100%     -    0s
+H    0     0                      42.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    8   42.00000    0.00000   100%     -    0s
+H    0     0                      21.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   11   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   12   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   12   21.00000    0.00000   100%     -    0s
+     0     2    0.00000    0   12   21.00000    0.00000   100%     -    0s
+*  108    25              19       7.0000000    0.18750  97.3%  26.2    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 13
+
+Explored 179 nodes (5199 simplex iterations) in 0.82 seconds (0.42 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 4: 7 21 42 48 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 7.000000000000e+00, best bound 7.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 2663 rows, 1431 columns and 10817 nonzeros
+Model fingerprint: 0xfff0203d
+Variable types: 1379 continuous, 52 integer (52 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 2e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective -98.0000000
+Presolve removed 1680 rows and 990 columns
+Presolve time: 0.04s
+Presolved: 983 rows, 441 columns, 6023 nonzeros
+Variable types: 396 continuous, 45 integer (45 binary)
+
+Root relaxation: objective -0.000000e+00, 564 iterations, 0.03 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    6  -98.00000   -0.00000   100%     -    0s
+H    0     0                     -44.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   21  -44.00000   -0.00000   100%     -    0s
+H    0     0                     -31.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    9  -31.00000   -0.00000   100%     -    0s
+H    0     0                     -21.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -21.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -21.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   17  -21.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   15  -21.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   13  -21.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   18  -21.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   18  -21.00000   -0.00000   100%     -    0s
+     0     2   -0.00000    0   15  -21.00000   -0.00000   100%     -    0s
+*   89    18              10      -7.0000000   -0.00000   100%  54.4    1s
+
+Cutting planes:
+  MIR: 39
+
+Explored 157 nodes (11121 simplex iterations) in 1.53 seconds (0.73 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 5: -7 -21 -31 ... -98
+No other solutions better than -7
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -7.000000000000e+00, best bound -7.000000000000e+00, gap 0.0000%
+Set parameter LazyConstraints to value 1
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 17 rows, 157 columns and 79 nonzeros
+Model fingerprint: 0xe4f337bb
+Variable types: 105 continuous, 52 integer (52 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Presolve removed 14 rows and 10 columns
+Presolve time: 0.00s
+Presolved: 3 rows, 147 columns, 45 nonzeros
+Variable types: 102 continuous, 45 integer (45 binary)
+
+Root relaxation: objective -0.000000e+00, 17 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    6          -   -0.00000      -     -    0s
+H    0     0                     -40.0000000   -0.00000   100%     -    0s
+H    0     0                     -35.0000000   -0.00000   100%     -    0s
+H    0     0                     -13.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   12  -13.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    8  -13.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    7  -13.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    7  -13.00000   -0.00000   100%     -    0s
+H    0     0                      -7.0000000   -0.00000   100%     -    0s
+     0     2   -0.00000    0    7   -7.00000   -0.00000   100%     -    0s
+
+Cutting planes:
+  MIR: 6
+  Lazy constraints: 224
+
+Explored 172 nodes (3161 simplex iterations) in 1.15 seconds (0.08 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 4: -7 -13 -35 -40 
+No other solutions better than -7
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -7.000000000000e+00, best bound -7.000000000000e+00, gap 0.0000%
+
+User-callback calls 623, time in user-callback 0.89 sec
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 1
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 787 rows, 441 columns and 13373 nonzeros
+Model fingerprint: 0x565a64e3
+Variable types: 396 continuous, 45 integer (45 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 3e+00]
+Found heuristic solution: objective 48.0000000
+Presolve removed 200 rows and 0 columns
+Presolve time: 0.03s
+Presolved: 587 rows, 441 columns, 9973 nonzeros
+Variable types: 396 continuous, 45 integer (45 binary)
+
+Root relaxation: objective 0.000000e+00, 13 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    4   48.00000    0.00000   100%     -    0s
+H    0     0                      42.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   10   42.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    7   42.00000    0.00000   100%     -    0s
+H    0     0                      21.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   10   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   16   21.00000    0.00000   100%     -    0s
+     0     0    0.10526    0   19   21.00000    0.10526  99.5%     -    0s
+     0     0    0.11111    0   19   21.00000    0.11111  99.5%     -    0s
+     0     0    0.16667    0   15   21.00000    0.16667  99.2%     -    0s
+     0     0    0.22222    0   17   21.00000    0.22222  98.9%     -    0s
+     0     0    0.25000    0   20   21.00000    0.25000  98.8%     -    0s
+     0     0    0.25000    0   13   21.00000    0.25000  98.8%     -    0s
+     0     0    0.28571    0   15   21.00000    0.28571  98.6%     -    0s
+     0     0    0.34091    0   21   21.00000    0.34091  98.4%     -    0s
+     0     0    0.40000    0   15   21.00000    0.40000  98.1%     -    0s
+     0     0    0.50000    0   20   21.00000    0.50000  97.6%     -    0s
+     0     0    0.65385    0   22   21.00000    0.65385  96.9%     -    0s
+     0     0    0.70588    0   20   21.00000    0.70588  96.6%     -    0s
+     0     0    0.72222    0   19   21.00000    0.72222  96.6%     -    0s
+     0     0    0.72222    0   19   21.00000    0.72222  96.6%     -    0s
+     0     0    1.00000    0   14   21.00000    1.00000  95.2%     -    0s
+     0     0    1.04255    0   22   21.00000    1.04255  95.0%     -    0s
+     0     0    1.06250    0   20   21.00000    1.06250  94.9%     -    0s
+     0     0    1.08738    0   26   21.00000    1.08738  94.8%     -    0s
+     0     0    1.08738    0   27   21.00000    1.08738  94.8%     -    0s
+     0     0    1.35088    0   20   21.00000    1.35088  93.6%     -    0s
+     0     0    1.37500    0   17   21.00000    1.37500  93.5%     -    0s
+     0     0    1.40000    0   21   21.00000    1.40000  93.3%     -    0s
+     0     0    1.40000    0   21   21.00000    1.40000  93.3%     -    0s
+     0     0    1.46243    0   21   21.00000    1.46243  93.0%     -    0s
+     0     0    1.46801    0   23   21.00000    1.46801  93.0%     -    0s
+     0     0    1.47368    0   23   21.00000    1.47368  93.0%     -    0s
+     0     0    1.47619    0   23   21.00000    1.47619  93.0%     -    0s
+     0     0    1.47619    0   24   21.00000    1.47619  93.0%     -    0s
+     0     0    1.52381    0   24   21.00000    1.52381  92.7%     -    0s
+     0     0    1.53521    0   24   21.00000    1.53521  92.7%     -    0s
+     0     0    1.53571    0   26   21.00000    1.53571  92.7%     -    0s
+     0     0    1.53571    0   25   21.00000    1.53571  92.7%     -    0s
+     0     0    1.57778    0   21   21.00000    1.57778  92.5%     -    0s
+     0     0    1.60000    0   24   21.00000    1.60000  92.4%     -    0s
+     0     0    1.61905    0   20   21.00000    1.61905  92.3%     -    0s
+     0     0    1.62893    0   25   21.00000    1.62893  92.2%     -    0s
+     0     0    1.63021    0   26   21.00000    1.63021  92.2%     -    0s
+     0     0    1.63021    0   27   21.00000    1.63021  92.2%     -    0s
+     0     0    1.70476    0   23   21.00000    1.70476  91.9%     -    0s
+     0     0    1.72589    0   25   21.00000    1.72589  91.8%     -    0s
+     0     0    1.75758    0   22   21.00000    1.75758  91.6%     -    0s
+     0     0    1.75758    0   21   21.00000    1.75758  91.6%     -    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 77
+
+Explored 1 nodes (1605 simplex iterations) in 1.00 seconds (0.40 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 3: 21 42 48 
+
+Time limit reached
+Best objective 2.100000000000e+01, best bound 1.757575757576e+00, gap 91.6306%
+
+
+
+Total Solving Time light 2.1186554431915283
+obj value light 7.000000000000013
+bnf_light {(1, 'Feat0.1'): 0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): 1.0, (1, 'Feat2.1'): 0.0, (1, 'Feat3.1'): -0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): 0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): 1.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): 1.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): 0.0, (3, 'Feat4.2'): 0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): -0.0, (3, 'Feat5.1'): -0.0}
+beta_zero light {4: 1.000000000000001, 5: 0.0, 6: 0.0, 7: 0.0}
+Total Solving Time light 2.307147741317749
+obj value light 21.0
+bnf_light {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): 0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): 1.0, (1, 'Feat1.3'): -0.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): -0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): 0.0, (2, 'Feat1.1'): 1.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): -0.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): 1.0, (3, 'Feat0.2'): 0.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): -0.0, (3, 'Feat5.1'): -0.0}
+beta_zero light {4: 0.0, 5: 1.0, 6: 1.0, 7: 1.0}
+Total Solving Time oct_with_p 2.1844067573547363
+obj oct_with_p -7.0
+bnf oct_with_p {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): 1.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): 0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): 0.0, (2, 'Feat0.2'): 0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): 0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): 0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): 1.0, (2, 'Feat5.1'): 0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): 0.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): 1.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): 0.0, (3, 'Feat3.2'): 0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): 0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): 0.0, (3, 'Feat5.1'): -0.0}
+beta_zero oct_with_p {(1, 1): 0.0, (2, 1): 0.0, (3, 1): 0.0, (4, 1): 1.0, (5, 1): 0.0, (6, 1): 0.0, (7, 1): 1.0}
+p oct_with_p {1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0}
+Total Solving Time oct_with_p 1.1551754474639893
+obj oct_with_p -7.0
+bnf oct_with_p {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): -0.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): -0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): 1.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): 1.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): -0.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): -0.0, (3, 'Feat5.1'): 1.0}
+beta_zero oct_with_p {(1, 1): 0.0, (2, 1): 0.0, (3, 1): 0.0, (4, 1): 1.0, (5, 1): 0.0, (6, 1): 0.0, (7, 1): 0.0}
+p oct_with_p {1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0}
+
+
+lower_bound_reference 7.000000000000013
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 787 rows, 147 columns and 13373 nonzeros
+Model fingerprint: 0xf483e033
+Variable types: 102 continuous, 45 integer (45 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 3e+00]
+Found heuristic solution: objective 48.0000000
+Presolve removed 200 rows and 0 columns
+Presolve time: 0.03s
+Presolved: 587 rows, 147 columns, 9973 nonzeros
+Variable types: 102 continuous, 45 integer (45 binary)
+
+Root relaxation: objective 0.000000e+00, 13 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    4   48.00000    0.00000   100%     -    0s
+H    0     0                      46.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   10   46.00000    0.00000   100%     -    0s
+H    0     0                      44.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   44.00000    0.00000   100%     -    0s
+H    0     0                      21.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   10   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   10   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   10   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   11   21.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   11   21.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    9   21.00000    0.00000   100%     -    0s
+H   81    20                       5.0000000    0.66667  86.7%  21.5    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 11
+
+Explored 115 nodes (3550 simplex iterations) in 0.75 seconds (0.37 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 5: 5 21 44 ... 48
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 5.000000000000e+00, best bound 5.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 2663 rows, 1431 columns and 10817 nonzeros
+Model fingerprint: 0xbc1e4e10
+Variable types: 1379 continuous, 52 integer (52 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 2e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective -98.0000000
+Presolve removed 1680 rows and 990 columns
+Presolve time: 0.04s
+Presolved: 983 rows, 441 columns, 6023 nonzeros
+Variable types: 396 continuous, 45 integer (45 binary)
+
+Root relaxation: objective -0.000000e+00, 586 iterations, 0.03 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    9  -98.00000   -0.00000   100%     -    0s
+H    0     0                     -45.0000000   -0.00000   100%     -    0s
+H    0     0                     -25.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   19  -25.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    5  -25.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   18  -25.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   17  -25.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   13  -25.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   17  -25.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   17  -25.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    4  -25.00000   -0.00000   100%     -    0s
+     0     2   -0.00000    0    4  -25.00000   -0.00000   100%     -    1s
+H   35    35                     -21.0000000   -0.00000   100%   121    1s
+*  119    66              22     -20.0000000   -0.00000   100%  54.0    1s
+H  147    18                     -10.0000000   -0.00000   100%  49.7    1s
+*  155    13               4      -5.0000000   -0.00000   100%  50.7    1s
+
+Cutting planes:
+  MIR: 59
+
+Explored 190 nodes (12877 simplex iterations) in 1.95 seconds (0.81 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 7: -5 -10 -20 ... -98
+No other solutions better than -5
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -5.000000000000e+00, best bound -5.000000000000e+00, gap 0.0000%
+Set parameter LazyConstraints to value 1
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 17 rows, 157 columns and 79 nonzeros
+Model fingerprint: 0xe4f337bb
+Variable types: 105 continuous, 52 integer (52 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Presolve removed 14 rows and 10 columns
+Presolve time: 0.00s
+Presolved: 3 rows, 147 columns, 45 nonzeros
+Variable types: 102 continuous, 45 integer (45 binary)
+
+Root relaxation: objective -0.000000e+00, 8 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    -          -   -0.00000      -     -    0s
+     0     0   -0.00000    0    5          -   -0.00000      -     -    0s
+H    0     0                     -37.0000000   -0.00000   100%     -    0s
+H    0     0                     -34.0000000   -0.00000   100%     -    0s
+H    0     0                     -25.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    7  -25.00000   -0.00000   100%     -    0s
+     0     2   -0.00000    0    7  -25.00000   -0.00000   100%     -    1s
+*   94    58              18     -21.0000000   -0.00000   100%  27.2    1s
+H  245    11                      -5.0000000   -0.00000   100%  27.7    1s
+
+Cutting planes:
+  Lazy constraints: 316
+
+Explored 263 nodes (7329 simplex iterations) in 1.94 seconds (0.17 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 5: -5 -21 -25 ... -37
+No other solutions better than -5
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -5.000000000000e+00, best bound -5.000000000000e+00, gap 0.0000%
+
+User-callback calls 920, time in user-callback 1.41 sec
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 1
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 787 rows, 441 columns and 13373 nonzeros
+Model fingerprint: 0x8b7a8e43
+Variable types: 396 continuous, 45 integer (45 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 3e+00]
+Found heuristic solution: objective 48.0000000
+Presolve removed 200 rows and 0 columns
+Presolve time: 0.03s
+Presolved: 587 rows, 441 columns, 9973 nonzeros
+Variable types: 396 continuous, 45 integer (45 binary)
+
+Root relaxation: objective 0.000000e+00, 13 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    4   48.00000    0.00000   100%     -    0s
+H    0     0                      46.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   46.00000    0.00000   100%     -    0s
+H    0     0                      39.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   10   39.00000    0.00000   100%     -    0s
+H    0     0                      34.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   34.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   11   34.00000    0.00000   100%     -    0s
+H    0     0                      28.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   28.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4   28.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   12   28.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8   28.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8   28.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    8   28.00000    0.00000   100%     -    0s
+*   49    39              36      26.0000000    0.19048  99.3%  20.7    0s
+*   75    49              21      25.0000000    0.90000  96.4%  20.9    0s
+*   97    50              26      21.0000000    1.00000  95.2%  20.3    0s
+*  107    11              11       5.0000000    1.00000  80.0%  19.3    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 30
+
+Explored 138 nodes (3357 simplex iterations) in 0.88 seconds (0.37 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 9: 5 21 25 ... 48
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 5.000000000000e+00, best bound 5.000000000000e+00, gap 0.0000%
+
+
+
+Total Solving Time light 2.0564796924591064
+obj value light 5.0
+bnf_light {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): 0.0, (1, 'Feat1.3'): 1.0, (1, 'Feat2.1'): 0.0, (1, 'Feat3.1'): 0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): 0.0, (1, 'Feat4.1'): 0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): 0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): 1.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): 1.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): 0.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): 0.0, (3, 'Feat5.1'): -0.0}
+beta_zero light {4: 1.0, 5: 0.0, 6: 0.0, 7: 0.0}
+Total Solving Time light 2.3857645988464355
+obj value light 5.0
+bnf_light {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): 0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): -0.0, (1, 'Feat2.1'): 0.0, (1, 'Feat3.1'): 0.0, (1, 'Feat3.2'): 0.0, (1, 'Feat3.3'): 0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): 0.0, (1, 'Feat4.4'): 1.0, (1, 'Feat5.1'): 0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): 0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): 1.0, (2, 'Feat2.1'): 0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): -0.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): 0.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): 1.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): -0.0, (3, 'Feat5.1'): -0.0}
+beta_zero light {4: 1.0, 5: 0.0, 6: 0.0, 7: 0.0}
+Total Solving Time oct_with_p 2.6715662479400635
+obj oct_with_p -5.0
+bnf oct_with_p {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): -0.0, (1, 'Feat2.1'): 0.0, (1, 'Feat3.1'): 0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): 0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): 0.0, (1, 'Feat4.4'): 1.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): 0.0, (2, 'Feat1.1'): 0.0, (2, 'Feat1.2'): 0.0, (2, 'Feat1.3'): 1.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): 0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): 0.0, (2, 'Feat4.3'): 0.0, (2, 'Feat4.4'): -0.0, (2, 'Feat5.1'): 0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): 1.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): 0.0, (3, 'Feat3.3'): 0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): -0.0, (3, 'Feat5.1'): -0.0}
+beta_zero oct_with_p {(1, 1): 0.0, (2, 1): 0.0, (3, 1): 0.0, (4, 1): 1.0, (5, 1): 0.0, (6, 1): 0.0, (7, 1): 0.0}
+p oct_with_p {1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0}
+Total Solving Time oct_with_p 1.9530205726623535
+obj oct_with_p -5.0
+bnf oct_with_p {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): 0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): 0.0, (1, 'Feat1.3'): 1.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): -0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): 0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): 0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): 0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): 0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): 1.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): 0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): 0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): -0.0, (3, 'Feat5.1'): 1.0}
+beta_zero oct_with_p {(1, 1): 0.0, (2, 1): 0.0, (3, 1): 0.0, (4, 1): 1.0, (5, 1): 0.0, (6, 1): 0.0, (7, 1): 0.0}
+p oct_with_p {1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0}
+
+
+lower_bound_reference 5.0
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 787 rows, 147 columns and 13373 nonzeros
+Model fingerprint: 0xc06d3514
+Variable types: 102 continuous, 45 integer (45 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 3e+00]
+Found heuristic solution: objective 48.0000000
+Presolve removed 200 rows and 0 columns
+Presolve time: 0.03s
+Presolved: 587 rows, 147 columns, 9973 nonzeros
+Variable types: 102 continuous, 45 integer (45 binary)
+
+Root relaxation: objective 0.000000e+00, 11 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    4   48.00000    0.00000   100%     -    0s
+H    0     0                      31.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    6   31.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   14   31.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    4   31.00000    0.00000   100%     -    0s
+H    0     0                      20.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    4   20.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   17   20.00000    0.00000   100%     -    0s
+H    0     0                      19.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   14   19.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   10   19.00000    0.00000   100%     -    0s
+H    0     0                       7.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   11    7.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    7.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    8    7.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    8    7.00000    0.00000   100%     -    0s
+
+Cutting planes:
+  MIR: 20
+
+Explored 88 nodes (3194 simplex iterations) in 0.80 seconds (0.37 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 5: 7 19 20 ... 48
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 7.000000000000e+00, best bound 7.000000000000e+00, gap 0.0000%
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 2663 rows, 1431 columns and 10817 nonzeros
+Model fingerprint: 0xe8d3d09e
+Variable types: 1379 continuous, 52 integer (52 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 2e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Found heuristic solution: objective -98.0000000
+Presolve removed 1680 rows and 990 columns
+Presolve time: 0.04s
+Presolved: 983 rows, 441 columns, 6023 nonzeros
+Variable types: 396 continuous, 45 integer (45 binary)
+
+Root relaxation: objective -0.000000e+00, 531 iterations, 0.03 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    6  -98.00000   -0.00000   100%     -    0s
+H    0     0                     -46.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   20  -46.00000   -0.00000   100%     -    0s
+H    0     0                     -36.0000000   -0.00000   100%     -    0s
+H    0     0                     -28.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   17  -28.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   10  -28.00000   -0.00000   100%     -    0s
+H    0     0                      -7.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   18   -7.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   19   -7.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   10   -7.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   20   -7.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   10   -7.00000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   10   -7.00000   -0.00000   100%     -    0s
+     0     2   -0.00000    0   10   -7.00000   -0.00000   100%     -    1s
+
+Cutting planes:
+  MIR: 58
+
+Explored 135 nodes (11151 simplex iterations) in 1.85 seconds (0.75 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 5: -7 -28 -36 ... -98
+No other solutions better than -7
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -7.000000000000e+00, best bound -7.000000000000e+00, gap 0.0000%
+Set parameter LazyConstraints to value 1
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 3600
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 17 rows, 157 columns and 79 nonzeros
+Model fingerprint: 0xe4f337bb
+Variable types: 105 continuous, 52 integer (52 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Presolve removed 14 rows and 10 columns
+Presolve time: 0.00s
+Presolved: 3 rows, 147 columns, 45 nonzeros
+Variable types: 102 continuous, 45 integer (45 binary)
+
+Root relaxation: objective -0.000000e+00, 12 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0   -0.00000    0    -          -   -0.00000      -     -    0s
+     0     0   -0.00000    0    -          -   -0.00000      -     -    0s
+     0     0   -0.00000    0    7          -   -0.00000      -     -    0s
+H    0     0                     -46.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0   15  -46.00000   -0.00000   100%     -    0s
+H    0     0                     -44.0000000   -0.00000   100%     -    0s
+     0     0   -0.00000    0    6  -44.00000   -0.00000   100%     -    1s
+     0     0   -0.00000    0    9  -44.00000   -0.00000   100%     -    1s
+     0     0   -0.00000    0    9  -44.00000   -0.00000   100%     -    1s
+     0     2   -0.00000    0    9  -44.00000   -0.00000   100%     -    1s
+*   18    18              15     -20.0000000   -0.00000   100%  18.4    1s
+*  142    59              29     -15.0000000   -0.05464   100%  26.3    1s
+*  218    37              19     -12.0000000   -2.00000  83.3%  27.2    1s
+*  229    15               8      -7.0000000   -2.50000  64.3%  27.1    1s
+
+Cutting planes:
+  MIR: 23
+  Lazy constraints: 301
+
+Explored 299 nodes (7492 simplex iterations) in 1.99 seconds (0.20 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 6: -7 -12 -15 ... -46
+No other solutions better than -7
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective -7.000000000000e+00, best bound -7.000000000000e+00, gap 0.0000%
+
+User-callback calls 1064, time in user-callback 1.27 sec
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 1
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 787 rows, 441 columns and 13373 nonzeros
+Model fingerprint: 0x175de0b3
+Variable types: 396 continuous, 45 integer (45 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 3e+00]
+Found heuristic solution: objective 48.0000000
+Presolve removed 200 rows and 0 columns
+Presolve time: 0.03s
+Presolved: 587 rows, 441 columns, 9973 nonzeros
+Variable types: 396 continuous, 45 integer (45 binary)
+
+Root relaxation: objective 0.000000e+00, 11 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    0.00000    0    4   48.00000    0.00000   100%     -    0s
+H    0     0                      46.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   10   46.00000    0.00000   100%     -    0s
+H    0     0                      44.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0    7   44.00000    0.00000   100%     -    0s
+H    0     0                      27.0000000    0.00000   100%     -    0s
+H    0     0                      20.0000000    0.00000   100%     -    0s
+     0     0    0.00000    0   11   20.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   10   20.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   20.00000    0.00000   100%     -    0s
+     0     0    0.00000    0   14   20.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   20.00000    0.00000   100%     -    0s
+     0     0    0.00000    0    9   20.00000    0.00000   100%     -    0s
+     0     2    0.00000    0    9   20.00000    0.00000   100%     -    0s
+H  137    18                       7.0000000    1.12500  83.9%  18.3    0s
+
+Cutting planes:
+  MIR: 16
+
+Explored 193 nodes (4234 simplex iterations) in 0.98 seconds (0.42 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 6: 7 20 27 ... 48
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 7.000000000000e+00, best bound 7.000000000000e+00, gap 0.0000%
+
+
+
+Total Solving Time light 2.3636248111724854
+obj value light 7.0
+bnf_light {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): 0.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): -0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): 1.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): 1.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): 0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): -0.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): 0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): 1.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): -0.0, (3, 'Feat5.1'): -0.0}
+beta_zero light {4: 1.0, 5: 0.0, 6: 0.0, 7: 0.0}
+Total Solving Time light 2.5431065559387207
+obj value light 7.0
+bnf_light {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): 0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): 1.0, (1, 'Feat2.1'): 0.0, (1, 'Feat3.1'): -0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): 0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): 0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): 1.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): 0.0, (3, 'Feat0.3'): 1.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): -0.0, (3, 'Feat5.1'): -0.0}
+beta_zero light {4: 1.0, 5: 0.0, 6: 0.0, 7: 0.0}
+Total Solving Time oct_with_p 2.626873254776001
+obj oct_with_p -7.0
+bnf oct_with_p {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): 1.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): -0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): -0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): -0.0, (2, 'Feat4.4'): 1.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): -0.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): 1.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): -0.0, (3, 'Feat5.1'): -0.0}
+beta_zero oct_with_p {(1, 1): 0.0, (2, 1): 0.0, (3, 1): 0.0, (4, 1): 1.0, (5, 1): 0.0, (6, 1): 0.0, (7, 1): 0.0}
+p oct_with_p {1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0}
+Total Solving Time oct_with_p 2.002591133117676
+obj oct_with_p -7.0
+bnf oct_with_p {(1, 'Feat0.1'): -0.0, (1, 'Feat0.2'): -0.0, (1, 'Feat0.3'): -0.0, (1, 'Feat1.1'): -0.0, (1, 'Feat1.2'): -0.0, (1, 'Feat1.3'): 1.0, (1, 'Feat2.1'): -0.0, (1, 'Feat3.1'): -0.0, (1, 'Feat3.2'): -0.0, (1, 'Feat3.3'): -0.0, (1, 'Feat4.1'): 0.0, (1, 'Feat4.2'): -0.0, (1, 'Feat4.3'): -0.0, (1, 'Feat4.4'): -0.0, (1, 'Feat5.1'): -0.0, (2, 'Feat0.1'): -0.0, (2, 'Feat0.2'): -0.0, (2, 'Feat0.3'): -0.0, (2, 'Feat1.1'): -0.0, (2, 'Feat1.2'): -0.0, (2, 'Feat1.3'): -0.0, (2, 'Feat2.1'): -0.0, (2, 'Feat3.1'): -0.0, (2, 'Feat3.2'): -0.0, (2, 'Feat3.3'): -0.0, (2, 'Feat4.1'): -0.0, (2, 'Feat4.2'): -0.0, (2, 'Feat4.3'): 0.0, (2, 'Feat4.4'): 1.0, (2, 'Feat5.1'): -0.0, (3, 'Feat0.1'): -0.0, (3, 'Feat0.2'): -0.0, (3, 'Feat0.3'): -0.0, (3, 'Feat1.1'): -0.0, (3, 'Feat1.2'): -0.0, (3, 'Feat1.3'): -0.0, (3, 'Feat2.1'): 1.0, (3, 'Feat3.1'): -0.0, (3, 'Feat3.2'): -0.0, (3, 'Feat3.3'): -0.0, (3, 'Feat4.1'): -0.0, (3, 'Feat4.2'): -0.0, (3, 'Feat4.3'): -0.0, (3, 'Feat4.4'): 0.0, (3, 'Feat5.1'): -0.0}
+beta_zero oct_with_p {(1, 1): 0.0, (2, 1): 0.0, (3, 1): 0.0, (4, 1): 1.0, (5, 1): 0.0, (6, 1): 0.0, (7, 1): 0.0}
+p oct_with_p {1: 0.0, 2: 0.0, 3: 0.0, 4: 1.0, 5: 1.0, 6: 1.0, 7: 1.0}
+
+
+lower_bound_reference 7.0
+
+
+mip gaps light [0.0, 0.0, 0.0, 0.0, 0.0]
+mip gaps light_e_n [0.0, 0.0, 91.63059163059162, 0.0, 0.0]
+mip gaps oct_with_p [0.0, 0.0, 0.0, 0.0, 0.0]
+mip gaps benders_oct_with_p [0.0, 0.0, 0.0, 0.0, 0.0]
+
+
+solving times light [1.9165887832641602, 2.1507766246795654, 2.1186554431915283, 2.0564796924591064, 2.3636248111724854]
+solving times light_e_n [2.119957208633423, 2.1234848499298096, 2.307147741317749, 2.3857645988464355, 2.5431065559387207]
+solving times oct_with_p [2.6404261589050293, 2.379157304763794, 2.1844067573547363, 2.6715662479400635, 2.626873254776001]
+solving times benders_oct_with_p [1.740875482559204, 1.552966594696045, 1.1551754474639893, 1.9530205726623535, 2.002591133117676]
+
+
+maes light [0.061855670103092786, 0.07216494845360824, 0.07142857142857191, 0.05102040816326531, 0.07142857142857142]
+maes light_e_n [0.061855670103092786, 0.07216494845360824, 0.21428571428571427, 0.05102040816326531, 0.07142857142857142]
+maes oct_with_p [0.061855670103092786, 0.07216494845360828, 0.07142857142857142, 0.05102040816326531, 0.07142857142857142]
+maes benders_oct_with_p [0.061855670103092786, 0.0721649484536083, 0.07142857142857142, 0.05102040816326531, 0.07142857142857142]
+
+
+maes light test [0.08, 0.04, 0.04166666666666727, 0.125, 0.041666666666666664]
+maes light_e_n test [0.08, 0.04, 0.25, 0.125, 0.041666666666666664]
+maes oct_with_p test [0.08, 0.040000000000000105, 0.041666666666666664, 0.125, 0.041666666666666664]
+maes benders_oct_with_p test [0.08, 0.04000000000000013, 0.041666666666666664, 0.125, 0.041666666666666664]
