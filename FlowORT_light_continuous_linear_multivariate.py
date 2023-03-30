@@ -50,7 +50,7 @@ class FlowORT:
         self.big_m = len(data.index)
         #self.big_m = 9213365350734
         #self.w = 0.0000005
-        self.w = 0.000005
+        self.w = 0.000003
         self.d = self.tree.depth
         # Decision Variables
         self.b = 0
@@ -69,6 +69,7 @@ class FlowORT:
         '''
         self.model.params.Threads = 1
         self.model.params.TimeLimit = time_limit
+        self.model.params.FeasibilityTol = 1e-7
 
         '''
         The following variables are used for the Benders problem to keep track of the times we call the callback.

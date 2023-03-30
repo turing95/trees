@@ -26,7 +26,7 @@ def validate_initial_solution(initial_beta_beta_zero, initial_a_b, initial_e_i, 
         if y_min is None or y_i < y_min:
             y_min = y_i
     big_m = 9213365350734
-    w = 0.000005
+    w = 0.000003
     d = tree.depth
     cs_1_wrong = []
     cs_1 = []

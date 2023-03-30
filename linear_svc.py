@@ -15,7 +15,7 @@ def linear_svc(dataframe, depth):
         # nodes_a_b = [([], 0) for i in range(1, np.power(2, depth))]
         if level == depth:
             df = clusters[node - 2 ** depth]
-            df = df.drop('target',axis=1)
+            df = df.drop('target', axis=1)
 
             return df
         cluster_sx = recursive_linear_svc_bottom_up(level + 1, node * 2)
@@ -29,17 +29,24 @@ def linear_svc(dataframe, depth):
     recursive_linear_svc_bottom_up()
     return nodes_a_b, clusters
 
+
+def n(v):
+    l = len(v[0]) - 1
+    max_val = max(max(abs(v[0])), abs(v[1]))
+    if max_val >= 1:
+        den = max_val * l
+        return [[i / den for i in v[0]], v[1] / den]
+    else:
+        return [[i for i in v[0]], v[1]]
+
+
 def normalize(a_b):
     normalized_a_b = {}
     for k, v in a_b.items():
-        l = len(v[0]) - 1
-        max_val = max(max(abs(v[0])), abs(v[1]))
-        if max_val >= 1:
-            den = max_val * l
-            normalized_a_b[k] = [[i / den for i in v[0]], v[1] / den]
-        else:
-            normalized_a_b[k] = [[i for i in v[0]], v[1]]
+        normalized_a_b[k] = n(v)
     return normalized_a_b
+
+
 def linear_svc_alternative(dataframe, depth):
     clusters = class_encoding_jobs_alternative(dataframe, depth)
 
@@ -49,12 +56,12 @@ def linear_svc_alternative(dataframe, depth):
         # nodes_a_b = [([], 0) for i in range(1, np.power(2, depth))]
         if level == depth:
             df = clusters[node]['cluster']
-            df = df.drop('target',axis=1)
+            df = df.drop('target', axis=1)
         else:
             cluster_sx = recursive_linear_svc_bottom_up(level + 1, node * 2)
             cluster_dx = recursive_linear_svc_bottom_up(level + 1, node * 2 + 1)
             df = pd.concat([cluster_sx, cluster_dx])
-            lsvc = LinearSVC(random_state=0, tol=1e-5, C=1000,max_iter=100000)
+            lsvc = LinearSVC(random_state=0, tol=1e-5, C=1000, max_iter=100000)
             y = df.iloc[:, -1]
             X = df.iloc[:, :-1]
             lsvc.fit(X.values, y.values)
@@ -62,7 +69,7 @@ def linear_svc_alternative(dataframe, depth):
             while score != 1.0:
                 for _i in df.index:
                     predicted_class = lsvc.predict([df.loc[_i, [c for c in df.columns if c != df.columns[-1]]]])[0]
-                    if df.loc[_i,'class'] != predicted_class:
+                    if df.loc[_i, 'class'] != predicted_class:
                         df.loc[_i, 'class'] = predicted_class
                 lsvc = LinearSVC(random_state=0, tol=1e-5, C=1000, max_iter=100000)
                 y = df.iloc[:, -1]
@@ -75,7 +82,6 @@ def linear_svc_alternative(dataframe, depth):
         return df
 
     recursive_linear_svc_bottom_up()
-
 
     return normalize(nodes_a_b), clusters
 
