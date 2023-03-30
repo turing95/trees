@@ -1052,3 +1052,53 @@ r2 light traing  [0.5392051823556435]
 
 
 r2 light test [0.5205480174645598]
+TRAIN: [   0    1    2 ... 1499 1500 1501] TEST: [   3   12   19   30   37   48   49   51   53   56   60   65   73   75
+   80   81   87   88   91   94  101  102  104  107  108  111  115  119
+  120  133  140  142  158  159  167  169  177  181  186  190  194  198
+  201  204  211  223  227  231  236  248  255  258  259  264  267  268
+  270  283  288  292  299  301  302  304  309  314  321  330  331  335
+  359  368  372  375  382  386  390  396  399  408  409  414  418  421
+  424  428  435  443  453  460  462  464  484  487  496  498  512  516
+  520  521  525  527  531  535  536  537  538  547  553  558  561  563
+  572  574  575  577  584  587  589  592  596  597  602  607  613  620
+  622  623  629  631  636  638  639  640  644  649  653  654  661  664
+  669  675  679  683  685  692  697  703  705  707  708  713  718  729
+  730  746  759  761  765  767  771  774  777  782  789  793  807  808
+  815  817  820  823  826  827  831  851  855  857  858  863  870  872
+  881  885  894  895  898  918  919  921  922  923  925  926  943  950
+  951  955  957  980  983  985  990 1007 1009 1012 1020 1021 1023 1032
+ 1037 1038 1040 1043 1047 1048 1053 1069 1078 1079 1083 1085 1089 1090
+ 1092 1093 1094 1097 1098 1100 1105 1127 1130 1131 1135 1138 1140 1141
+ 1142 1152 1156 1157 1159 1166 1167 1172 1176 1177 1180 1181 1200 1204
+ 1213 1218 1221 1226 1234 1238 1240 1244 1245 1246 1252 1260 1264 1265
+ 1269 1272 1273 1280 1285 1291 1295 1296 1309 1318 1338 1351 1357 1364
+ 1373 1377 1379 1395 1398 1407 1409 1428 1438 1456 1458 1462 1466 1470
+ 1471 1474 1476 1479 1481 1489 1496]
+Set parameter Threads to value 1
+Set parameter TimeLimit to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: Intel(R) Xeon(R) CPU           L5335  @ 2.00GHz, instruction set [SSE2]
+Thread count: 8 physical cores, 8 logical processors, using up to 1 threads
+
+Optimize a model with 18021 rows, 6047 columns and 123930 nonzeros
+Model fingerprint: 0x92d68c2d
+Variable types: 1243 continuous, 4804 integer (4804 binary)
+Coefficient statistics:
+  Matrix range     [2e-04, 1e+03]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+03]
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 1 (of 8 available processors)
+
+Solution count 0
+
+Time limit reached
+Best objective -, best bound -, gap -
+
+
+
+Total Solving Time light 13.225759267807007
+obj value light inf
