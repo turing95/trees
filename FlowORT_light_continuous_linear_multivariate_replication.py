@@ -202,7 +202,7 @@ def main(argv):
 
         results_writer.writerow(row_1)
 
-    with open(out_put_path + f'res_continuous_{date.today()}.csv', mode='a') as results:
+    with open(out_put_path + f'res_continuous_1_{date.today()}.csv', mode='a') as results:
         results_writer = csv.writer(results, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
 
         results_writer.writerow(row_1)
