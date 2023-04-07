@@ -157,19 +157,22 @@ def main(argv):
 
         print(f'\n\nlower_bound_reference {lower_bound_reference}')
 
-        mae_light, r2_light = primal_light.get_accuracy(data_train)
-        mae_light_test, r2_light_test = primal_light.get_accuracy(
+        mae_light, r2_light,r2_abs_light = primal_light.get_accuracy(data_train)
+        mae_light_test, r2_light_test,r2_abs_light_test = primal_light.get_accuracy(
             data_test)
         maes_test_light.append(mae_light_test)
         r2_test.append(r2_light_test)
+        r2_lads_test_light.append(r2_abs_light_test)
 
         maes_train_light.append(mae_light)
+        r2_train.append(r2_light)
+        r2_lads_train_light.append(r2_abs_light)
+
 
         mip_gaps_light.append(primal_light.model.getAttr("MIPGap"))
 
         solving_times_light.append(solving_time_light)
 
-        r2_train.append(r2_light)
         break
     print('\n')
     print('mip gaps light', mip_gaps_light)
@@ -185,10 +188,16 @@ def main(argv):
     print('\n')
     print('r2 light test', r2_test)
 
+    print('\n')
+    print('1-r2 light train', r2_lads_train_light)
+
+    print('\n')
+    print('1-r2 light test', r2_lads_test_light)
+
     row_1 = [approach_name_1, input_file, train_len, features_count, depth, n_k_folds, time_limit,
              np.average(mip_gaps_light) * 100,
              np.average(solving_times_light), np.average(maes_train_light),
-             np.average(r2_train),np.average(maes_test_light),np.average(r2_test),solutions,np.average(t_sol) if t_sol else 0]
+             np.average(r2_train),np.average(r2_lads_train_light),np.average(maes_test_light),np.average(r2_test),np.average(r2_lads_test_light),solutions,np.average(t_sol) if t_sol else 0]
 
     result_file_light = out_put_name_1 + '.csv'
     with open(out_put_path + result_file_light, mode='a') as results:

@@ -161,5 +161,5 @@ def get_model_accuracy(model, data, a, b, beta_zero, beta, g):
     mae = get_mae(model, data, a, b, beta_zero, g, beta)
 
     r2 = get_r_squared(model, data, a, b, beta_zero, g, beta)
-
-    return mae, r2
+    r2_lad = get_r_lad(model.label, data, mae)
+    return mae, r2, 1-r2_lad
